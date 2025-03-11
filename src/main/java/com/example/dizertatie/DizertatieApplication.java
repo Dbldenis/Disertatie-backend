@@ -7,7 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DizertatieApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DizertatieApplication.class, args);
+		try {
+			SpringApplication.run(DizertatieApplication.class, args);
+		}catch(Exception exception) {
+			System.out.println(exception);
+		}
 	}
 
 }
