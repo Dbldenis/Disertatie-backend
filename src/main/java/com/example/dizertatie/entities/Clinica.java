@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity(name = "Clinica")
-@Table(name = "CLINICA")
+@Table(name = "CLINICA", schema = "public")
 public class Clinica {
 
     @Id
@@ -23,8 +23,7 @@ public class Clinica {
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY,
-            orphanRemoval = true,
-            mappedBy = "clinica")
+            orphanRemoval = true)
     private List<Medic> listaMedici;
 
 

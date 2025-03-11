@@ -33,7 +33,6 @@ public class Medic {
             fetch = FetchType.LAZY,
             orphanRemoval = true,
             mappedBy = "medic")
-
     private List<Pacient> listaPacienti = new ArrayList<>();
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
