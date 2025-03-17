@@ -1,3 +1,4 @@
+/*
 package com.example.dizertatie.dto;
 
 import com.example.dizertatie.entities.Medic;
@@ -81,3 +82,4 @@ public class ConsultatiDto {
         this.medic = medic;
     }
 }
+*/

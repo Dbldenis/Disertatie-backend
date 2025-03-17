@@ -1,6 +1,5 @@
 package com.example.dizertatie.entities;
 
-
 import jakarta.persistence.*;
 
 import java.util.List;

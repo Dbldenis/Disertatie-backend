@@ -1,7 +1,7 @@
+/*
 package com.example.dizertatie.entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity(name = "Consultati")
@@ -99,3 +99,4 @@ public class Consultati {
         this.diagnostic = diagnostic;
     }
 }
+*/

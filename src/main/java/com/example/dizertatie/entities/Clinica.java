@@ -19,13 +19,10 @@ public class Clinica {
     @Column(name = "ADRESA")
     private String adresa;
 
-    // Lista medici
-
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY,
             orphanRemoval = true)
     private List<Medic> listaMedici;
-
 
     public Long getId() {
         return id;
