@@ -1,6 +1,6 @@
 package com.example.dizertatie.dto;
 
-import com.example.dizertatie.entities.Consultati;
+
 import com.example.dizertatie.entities.Pacient;
 
 import java.util.List;
@@ -8,22 +8,12 @@ import java.util.List;
 public class MedicDto {
 
     // nume, prem, specializare, telefon, codparaf, listapacienti, consultati,
-    private Long id;
     private String nume;
     private String prenume;
     private String specializare;
     private String telefon;
     private Integer codParafa;
     private List<Pacient> listaPacienti;
-    private List<Consultati> consultati;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNume() {
         return nume;
@@ -73,11 +63,4 @@ public class MedicDto {
         this.listaPacienti = listaPacienti;
     }
 
-    public List<Consultati> getConsultati() {
-        return consultati;
-    }
-
-    public void setConsultati(List<Consultati> consultati) {
-        this.consultati = consultati;
-    }
 }

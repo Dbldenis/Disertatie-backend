@@ -9,6 +9,7 @@ import java.util.List;
 @Table(name = "MEDIC", schema = "public")
 public class Medic {
 
+    // nume, prenume, specializare, telefon, cod parafa
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +36,15 @@ public class Medic {
             mappedBy = "medic")
     private List<Pacient> listaPacienti = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+    /*@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY,
             orphanRemoval = true,
             mappedBy = "medic")
-    private List<Consultati> listaConsultati;
+    private List<Consultati> listaConsultati;*/
+
+    public void addPacient(Pacient pacient) {
+        listaPacienti.add(pacient);
+    }
 
     public Long getId() {
         return id;
@@ -97,11 +102,4 @@ public class Medic {
         this.codParafa = codParafa;
     }
 
-    public List<Consultati> getConsultati() {
-        return listaConsultati;
-    }
-
-    public void setConsultati(List<Consultati> consultati) {
-        this.listaConsultati = consultati;
-    }
 }

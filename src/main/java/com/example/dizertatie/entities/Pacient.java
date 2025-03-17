@@ -35,11 +35,11 @@ public class Pacient {
     @Column(name="ASIGURARE")
     private Boolean asigurare;
 
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},
+    /*@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},
             fetch = FetchType.LAZY,
             orphanRemoval = true,
             mappedBy = "pacient")
-    private List<Consultati> listaConsultatii;
+    private List<Consultati> listaConsultatii;*/
 
     @ManyToOne()
     @JoinColumn(name = "medic_id")
@@ -119,11 +119,4 @@ public class Pacient {
         this.medic = medic;
     }
 
-    public List<Consultati> getListaConsultatii() {
-        return listaConsultatii;
-    }
-
-    public void setListaConsultatii(List<Consultati> listaConsultatii) {
-        this.listaConsultatii = listaConsultatii;
-    }
 }

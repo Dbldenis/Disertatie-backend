@@ -11,10 +11,6 @@ public class PacientMapper {
 
     public static Pacient pacient2Entity(PacientDto pacientDto) {
 
-        if (pacientDto.getId() == null) {
-            return null;
-        }
-
         Pacient pacient = new Pacient();
 
         pacient.setNume(pacientDto.getNume());

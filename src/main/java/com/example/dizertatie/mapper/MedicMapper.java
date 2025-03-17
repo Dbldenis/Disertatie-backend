@@ -7,22 +7,17 @@ public class MedicMapper {
 
     public static Medic medic2Entity(MedicDto medicDto) {
 
-        if (medicDto.getId() == null) {
-            return null;
-        }
-
         Medic medicCreat = new Medic();
 
         // nume, prem, specializare, telefon, codparaf, listapacienti, consultati,
 
-        medicCreat.setId(medicDto.getId());
         medicCreat.setNume(medicDto.getNume());
         medicCreat.setPrenume(medicDto.getPrenume());
         medicCreat.setSpecializare(medicDto.getSpecializare());
         medicCreat.setTelefon(medicDto.getTelefon());
         medicCreat.setCodParafa(medicDto.getCodParafa());
         //medicCreat.setListaPacienti(medicDto.getListaPacienti(medicDto.getListaPacienti());
-        medicCreat.setConsultati(medicDto.getConsultati());
+
 
         return medicCreat;
     }
@@ -37,7 +32,6 @@ public class MedicMapper {
 
         MedicDto medicReturnat = new MedicDto();
 
-        medicReturnat.setId(medic.getId());
         medicReturnat.setNume(medic.getNume());
         medicReturnat.setPrenume(medic.getPrenume());
         medicReturnat.setSpecializare(medic.getSpecializare());

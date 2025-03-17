@@ -1,6 +1,5 @@
 package com.example.dizertatie.dto;
 
-import com.example.dizertatie.entities.Consultati;
 import com.example.dizertatie.entities.Medic;
 
 import java.time.LocalDateTime;
@@ -19,7 +18,6 @@ public class PacientDto {
     private String adresa;
     private Boolean asigurare;
     private Medic medic;
-    private List<Consultati> listaConsultati;
 
     public Long getId() {
         return id;
@@ -93,11 +91,4 @@ public class PacientDto {
         this.medic = medic;
     }
 
-    public List<Consultati> getListaConsultati() {
-        return listaConsultati;
-    }
-
-    public void setListaConsultati(List<Consultati> listaConsultati) {
-        this.listaConsultati = listaConsultati;
-    }
 }
