@@ -1,10 +1,6 @@
 package com.example.dizertatie.dto;
 
 
-import com.example.dizertatie.entities.Pacient;
-
-import java.util.List;
-
 public class MedicDto {
 
     // nume, prem, specializare, telefon, codparaf, listapacienti, consultati,
@@ -13,7 +9,6 @@ public class MedicDto {
     private String specializare;
     private String telefon;
     private Integer codParafa;
-    private List<Pacient> listaPacienti;
 
     public String getNume() {
         return nume;
@@ -53,14 +48,6 @@ public class MedicDto {
 
     public void setCodParafa(Integer codParafa) {
         this.codParafa = codParafa;
-    }
-
-    public List<Pacient> getListaPacienti() {
-        return this.listaPacienti;
-    }
-
-    public void setListaPacienti(List<Pacient> listaPacienti) {
-        this.listaPacienti = listaPacienti;
     }
 
 }

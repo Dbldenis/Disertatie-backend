@@ -1,13 +1,10 @@
 package com.example.dizertatie.controller;
 
-
 import com.example.dizertatie.dto.MedicDto;
-import com.example.dizertatie.dto.PacientDto;
 import com.example.dizertatie.entities.Medic;
-import com.example.dizertatie.entities.Pacient;
 import com.example.dizertatie.mapper.MedicMapper;
-import com.example.dizertatie.mapper.PacientMapper;
 import com.example.dizertatie.service.MedicService;
+import com.example.dizertatie.service.PacientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +16,9 @@ public class MedicController {
     @Autowired
     private MedicService medicService;
 
+    @Autowired
+    private PacientService pacientService;
+
     //add medic
     @PostMapping("/add")
     public ResponseEntity<?> createMedic(@RequestBody MedicDto medicDto) {
@@ -27,6 +27,13 @@ public class MedicController {
         Medic medicCreated = medicService.medicToCreate(medicToCreate);
 
         return ResponseEntity.ok(medicCreated);
+    }
+
+    //sterg pacient dupa id
+    @DeleteMapping("/delete/{pacientId}")
+    public ResponseEntity<?> deletePacientByIdFromMedic(@PathVariable Long pacientId) {
+        pacientService.deletePacient(pacientId);
+        return ResponseEntity.noContent().build();
     }
 
 }

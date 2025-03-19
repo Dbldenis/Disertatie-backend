@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity(name = "Medic")
 @Table(name = "MEDIC", schema = "public")
 public class Medic {
@@ -36,14 +37,9 @@ public class Medic {
             mappedBy = "medic")
     private List<Pacient> listaPacienti = new ArrayList<>();
 
-    /*@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
-            fetch = FetchType.LAZY,
-            orphanRemoval = true,
-            mappedBy = "medic")
-    private List<Consultati> listaConsultati;*/
-
     public void addPacient(Pacient pacient) {
         listaPacienti.add(pacient);
+        pacient.setMedic(this);
     }
 
     public Long getId() {

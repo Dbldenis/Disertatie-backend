@@ -20,4 +20,5 @@ public class MedicService {
         }
         return medicRepository.save(medicToCreate);
     }
+
 }

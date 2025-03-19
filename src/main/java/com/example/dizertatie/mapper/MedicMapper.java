@@ -22,7 +22,7 @@ public class MedicMapper {
         return medicCreat;
     }
 
-    public static MedicDto medic2Dto(Medic medic) {
+    public static Medic medic2Dto(Medic medic) {
 
         if (medic.getId() == null) {
             return null;
@@ -30,7 +30,7 @@ public class MedicMapper {
 
         // nume, prem, specializare, telefon, codparaf, listapacienti, consultati,
 
-        MedicDto medicReturnat = new MedicDto();
+        Medic medicReturnat = new Medic();
 
         medicReturnat.setNume(medic.getNume());
         medicReturnat.setPrenume(medic.getPrenume());

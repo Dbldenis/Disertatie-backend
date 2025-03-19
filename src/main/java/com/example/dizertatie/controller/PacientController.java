@@ -25,11 +25,36 @@ public class PacientController {
     // add pacient
     @PostMapping("/add/{medicId}")
     public ResponseEntity<?> addPacientToMedic(@RequestBody PacientDto pacientDto, @PathVariable Long medicId) {
-        Pacient pacientToCreate = PacientMapper.pacient2Entity(pacientDto);
-        Pacient pacientCreated = pacientService.pacientToCreate(pacientToCreate,medicId);
+        Pacient pacientCreate = PacientMapper.pacient2Entity(pacientDto);
+        Pacient pacientCreated = pacientService.pacientToCreate(pacientCreate,medicId);
 
-        return ResponseEntity.ok(pacientCreated);
+        PacientDto pacientDto1 = PacientMapper.pacient2Dto(pacientCreated);
+
+        return ResponseEntity.ok(pacientDto1);
     }
+
+    // edit pacient
+    @PutMapping("/edit/{pacientId}")
+    public ResponseEntity<?> editPacient(@RequestBody PacientDto pacientDto, @PathVariable Long pacientId) {
+
+        Pacient pacientToUpdate = PacientMapper.pacient2Entity(pacientDto);
+        Pacient pacientUpdated = pacientService.pacientUpdate(pacientToUpdate,pacientId);
+        PacientDto pacientDto1 = PacientMapper.pacient2Dto(pacientUpdated);
+
+        return ResponseEntity.ok(pacientDto1);
+    }
+
+    // get pacient by id
+    @GetMapping("/get/{pacientId}")
+    public ResponseEntity<?> getPacientById(@PathVariable(name = "pacientId") Long pacientToGet) {
+        Pacient pacientFound = pacientService.getPacientData(pacientToGet);
+        PacientDto pacientData = PacientMapper.pacient2Dto(pacientFound);
+
+        return ResponseEntity.ok(pacientData);
+    }
+
+
+
 
 
 }

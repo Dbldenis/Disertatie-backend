@@ -2,13 +2,10 @@ package com.example.dizertatie.dto;
 
 import com.example.dizertatie.entities.Medic;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 public class PacientDto {
 
-
     // nume, prenume, email, telefon, cnp, adresa, asigurare, medic
+
     private Long id;
     private String nume;
     private String prenume;

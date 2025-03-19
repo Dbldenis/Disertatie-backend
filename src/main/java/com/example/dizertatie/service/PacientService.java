@@ -31,4 +31,35 @@ public class PacientService {
         return pacientRepository.save(pacientToCreate);
     }
 
+    public Pacient pacientUpdate(Pacient pacientUpdate, Long pacientId) {
+
+        Pacient dbPacient = pacientRepository.findById(pacientId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        // nume, prenume, email, telefon, cnp, adresa, asigurare, medic
+        dbPacient.setNume(pacientUpdate.getNume());
+        dbPacient.setPrenume(pacientUpdate.getPrenume());
+        dbPacient.setEmail(pacientUpdate.getEmail());
+        dbPacient.setAdresa(pacientUpdate.getAdresa());
+        dbPacient.setTelefon(pacientUpdate.getTelefon());
+        dbPacient.setCnp(pacientUpdate.getCnp());
+        dbPacient.setAsigurare(pacientUpdate.getAsigurare());
+        dbPacient.setMedic(pacientUpdate.getMedic());
+
+        return pacientRepository.save(dbPacient);
+
+    }
+
+    //GET Pacient by Id
+    public Pacient getPacientData(Long pacientId) {
+
+        return pacientRepository.findById(pacientId).
+                orElseThrow(EntityNotFoundException::new);
+    }
+
+
+    public void deletePacient(Long pacientId) {
+        pacientRepository.deleteById(pacientId);
+    }
+
 }
