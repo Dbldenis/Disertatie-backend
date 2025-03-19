@@ -21,4 +21,9 @@ public class MedicService {
         return medicRepository.save(medicToCreate);
     }
 
+    public void deleteAllPacienti () {
+        medicRepository.deleteAll();
+    }
+
+
 }

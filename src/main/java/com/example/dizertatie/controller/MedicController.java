@@ -36,4 +36,12 @@ public class MedicController {
         return ResponseEntity.noContent().build();
     }
 
+    //sterg toti pacienti
+    @DeleteMapping("/delete/all")
+    public ResponseEntity<?> deleteAll() {
+        medicService.deleteAllPacienti();
+
+        return ResponseEntity.ok().build();
+    }
+
 }
