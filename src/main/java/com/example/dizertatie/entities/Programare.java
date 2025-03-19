@@ -1,7 +1,7 @@
 package com.example.dizertatie.entities;
 
-
 import jakarta.persistence.*;
+
 
 @Entity(name="Programare")
 @Table(name="PROGRAMARE",schema = "public")

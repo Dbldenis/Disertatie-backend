@@ -2,8 +2,6 @@ package com.example.dizertatie.entities;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity(name = "Pacient")
 @Table(name = "PACIENT", schema = "public")
 public class Pacient {
@@ -35,17 +33,9 @@ public class Pacient {
     @Column(name="ASIGURARE")
     private Boolean asigurare;
 
-    /*@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},
-            fetch = FetchType.LAZY,
-            orphanRemoval = true,
-            mappedBy = "pacient")
-    private List<Consultati> listaConsultatii;*/
-
     @ManyToOne()
     @JoinColumn(name = "medic_id")
     private Medic medic;
-
-    // Metoda Cnp
 
     public Long getId() {
         return id;
