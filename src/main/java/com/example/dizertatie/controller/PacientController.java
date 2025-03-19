@@ -33,6 +33,10 @@ public class PacientController {
         return ResponseEntity.ok(pacientDto1);
     }
 
+    // add fisa pacientului
+    /*@PostMapping("/addFisa/{pacientId}")
+    public ResponseEntity<?> addFisaToPacient(@RequestBody PacientDto pacientDto, @PathVariable Long medicId)*/
+
     // edit pacient
     @PutMapping("/edit/{pacientId}")
     public ResponseEntity<?> editPacient(@RequestBody PacientDto pacientDto, @PathVariable Long pacientId) {

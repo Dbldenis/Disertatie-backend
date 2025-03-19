@@ -26,4 +26,5 @@ public class Programare {
             orphanRemoval = true)
     private Medic medic;
 
+
 }

@@ -2,9 +2,12 @@ package com.example.dizertatie.entities;
 
 import jakarta.persistence.*;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-
-/*@Entity(name = "FisaPacientului")
+@Getter
+@Setter
+@Entity(name = "FisaPacientului")
 @Table(name = "FISA_PACIENTULUI", schema = "public")
 public class FisaPacientului {
 
@@ -13,15 +16,19 @@ public class FisaPacientului {
     private Long id;
 
     // Relație One-to-One cu Pacient
-    @OneToOne
-    @JoinColumn(name = "pacient_id")
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true)
+    @JoinColumn(name = "pacient_id", referencedColumnName = "id")
     private Pacient pacient;
+
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true)
+    @JoinColumn(name = "medic_id", referencedColumnName = "id")
+    private Medic medic;
 
     // Date medicale din document (secțiunea I)
     private Double greutate; // în kg
     private Double inaltime; // în cm
-    *//*private LocalDate dataNasterii;
-    private String sex; // M/F/OTHER*//*
 
     // Istoric medical (secțiunea II din document)
     private String alergii; // ex: "penicilină, nuci"
@@ -39,8 +46,7 @@ public class FisaPacientului {
     private String relatieCuPacientul; // ex: "Îngrijitor"
 
     // Relație cu Consultații (o fișă poate avea mai multe consultații)
-    @OneToMany(mappedBy = "fisa", cascade = CascadeType.ALL)
-    private List<Consultatie> consultatii;
+    /*@OneToMany(mappedBy = "fisa", cascade = CascadeType.ALL)
+    private List<Consultatie> consultatii;*/
 
-    // Getters și Setters
-}*/
+}

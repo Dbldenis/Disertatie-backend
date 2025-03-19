@@ -4,10 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
-
 @Entity(name = "Pacient")
 @Table(name = "PACIENT", schema = "public")
 public class Pacient {
@@ -42,5 +40,8 @@ public class Pacient {
     @ManyToOne()
     @JoinColumn(name = "medic_id")
     private Medic medic;
+
+    @OneToOne(mappedBy = "pacient", cascade = CascadeType.ALL)
+    private FisaPacientului fisaPacientului;
 
 }
