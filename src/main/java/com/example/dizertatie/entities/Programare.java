@@ -2,7 +2,11 @@ package com.example.dizertatie.entities;
 
 import jakarta.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity(name="Programare")
 @Table(name="PROGRAMARE",schema = "public")
 public class Programare {
@@ -22,35 +26,4 @@ public class Programare {
             orphanRemoval = true)
     private Medic medic;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Consultatie getTipConsutlatie() {
-        return tipConsutlatie;
-    }
-
-    public void setTipConsutlatie(Consultatie tipConsutlatie) {
-        this.tipConsutlatie = tipConsutlatie;
-    }
-
-    public Pacient getPacient() {
-        return pacient;
-    }
-
-    public void setPacient(Pacient pacient) {
-        this.pacient = pacient;
-    }
-
-    public Medic getMedic() {
-        return medic;
-    }
-
-    public void setMedic(Medic medic) {
-        this.medic = medic;
-    }
 }

@@ -1,11 +1,13 @@
 package com.example.dizertatie.entities;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter
+@Setter
 @Entity(name = "Medic")
 @Table(name = "MEDIC", schema = "public")
 public class Medic {
@@ -40,62 +42,6 @@ public class Medic {
     public void addPacient(Pacient pacient) {
         listaPacienti.add(pacient);
         pacient.setMedic(this);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNume() {
-        return nume;
-    }
-
-    public void setNume(String nume) {
-        this.nume = nume;
-    }
-
-    public String getPrenume() {
-        return prenume;
-    }
-
-    public void setPrenume(String prenume) {
-        this.prenume = prenume;
-    }
-
-    public String getSpecializare() {
-        return specializare;
-    }
-
-    public void setSpecializare(String specializare) {
-        this.specializare = specializare;
-    }
-
-    public String getTelefon() {
-        return telefon;
-    }
-
-    public void setTelefon(String telefon) {
-        this.telefon = telefon;
-    }
-
-    public List<Pacient> getListaPacienti() {
-        return listaPacienti;
-    }
-
-    public void setListaPacienti(List<Pacient> listaPacienti) {
-        this.listaPacienti = listaPacienti;
-    }
-
-    public Integer getCodParafa() {
-        return codParafa;
-    }
-
-    public void setCodParafa(Integer codParafa) {
-        this.codParafa = codParafa;
     }
 
 }
