@@ -1,7 +1,10 @@
 package com.example.dizertatie.controller;
 
+import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.MedicDto;
+import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Medic;
+import com.example.dizertatie.mapper.FisaPacientuluiMapper;
 import com.example.dizertatie.mapper.MedicMapper;
 import com.example.dizertatie.service.MedicService;
 import com.example.dizertatie.service.PacientService;
@@ -27,6 +30,16 @@ public class MedicController {
         Medic medicCreated = medicService.medicToCreate(medicToCreate);
 
         return ResponseEntity.ok(medicCreated);
+    }
+
+    // add fisa pacientului
+    @PostMapping("/addFisa/{pacientId}")
+    public ResponseEntity<?> addFisaToPacient(@RequestBody FisaPacientuluiDto fisaPacientuluiDto, @PathVariable Long pacientId) {
+        FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
+        FisaPacientului fisaPacientului1Created = medicService.FisaToCreate(fisaPacientului,pacientId);
+        FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaPacientului1Created);
+
+        return ResponseEntity.ok(fisaPacientuluiDto);
     }
 
     //sterg pacient dupa id
