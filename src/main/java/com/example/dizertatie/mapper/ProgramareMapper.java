@@ -18,6 +18,8 @@ public class ProgramareMapper {
 
         programare.setId(programareDto.getId());
         programare.setTipConsutlatie(programareDto.getTipConsultatie());
+        programare.setData(programareDto.getData());
+        programare.setOra(programareDto.getOra());
         programare.setPacient(programareDto.getPacient());
         programare.setMedic(programareDto.getMedic());
 
@@ -35,6 +37,8 @@ public class ProgramareMapper {
 
         programareDto.setId(programare.getId());
         programareDto.setTipConsultatie(programare.getTipConsutlatie());
+        programareDto.setData(programare.getData());
+        programareDto.setOra(programare.getOra());
         programareDto.setPacient(programare.getPacient());
         programareDto.setMedic(programare.getMedic());
 

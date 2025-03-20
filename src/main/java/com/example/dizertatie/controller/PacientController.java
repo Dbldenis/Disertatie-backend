@@ -1,10 +1,7 @@
 package com.example.dizertatie.controller;
 
-import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.PacientDto;
-import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Pacient;
-import com.example.dizertatie.mapper.FisaPacientuluiMapper;
 import com.example.dizertatie.mapper.PacientMapper;
 import com.example.dizertatie.service.MedicService;
 import com.example.dizertatie.service.PacientService;
@@ -62,6 +59,12 @@ public class PacientController {
         pacientService.deleteALL();
 
         return ResponseEntity.ok().build();
+    }
+
+    // Creez programare
+    @PostMapping("/programare/{medicId}")
+    public ResponseEntity<?> createProgramare(@PathVariable(name = "pacientId")){
+
     }
 
 
