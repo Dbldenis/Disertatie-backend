@@ -30,7 +30,7 @@ public class MedicService {
         return medicRepository.save(medicToCreate);
     }
 
-    public FisaPacientului FisaToCreate(FisaPacientului fisaPacientuluiToCreate, Long pacientId) {
+    public FisaPacientului FisaToCreate(FisaPacientului fisaPacientuluiToCreate, Long pacientId, Long medicId) {
 
         if (fisaPacientuluiToCreate.getId() != null) {
             throw new RuntimeException("You cannot provide an ID to a new user that you want to create");
@@ -40,6 +40,14 @@ public class MedicService {
                 .orElseThrow(EntityNotFoundException::new);
 
         pacientCreated.setFisaPacientului(fisaPacientuluiToCreate);
+        fisaPacientuluiToCreate.setPacient(pacientCreated);
+
+
+        Medic medic = medicRepository.findById(medicId).
+                orElseThrow(EntityNotFoundException::new);
+
+        fisaPacientuluiToCreate.setMedic(medic);
+
 
         return fisaPacientuluiRepository.save(fisaPacientuluiToCreate);
     }

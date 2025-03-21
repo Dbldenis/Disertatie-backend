@@ -33,10 +33,10 @@ public class MedicController {
     }
 
     // add fisa pacientului
-    @PostMapping("/addFisa/{pacientId}")
-    public ResponseEntity<?> addFisaToPacient(@RequestBody FisaPacientuluiDto fisaPacientuluiDto, @PathVariable Long pacientId) {
+    @PostMapping("/addFisa/{pacientId}/{medicId}")
+    public ResponseEntity<?> addFisaToPacient(@RequestBody FisaPacientuluiDto fisaPacientuluiDto, @PathVariable Long pacientId, @PathVariable Long medicId) {
         FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
-        FisaPacientului fisaPacientului1Created = medicService.FisaToCreate(fisaPacientului,pacientId);
+        FisaPacientului fisaPacientului1Created = medicService.FisaToCreate(fisaPacientului,pacientId, medicId);
         FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaPacientului1Created);
 
         return ResponseEntity.ok(fisaPacientuluiDto);
