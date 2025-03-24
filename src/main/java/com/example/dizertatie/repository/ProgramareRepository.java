@@ -7,7 +7,4 @@ import java.util.List;
 
 public interface ProgramareRepository extends JpaRepository<Programare, Long> {
 
-    List<Programare> findByMedicId(Long medicId);
-    List<Programare> findByPacientId(Long pacientId);
-
 }

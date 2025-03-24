@@ -20,7 +20,7 @@ public class PacientService {
     public Pacient pacientToCreate(Pacient pacientToCreate, Long medicId) {
 
         if (pacientToCreate.getId() != null) {
-            throw new RuntimeException("You cannot provide an ID to a new user that you want to create");
+            throw new RuntimeException("You cannot provide an ID to a new pacient that you want to create");
         }
 
         Medic medicCreated = medicRepository.findById(medicId)

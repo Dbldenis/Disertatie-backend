@@ -1,10 +1,14 @@
 package com.example.dizertatie.controller;
 
 import com.example.dizertatie.dto.PacientDto;
+import com.example.dizertatie.dto.ProgramareDto;
 import com.example.dizertatie.entities.Pacient;
+import com.example.dizertatie.entities.Programare;
 import com.example.dizertatie.mapper.PacientMapper;
+import com.example.dizertatie.mapper.ProgramareMapper;
 import com.example.dizertatie.service.MedicService;
 import com.example.dizertatie.service.PacientService;
+import com.example.dizertatie.service.ProgramareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +26,9 @@ public class PacientController {
     @Autowired
     private MedicController medicController;
 
+    @Autowired
+    private ProgramareService programareService;
+
     // add pacient
     @PostMapping("/add/{medicId}")
     public ResponseEntity<?> addPacientToMedic(@RequestBody PacientDto pacientDto, @PathVariable Long medicId) {
@@ -31,6 +38,16 @@ public class PacientController {
         PacientDto pacientDto1 = PacientMapper.pacient2Dto(pacientCreated);
 
         return ResponseEntity.ok(pacientDto1);
+    }
+
+    //add programare
+    @PostMapping("/add/programare")
+    public ResponseEntity<ProgramareDto> creazaProgramare(@RequestBody ProgramareDto programareDto) {
+        Programare programareNoua = ProgramareMapper.programare2Entity(programareDto);
+        Programare programare = programareService.creazaProgramare(programareNoua);
+        ProgramareDto programareDto1 = ProgramareMapper.exemplarToDTO(programare);
+
+        return ResponseEntity.ok(programareDto1);
     }
 
     // edit pacient
@@ -62,10 +79,10 @@ public class PacientController {
     }
 
     // Creez programare
-    @PostMapping("/programare/{medicId}")
+    /*@PostMapping("/programare/{medicId}")
     public ResponseEntity<?> createProgramare(@PathVariable(name = "pacientId")){
 
-    }
+    }*/
 
 
 
