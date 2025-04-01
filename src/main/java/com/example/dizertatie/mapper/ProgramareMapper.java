@@ -9,13 +9,8 @@ public class ProgramareMapper {
 
     public static Programare programare2Entity(ProgramareDto programareDto) {
 
-        if (programareDto.getId() == null) {
-            return null;
-        }
-
         Programare programare = new Programare();
 
-        programare.setId(programareDto.getId());
         programare.setTipConsutlatie(programareDto.getTipConsultatie());
         programare.setData(programareDto.getData());
         programare.setOra(programareDto.getOra());

@@ -36,6 +36,8 @@ public class ProgramareService {
         programareCreata.setOra(programare.getOra());
         programareCreata.setTipConsutlatie(programare.getTipConsutlatie());
 
+        System.out.println("Programare ce va fi salvată: " + programareCreata);
+
         return programareRepository.save(programareCreata);
     }
 
