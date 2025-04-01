@@ -1,5 +1,6 @@
 package com.example.dizertatie.service;
 
+import com.example.dizertatie.dto.ProgramareDto;
 import com.example.dizertatie.entities.Medic;
 import com.example.dizertatie.entities.Pacient;
 import com.example.dizertatie.entities.Programare;
@@ -40,6 +41,20 @@ public class ProgramareService {
 
         return programareRepository.save(programareCreata);
     }
+
+    public Programare editeazaProgramare(Long programareId, ProgramareDto dto) {
+
+        Programare programare = programareRepository.findById(programareId)
+                .orElseThrow(() -> new RuntimeException("Programare inexistentă"));
+
+        // actualizăm doar câmpurile permise
+        programare.setData(dto.getData());
+        programare.setOra(dto.getOra());
+        programare.setTipConsutlatie(dto.getTipConsultatie());
+
+        return programareRepository.save(programare);
+    }
+
 
     public void stergeProgramare(Long id) {
         if (!programareRepository.existsById(id)) {

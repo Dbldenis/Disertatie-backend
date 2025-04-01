@@ -53,6 +53,15 @@ public class PacientController {
     }
 
     //edit programre
+    @PutMapping("/edit/programare/{programareId}")
+    public ResponseEntity<ProgramareDto> editeazaProgramare(@PathVariable Long programareId, @RequestBody ProgramareDto dto) {
+
+        Programare programareActualizata = programareService.editeazaProgramare(programareId, dto);
+        ProgramareDto raspuns = ProgramareMapper.exemplarToDTO(programareActualizata);
+
+        return ResponseEntity.ok(raspuns);
+    }
+
 
 
     //sterge programarea
