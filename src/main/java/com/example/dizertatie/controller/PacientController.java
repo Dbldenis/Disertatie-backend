@@ -50,6 +50,13 @@ public class PacientController {
         return ResponseEntity.ok(programareDto1);
     }
 
+    //sterge programarea
+    @DeleteMapping("/delete/programare/{programareId}")
+    public ResponseEntity<?> stergeProgramare(@PathVariable Long programareId) {
+        programareService.stergeProgramare(programareId);
+        return ResponseEntity.ok().build();
+    }
+
     // edit pacient
     @PutMapping("/edit/{pacientId}")
     public ResponseEntity<?> editPacient(@RequestBody PacientDto pacientDto, @PathVariable Long pacientId) {

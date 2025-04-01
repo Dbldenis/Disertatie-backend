@@ -41,10 +41,10 @@ public class ProgramareService {
         return programareRepository.save(programareCreata);
     }
 
-    /*public void stergeProgramare(Long id) {
+    public void stergeProgramare(Long id) {
         if (!programareRepository.existsById(id)) {
             throw new RuntimeException("Programare inexistenta");
         }
         programareRepository.deleteById(id);
-    }*/
+    }
 }
