@@ -15,6 +15,7 @@ public class Programare {
 
     @Id
     @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "TIP_CONSULTATIE")
@@ -34,5 +35,6 @@ public class Programare {
             orphanRemoval = true)
     private Medic medic;
 
+    // tip consultatie, data ora
 
 }

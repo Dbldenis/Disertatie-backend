@@ -21,20 +21,22 @@ public class ProgramareService {
     @Autowired
     private MedicRepository medicRepository;
 
-    public Programare creazaProgramare(Programare programare) {
+    public Programare creazaProgramare(Programare programare, Long pacientId, Long medicId) {
 
-        Pacient pacient = pacientRepository.findById(programare.getPacient().getId())
+        Pacient pacient = pacientRepository.findById(pacientId)
                 .orElseThrow(() -> new RuntimeException("Pacient inexistent"));
-        Medic medic = medicRepository.findById(programare.getMedic().getId())
+        Medic medic = medicRepository.findById(medicId)
                 .orElseThrow(() -> new RuntimeException("Medic inexistent"));
 
         Programare programareCreata = new Programare();
+
         programareCreata.setPacient(pacient);
         programareCreata.setMedic(medic);
         programareCreata.setData(programare.getData());
         programareCreata.setOra(programare.getOra());
+        programareCreata.setTipConsutlatie(programare.getTipConsutlatie());
 
-        return programareRepository.save(programare);
+        return programareRepository.save(programareCreata);
     }
 
     /*public void stergeProgramare(Long id) {

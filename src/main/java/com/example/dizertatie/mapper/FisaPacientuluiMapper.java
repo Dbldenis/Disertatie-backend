@@ -7,6 +7,7 @@ public class FisaPacientuluiMapper {
 
     // Conversie DTO -> Entitate (fără medicamenteConcomitente, dataNasterii, sex)
     public static FisaPacientului fisaPacientuluiDto2Entity(FisaPacientuluiDto fisaDto) {
+
         FisaPacientului fisa = new FisaPacientului();
 
         fisa.setGreutate(fisaDto.getGreutate());

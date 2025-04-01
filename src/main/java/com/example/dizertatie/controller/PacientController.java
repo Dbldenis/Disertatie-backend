@@ -41,10 +41,10 @@ public class PacientController {
     }
 
     //add programare
-    @PostMapping("/add/programare")
-    public ResponseEntity<ProgramareDto> creazaProgramare(@RequestBody ProgramareDto programareDto) {
+    @PostMapping("/add/programare/{pacientId}/{medicId}")
+    public ResponseEntity<ProgramareDto> creazaProgramare(@RequestBody ProgramareDto programareDto, @PathVariable Long pacientId, @PathVariable Long medicId ) {
         Programare programareNoua = ProgramareMapper.programare2Entity(programareDto);
-        Programare programare = programareService.creazaProgramare(programareNoua);
+        Programare programare = programareService.creazaProgramare(programareNoua, pacientId, medicId);
         ProgramareDto programareDto1 = ProgramareMapper.exemplarToDTO(programare);
 
         return ResponseEntity.ok(programareDto1);

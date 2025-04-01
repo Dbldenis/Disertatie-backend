@@ -1,7 +1,6 @@
 package com.example.dizertatie.entities;
 
 import jakarta.persistence.*;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +14,6 @@ public class FisaPacientului {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Relație One-to-One cu Pacient
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true)
     @JoinColumn(name = "pacient_id", referencedColumnName = "id")
@@ -37,9 +35,9 @@ public class FisaPacientului {
     private String evolutieReactie; // ex: "Recuperat cu sechele"
 
     // Medicamente concomitente (secțiunea III.3)
-    @ElementCollection
+    /*@ElementCollection
     @CollectionTable(name = "MEDICAMENTE_CONCOMITENTE", joinColumns = @JoinColumn(name = "fisa_id"))
-    private List<String> medicamenteConcomitente;
+    private List<String> medicamenteConcomitente;*/
 
     // Detalii raportor (secțiunea IV)
     private String numeRaportor;

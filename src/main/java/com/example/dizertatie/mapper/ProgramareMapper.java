@@ -2,7 +2,6 @@ package com.example.dizertatie.mapper;
 
 import com.example.dizertatie.dto.PacientDto;
 import com.example.dizertatie.dto.ProgramareDto;
-import com.example.dizertatie.entities.Pacient;
 import com.example.dizertatie.entities.Programare;
 
 public class ProgramareMapper {
@@ -20,8 +19,6 @@ public class ProgramareMapper {
         programare.setTipConsutlatie(programareDto.getTipConsultatie());
         programare.setData(programareDto.getData());
         programare.setOra(programareDto.getOra());
-        programare.setPacient(programareDto.getPacient());
-        programare.setMedic(programareDto.getMedic());
 
         return programare;
 
@@ -39,8 +36,6 @@ public class ProgramareMapper {
         programareDto.setTipConsultatie(programare.getTipConsutlatie());
         programareDto.setData(programare.getData());
         programareDto.setOra(programare.getOra());
-        programareDto.setPacient(programare.getPacient());
-        programareDto.setMedic(programare.getMedic());
 
         return programareDto;
 

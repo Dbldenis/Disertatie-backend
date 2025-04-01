@@ -15,7 +15,7 @@ public class ProgramareDto {
     private Consultatie tipConsultatie;
     private LocalDate data;
     private LocalTime ora;
-    private Pacient pacient;
-    private Medic medic;
+    private Long pacientId;
+    private Long medicId;
 
 }
