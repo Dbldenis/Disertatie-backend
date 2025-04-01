@@ -29,11 +29,11 @@ public class Programare {
     @Column(name = "ORA")
     private LocalTime ora;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             orphanRemoval = true)
     private Pacient pacient;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             orphanRemoval = true)
     private Medic medic;
 

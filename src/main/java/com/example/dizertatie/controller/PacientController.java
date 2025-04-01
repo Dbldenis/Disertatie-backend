@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/pacient")
 public class PacientController {
@@ -50,11 +52,18 @@ public class PacientController {
         return ResponseEntity.ok(programareDto1);
     }
 
+    //edit programre
+
+
     //sterge programarea
     @DeleteMapping("/delete/programare/{programareId}")
     public ResponseEntity<?> stergeProgramare(@PathVariable Long programareId) {
         programareService.stergeProgramare(programareId);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok().body(
+                Map.of("mesaj", "Programarea a fost ștearsă cu succes")
+        );
+
     }
 
     // edit pacient
