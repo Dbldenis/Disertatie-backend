@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class ProgramareService {
@@ -87,6 +88,9 @@ public class ProgramareService {
                 .orElseThrow(() -> new RuntimeException("Programarea nu a fost găsită"));
     }
 
+    public List<Programare> getProgramariPentruPacient(Long pacientId) {
+        return programareRepository.findAllByPacientId(pacientId);
+    }
 
     public void stergeProgramare(Long id) {
         if (!programareRepository.existsById(id)) {

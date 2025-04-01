@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -70,6 +71,17 @@ public class PacientController {
         return ResponseEntity.ok(dto);
     }
 
+    // Filtrare dupa pacient Id
+    @GetMapping("/get/programari/{pacientId}")
+    public ResponseEntity<List<ProgramareDto>> getProgramariPacient(@PathVariable Long pacientId) {
+        List<Programare> programari = programareService.getProgramariPentruPacient(pacientId);
+
+        List<ProgramareDto> raspuns = programari.stream()
+                .map(ProgramareMapper::exemplarToDTO)
+                .toList();
+
+        return ResponseEntity.ok(raspuns);
+    }
 
 
 

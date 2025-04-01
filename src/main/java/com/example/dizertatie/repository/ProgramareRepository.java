@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface ProgramareRepository extends JpaRepository<Programare, Long> {
 
-    List<Programare> findByTipConsutlatie(Consultatie tip);
+    List<Programare> findAllByPacientId(Long pacientId);
+
 }
