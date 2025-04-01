@@ -10,6 +10,9 @@ import com.example.dizertatie.repository.ProgramareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Service
 public class ProgramareService {
 
@@ -23,6 +26,17 @@ public class ProgramareService {
     private MedicRepository medicRepository;
 
     public Programare creazaProgramare(Programare programare, Long pacientId, Long medicId) {
+
+        if (programare.getData() == null || programare.getOra() == null) {
+            throw new RuntimeException("Data și ora sunt obligatorii");
+        }
+
+        LocalDate azi = LocalDate.now();
+        LocalTime acum = LocalTime.now();
+
+        if (programare.getData().isBefore(azi) || (programare.getData().isEqual(azi) && programare.getOra().isBefore(acum))) {
+            throw new RuntimeException("Nu poți crea o programare în trecut");
+        }
 
         Pacient pacient = pacientRepository.findById(pacientId)
                 .orElseThrow(() -> new RuntimeException("Pacient inexistent"));
@@ -46,6 +60,19 @@ public class ProgramareService {
 
         Programare programare = programareRepository.findById(programareId)
                 .orElseThrow(() -> new RuntimeException("Programare inexistentă"));
+
+
+        if (dto.getData() == null || dto.getOra() == null) {
+            throw new RuntimeException("Data și ora sunt obligatorii");
+        }
+
+        LocalDate azi = LocalDate.now();
+        LocalTime acum = LocalTime.now();
+
+        if (dto.getData().isBefore(azi) ||
+                (dto.getData().isEqual(azi) && dto.getOra().isBefore(acum))) {
+            throw new RuntimeException("Nu poți seta programarea într-un moment din trecut");
+        }
 
         // actualizăm doar câmpurile permise
         programare.setData(dto.getData());
