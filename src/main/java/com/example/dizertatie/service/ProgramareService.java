@@ -82,6 +82,11 @@ public class ProgramareService {
         return programareRepository.save(programare);
     }
 
+    public Programare getProgramareById(Long id) {
+        return programareRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Programarea nu a fost găsită"));
+    }
+
 
     public void stergeProgramare(Long id) {
         if (!programareRepository.existsById(id)) {

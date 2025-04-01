@@ -62,6 +62,15 @@ public class PacientController {
         return ResponseEntity.ok(raspuns);
     }
 
+    //get programare
+    @GetMapping("/get/programare/{programareId}")
+    public ResponseEntity<ProgramareDto> getProgramare(@PathVariable Long programareId) {
+        Programare programare = programareService.getProgramareById(programareId);
+        ProgramareDto dto = ProgramareMapper.exemplarToDTO(programare);
+        return ResponseEntity.ok(dto);
+    }
+
+
 
 
     //sterge programarea
