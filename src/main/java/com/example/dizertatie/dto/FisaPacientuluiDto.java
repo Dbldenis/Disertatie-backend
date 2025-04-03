@@ -1,6 +1,8 @@
 package com.example.dizertatie.dto;
 
 
+import com.example.dizertatie.entities.Medic;
+import com.example.dizertatie.entities.Pacient;
 import lombok.Data;
 import org.antlr.v4.runtime.misc.NotNull;
 //import javax.validation.constraints.NotNull;
@@ -15,14 +17,14 @@ public class FisaPacientuluiDto {
     //@NotNull(message = "Înălțimea este obligatorie")
     private Double inaltime;
 
+    private Pacient pacient;
+    private Medic medic;
+
     private String alergii;
     private String reactiiAdverse;
     private String medicamenteSuspecte;
     private String evolutieReactie;
     private String numeRaportor;
     private String relatieCuPacientul;
-
-    // Legătura cu pacientul (prin ID)
     //@NotNull(message = "ID-ul pacientului este obligatoriu")
-    private Long pacientId;
 }

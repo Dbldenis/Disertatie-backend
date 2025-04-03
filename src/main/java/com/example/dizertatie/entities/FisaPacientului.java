@@ -14,15 +14,15 @@ public class FisaPacientului {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             orphanRemoval = true)
     @JoinColumn(name = "pacient_id", referencedColumnName = "id")
     private Pacient pacient;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
-            orphanRemoval = true)
-    @JoinColumn(name = "medic_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "medic_id")
     private Medic medic;
+
 
     // Date medicale din document (secțiunea I)
     private Double greutate; // în kg

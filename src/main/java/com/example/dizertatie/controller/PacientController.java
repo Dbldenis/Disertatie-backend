@@ -1,17 +1,21 @@
 package com.example.dizertatie.controller;
 
+import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.PacientDto;
 import com.example.dizertatie.dto.ProgramareDto;
+import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Pacient;
 import com.example.dizertatie.entities.Programare;
 import com.example.dizertatie.mapper.PacientMapper;
 import com.example.dizertatie.mapper.ProgramareMapper;
+import com.example.dizertatie.service.FisaPacientuluiService;
 import com.example.dizertatie.service.MedicService;
 import com.example.dizertatie.service.PacientService;
 import com.example.dizertatie.service.ProgramareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.dizertatie.mapper.FisaPacientuluiMapper;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +35,9 @@ public class PacientController {
 
     @Autowired
     private ProgramareService programareService;
+
+    @Autowired
+    private FisaPacientuluiService fisaPacientuluiService;
 
     // add pacient
     @PostMapping("/add/{medicId}")
@@ -53,6 +60,17 @@ public class PacientController {
         return ResponseEntity.ok(programareDto1);
     }
 
+    //add fisa pacientului
+    @PostMapping("/add/fisa/{pacientId}/{medicId}")
+    public ResponseEntity<FisaPacientuluiDto> adaugaFisaPacientului(@RequestBody FisaPacientuluiDto fisaPacientuluiDto,@PathVariable Long pacientId, @PathVariable Long medicId) {
+        FisaPacientului fisa = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
+        FisaPacientului fisaCreata = fisaPacientuluiService.creeazaFisa(fisa,pacientId,medicId);
+        FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaCreata);
+
+        return ResponseEntity.ok(fisaPacientuluiDto1);
+    }
+
+
     //edit programre
     @PutMapping("/edit/programare/{programareId}")
     public ResponseEntity<ProgramareDto> editeazaProgramare(@PathVariable Long programareId, @RequestBody ProgramareDto dto) {
@@ -61,6 +79,17 @@ public class PacientController {
         ProgramareDto raspuns = ProgramareMapper.exemplarToDTO(programareActualizata);
 
         return ResponseEntity.ok(raspuns);
+    }
+
+    // edit pacient
+    @PutMapping("/edit/{pacientId}")
+    public ResponseEntity<?> editPacient(@RequestBody PacientDto pacientDto, @PathVariable Long pacientId) {
+
+        Pacient pacientToUpdate = PacientMapper.pacient2Entity(pacientDto);
+        Pacient pacientUpdated = pacientService.pacientUpdate(pacientToUpdate,pacientId);
+        PacientDto pacientDto1 = PacientMapper.pacient2Dto(pacientUpdated);
+
+        return ResponseEntity.ok(pacientDto1);
     }
 
     //get programare
@@ -83,30 +112,6 @@ public class PacientController {
         return ResponseEntity.ok(raspuns);
     }
 
-
-
-    //sterge programarea
-    @DeleteMapping("/delete/programare/{programareId}")
-    public ResponseEntity<?> stergeProgramare(@PathVariable Long programareId) {
-        programareService.stergeProgramare(programareId);
-
-        return ResponseEntity.ok().body(
-                Map.of("mesaj", "Programarea a fost ștearsă cu succes")
-        );
-
-    }
-
-    // edit pacient
-    @PutMapping("/edit/{pacientId}")
-    public ResponseEntity<?> editPacient(@RequestBody PacientDto pacientDto, @PathVariable Long pacientId) {
-
-        Pacient pacientToUpdate = PacientMapper.pacient2Entity(pacientDto);
-        Pacient pacientUpdated = pacientService.pacientUpdate(pacientToUpdate,pacientId);
-        PacientDto pacientDto1 = PacientMapper.pacient2Dto(pacientUpdated);
-
-        return ResponseEntity.ok(pacientDto1);
-    }
-
     // get pacient by id
     @GetMapping("/get/{pacientId}")
     public ResponseEntity<?> getPacientById(@PathVariable(name = "pacientId") Long pacientToGet) {
@@ -124,15 +129,15 @@ public class PacientController {
         return ResponseEntity.ok().build();
     }
 
-    // Creez programare
-    /*@PostMapping("/programare/{medicId}")
-    public ResponseEntity<?> createProgramare(@PathVariable(name = "pacientId")){
+    //sterge programarea
+    @DeleteMapping("/delete/programare/{programareId}")
+    public ResponseEntity<?> stergeProgramare(@PathVariable Long programareId) {
+        programareService.stergeProgramare(programareId);
 
-    }*/
+        return ResponseEntity.ok().body(
+                Map.of("mesaj", "Programarea a fost ștearsă cu succes")
+        );
 
-
-
-
-
+    }
 
 }

@@ -39,6 +39,13 @@ public class Medic {
             mappedBy = "medic")
     private List<Pacient> listaPacienti = new ArrayList<>();
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+            fetch = FetchType.LAZY,
+            orphanRemoval = true,
+            mappedBy = "medic")
+    private List<FisaPacientului> listaFisaPacienti = new ArrayList<>();
+
+
     public void addPacient(Pacient pacient) {
         listaPacienti.add(pacient);
         pacient.setMedic(this);

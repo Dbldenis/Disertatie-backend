@@ -1,5 +1,6 @@
 package com.example.dizertatie.dto;
 
+import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Medic;
 import lombok.Data;
 
@@ -16,5 +17,6 @@ public class PacientDto {
     private String adresa;
     private Boolean asigurare;
     private Medic medic;
+    private FisaPacientului fisaPacientului;
 
 }

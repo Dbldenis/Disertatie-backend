@@ -10,6 +10,9 @@ public class FisaPacientuluiMapper {
 
         FisaPacientului fisa = new FisaPacientului();
 
+        fisa.setPacient(fisaDto.getPacient());
+        fisa.setMedic(fisaDto.getMedic());
+
         fisa.setGreutate(fisaDto.getGreutate());
         fisa.setInaltime(fisaDto.getInaltime());
         fisa.setAlergii(fisaDto.getAlergii());
@@ -25,6 +28,7 @@ public class FisaPacientuluiMapper {
 
     // Conversie Entitate -> DTO
     public static FisaPacientuluiDto fisaPacientuluiEntity2Dto(FisaPacientului fisa) {
+
         if (fisa.getId() == null) {
             return null;
         }
@@ -42,7 +46,7 @@ public class FisaPacientuluiMapper {
 
         // Legătura cu pacientul (prin ID)
         if (fisa.getPacient() != null) {
-            fisaDto.setPacientId(fisa.getPacient().getId());
+            fisaDto.setPacient(fisa.getPacient());
         }
 
         return fisaDto;
