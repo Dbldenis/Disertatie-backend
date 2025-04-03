@@ -1,8 +1,12 @@
 package com.example.dizertatie.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,16 +43,24 @@ public class Medic {
             mappedBy = "medic")
     private List<Pacient> listaPacienti = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY,
             orphanRemoval = true,
             mappedBy = "medic")
-    private List<FisaPacientului> listaFisaPacienti = new ArrayList<>();
+    private Set<FisaPacientului> listaFisaPacienti = new HashSet<>();
 
 
     public void addPacient(Pacient pacient) {
         listaPacienti.add(pacient);
         pacient.setMedic(this);
     }
+
+    public void addFisa(FisaPacientului fisaPacientului) {
+        listaFisaPacienti.add(fisaPacientului);
+        fisaPacientului.setMedic(this);
+    }
+
+
 
 }

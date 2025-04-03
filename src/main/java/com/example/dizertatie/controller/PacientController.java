@@ -1,5 +1,6 @@
 package com.example.dizertatie.controller;
 
+import org.springframework.http.MediaType;
 import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.PacientDto;
 import com.example.dizertatie.dto.ProgramareDto;
@@ -70,6 +71,14 @@ public class PacientController {
         return ResponseEntity.ok(fisaPacientuluiDto1);
     }
 
+    //edit fisa pacientului
+    @PutMapping("/edit/fisa/{fisaId}") // pentru Json
+    public ResponseEntity<FisaPacientuluiDto> updateFisa(@PathVariable Long fisaId, @RequestBody FisaPacientuluiDto fisaPacientuluiDto) {
+        FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
+        FisaPacientului fisaCreata = fisaPacientuluiService.updateFisa(fisaPacientului,fisaId);
+        FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaCreata);
+        return ResponseEntity.ok(fisaPacientuluiDto1);
+    }
 
     //edit programre
     @PutMapping("/edit/programare/{programareId}")

@@ -1,5 +1,6 @@
 package com.example.dizertatie.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,11 +15,11 @@ public class FisaPacientului {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
-            orphanRemoval = true)
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "pacient_id", referencedColumnName = "id")
     private Pacient pacient;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "medic_id")
     private Medic medic;

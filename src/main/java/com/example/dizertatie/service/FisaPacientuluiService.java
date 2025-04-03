@@ -37,6 +37,7 @@ public class FisaPacientuluiService {
         pacient.setFisaPacientului(fisaCreata); // bidirectional
 
         fisaCreata.setMedic(medic);
+        medic.addFisa(fisaCreata); // bidirectional
 
         fisaCreata.setGreutate(fisaPacientului.getGreutate());
         fisaCreata.setInaltime(fisaPacientului.getInaltime());
@@ -49,4 +50,26 @@ public class FisaPacientuluiService {
 
         return fisaPacientuluiRepository.save(fisaCreata);
     }
+
+    public FisaPacientului updateFisa( FisaPacientului fisaPacientului, @PathVariable Long fisaId) {
+
+        FisaPacientului existingFisa = fisaPacientuluiRepository.findById(fisaId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        // Mapăm datele din DTO peste entitate
+        existingFisa.setGreutate(fisaPacientului.getGreutate());
+        existingFisa.setInaltime(fisaPacientului.getInaltime());
+        existingFisa.setAlergii(fisaPacientului.getAlergii());
+        existingFisa.setReactiiAdverse(fisaPacientului.getReactiiAdverse());
+        existingFisa.setMedicamenteSuspecte(fisaPacientului.getMedicamenteSuspecte());
+        existingFisa.setEvolutieReactie(fisaPacientului.getEvolutieReactie());
+        existingFisa.setNumeRaportor(fisaPacientului.getNumeRaportor());
+        existingFisa.setRelatieCuPacientul(fisaPacientului.getRelatieCuPacientul());
+
+        // Salvezi entitatea actualizată
+        //FisaPacientului updatedFisa = fisaRepository.save(existingFisa);
+
+        return fisaPacientuluiRepository.save(existingFisa);
+    }
+
 }
