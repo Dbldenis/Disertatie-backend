@@ -1,10 +1,7 @@
-
 package com.example.dizertatie.entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,8 +34,8 @@ public class Consultatie {
     private TipConsultatie tipConsultatie;*/
 
     @ManyToOne()
-    @JoinColumn(name = "pacient_id")
-    private Pacient pacient;
+    @JoinColumn(name = "fisa_id")
+    private FisaPacientului fisaPacientului;
 
 }
 

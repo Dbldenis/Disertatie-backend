@@ -45,7 +45,7 @@ public class FisaPacientului {
     private String relatieCuPacientul; // ex: "Îngrijitor"
 
     // Relație cu Consultații (o fișă poate avea mai multe consultații)
-    /*@OneToMany(mappedBy = "fisa", cascade = CascadeType.ALL)
-    private List<TipConsultatie> consultati;*/
+    @OneToMany(mappedBy = "fisaPacientului", cascade = CascadeType.ALL)
+    private List<Consultatie> listaConsultati;
 
 }

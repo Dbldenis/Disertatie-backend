@@ -1,9 +1,12 @@
 package com.example.dizertatie.controller;
 
+import com.example.dizertatie.dto.ConsultatieDto;
 import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.MedicDto;
+import com.example.dizertatie.entities.Consultatie;
 import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Medic;
+import com.example.dizertatie.mapper.ConsultatiMapper;
 import com.example.dizertatie.mapper.FisaPacientuluiMapper;
 import com.example.dizertatie.mapper.MedicMapper;
 import com.example.dizertatie.service.MedicService;
@@ -32,6 +35,15 @@ public class MedicController {
         return ResponseEntity.ok(medicCreated);
     }
 
+    // crearea consultatie la pacient
+    @PostMapping("{medicId}/creare/consultatie/pacient/{pacientId}")
+    public ResponseEntity<ConsultatieDto> createConsultatie(@RequestBody ConsultatieDto consultatieDto, @PathVariable Long medicId, @PathVariable Long pacientId) {
+
+        Consultatie consultatie = medicService.createConsultatie(consultatieDto,  pacientId);
+        ConsultatieDto consultatieDto1 = ConsultatiMapper.consultatie2Dto(consultatie);
+
+        return ResponseEntity.ok(consultatieDto1);
+    }
 
     @PostMapping("/addFisa/{pacientId}/{medicId}")
     public ResponseEntity<?> addFisaToPacient(@RequestBody FisaPacientuluiDto fisaPacientuluiDto, @PathVariable Long pacientId, @PathVariable Long medicId) {
