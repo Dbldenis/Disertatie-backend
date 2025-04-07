@@ -1,6 +1,5 @@
 package com.example.dizertatie.repository;
 
-import com.example.dizertatie.entities.Consultatie;
 import com.example.dizertatie.entities.Programare;
 import org.springframework.data.jpa.repository.JpaRepository;
 

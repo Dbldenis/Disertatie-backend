@@ -30,6 +30,13 @@ public class MedicService {
         return medicRepository.save(medicToCreate);
     }
 
+    //GET Pacient by Id
+    public Pacient getPacientData(Long pacientId) {
+
+        return pacientRepository.findById(pacientId).
+                orElseThrow(EntityNotFoundException::new);
+    }
+
     public FisaPacientului FisaToCreate(FisaPacientului fisaPacientuluiToCreate, Long pacientId, Long medicId) {
 
         if (fisaPacientuluiToCreate.getId() != null) {

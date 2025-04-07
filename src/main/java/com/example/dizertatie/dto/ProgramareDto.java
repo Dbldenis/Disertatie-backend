@@ -1,8 +1,7 @@
 package com.example.dizertatie.dto;
 
-import com.example.dizertatie.entities.Consultatie;
-import com.example.dizertatie.entities.Medic;
-import com.example.dizertatie.entities.Pacient;
+import com.example.dizertatie.entities.TipConsultatie;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -12,7 +11,7 @@ import lombok.Data;
 public class ProgramareDto {
 
     private Long Id;
-    private Consultatie tipConsultatie;
+    private TipConsultatie tipConsultatie;
     private LocalDate data;
     private LocalTime ora;
 

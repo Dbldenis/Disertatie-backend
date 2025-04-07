@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -45,6 +46,6 @@ public class FisaPacientului {
 
     // Relație cu Consultații (o fișă poate avea mai multe consultații)
     /*@OneToMany(mappedBy = "fisa", cascade = CascadeType.ALL)
-    private List<Consultatie> consultatii;*/
+    private List<TipConsultatie> consultati;*/
 
 }

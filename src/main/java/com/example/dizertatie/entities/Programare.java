@@ -21,7 +21,7 @@ public class Programare {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TIP_CONSULTATIE")
-    private Consultatie tipConsutlatie;
+    private TipConsultatie tipConsutlatie;
 
     @Column(name = "DATA")
     private LocalDate data;

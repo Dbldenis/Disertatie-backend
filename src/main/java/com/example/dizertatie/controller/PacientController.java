@@ -90,6 +90,16 @@ public class PacientController {
         return ResponseEntity.ok(fisaPacientuluiDto);
     }
 
+    // get pacient by id
+    @GetMapping("/get/{pacientId}")
+    public ResponseEntity<?> getPacientById(@PathVariable(name = "pacientId") Long pacientToGet) {
+        Pacient pacientFound = pacientService.getPacientData(pacientToGet);
+        PacientDto pacientData = PacientMapper.pacient2Dto(pacientFound);
+
+        return ResponseEntity.ok(pacientData);
+    }
+
+
     @DeleteMapping("/delete/fisa/{fisaId}")
     public ResponseEntity<?> stergeFisaPacientului(@PathVariable Long fisaId) {
 
@@ -106,7 +116,6 @@ public class PacientController {
     public ResponseEntity<String> test(@RequestBody Map<String, Object> payload) {
         return ResponseEntity.ok("OK");
     }
-
 
     //edit programre
     @PutMapping("/edit/programare/{programareId}")
@@ -147,15 +156,6 @@ public class PacientController {
                 .toList();
 
         return ResponseEntity.ok(raspuns);
-    }
-
-    // get pacient by id
-    @GetMapping("/get/{pacientId}")
-    public ResponseEntity<?> getPacientById(@PathVariable(name = "pacientId") Long pacientToGet) {
-        Pacient pacientFound = pacientService.getPacientData(pacientToGet);
-        PacientDto pacientData = PacientMapper.pacient2Dto(pacientFound);
-
-        return ResponseEntity.ok(pacientData);
     }
 
     // delete all pacienti

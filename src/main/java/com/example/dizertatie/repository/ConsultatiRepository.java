@@ -1,9 +1,10 @@
-/*
+
 package com.example.dizertatie.repository;
 
-import com.example.dizertatie.entities.Consultati;
+import com.example.dizertatie.entities.Consultatie;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ConsultatiRepository extends JpaRepository<Consultati, Long> {
+public interface ConsultatiRepository extends JpaRepository<Consultatie, Long> {
+
 }
-*/
+
