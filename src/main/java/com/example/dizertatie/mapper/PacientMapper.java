@@ -1,6 +1,7 @@
 package com.example.dizertatie.mapper;
 
 import com.example.dizertatie.dto.PacientDto;
+import com.example.dizertatie.entities.Medic;
 import com.example.dizertatie.entities.Pacient;
 
 public class PacientMapper {
@@ -18,7 +19,10 @@ public class PacientMapper {
         pacient.setCnp(pacientDto.getCnp());
         pacient.setAdresa(pacientDto.getAdresa());
         pacient.setAsigurare(pacientDto.getAsigurare());
-        pacient.setMedic(pacientDto.getMedic());
+
+        Medic medic = new Medic();
+        medic.setId(pacientDto.getMedicId());
+        pacient.setMedic(medic);
 
         return pacient;
 
@@ -41,7 +45,7 @@ public class PacientMapper {
         pacientDto.setCnp(pacient.getCnp());
         pacientDto.setAdresa(pacient.getAdresa());
         pacientDto.setAsigurare(pacient.getAsigurare());
-        pacientDto.setMedic(MedicMapper.medic2Dto(pacient.getMedic()));
+        pacientDto.setMedicId(pacient.getMedic().getId());
 
         return pacientDto;
 

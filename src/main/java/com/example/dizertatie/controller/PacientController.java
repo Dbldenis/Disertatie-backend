@@ -62,7 +62,7 @@ public class PacientController {
     }
 
     //add fisa pacientului
-    @PostMapping("/add/fisa/{pacientId}/{medicId}")
+    @PostMapping(value = "/add/fisa/{pacientId}/{medicId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FisaPacientuluiDto> adaugaFisaPacientului(@RequestBody FisaPacientuluiDto fisaPacientuluiDto,@PathVariable Long pacientId, @PathVariable Long medicId) {
         FisaPacientului fisa = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
         FisaPacientului fisaCreata = fisaPacientuluiService.creeazaFisa(fisa,pacientId,medicId);
@@ -72,13 +72,20 @@ public class PacientController {
     }
 
     //edit fisa pacientului
-    @PutMapping("/edit/fisa/{fisaId}") // pentru Json
+    @PutMapping(value = "/edit/fisa/{fisaId}", consumes = MediaType.APPLICATION_JSON_VALUE) // pentru Json
     public ResponseEntity<FisaPacientuluiDto> updateFisa(@PathVariable Long fisaId, @RequestBody FisaPacientuluiDto fisaPacientuluiDto) {
         FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
         FisaPacientului fisaCreata = fisaPacientuluiService.updateFisa(fisaPacientului,fisaId);
         FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaCreata);
         return ResponseEntity.ok(fisaPacientuluiDto1);
     }
+
+    //TEST
+    @PostMapping(value = "/test", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> test(@RequestBody Map<String, Object> payload) {
+        return ResponseEntity.ok("OK");
+    }
+
 
     //edit programre
     @PutMapping("/edit/programare/{programareId}")

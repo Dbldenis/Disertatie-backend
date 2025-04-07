@@ -32,16 +32,6 @@ public class MedicController {
         return ResponseEntity.ok(medicCreated);
     }
 
-    // add fisa pacientului
-    @PostMapping("/addFisa/{pacientId}/{medicId}")
-    public ResponseEntity<?> addFisaToPacient(@RequestBody FisaPacientuluiDto fisaPacientuluiDto, @PathVariable Long pacientId, @PathVariable Long medicId) {
-        FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
-        FisaPacientului fisaPacientului1Created = medicService.FisaToCreate(fisaPacientului,pacientId, medicId);
-        FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaPacientului1Created);
-
-        return ResponseEntity.ok(fisaPacientuluiDto);
-    }
-
     //sterg pacient dupa id
     @DeleteMapping("/delete/{pacientId}")
     public ResponseEntity<?> deletePacientByIdFromMedic(@PathVariable Long pacientId) {

@@ -17,8 +17,9 @@ public class FisaPacientuluiDto {
     //@NotNull(message = "Înălțimea este obligatorie")
     private Double inaltime;
 
-    private Pacient pacient;
-    private Medic medic;
+    private PacientDto pacientDto;
+    private MedicDto medicDto;
+    // pune dto-ul fiecarei entitati.
 
     private String alergii;
     private String reactiiAdverse;

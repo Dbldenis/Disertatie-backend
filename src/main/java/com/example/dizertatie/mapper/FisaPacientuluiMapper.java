@@ -10,8 +10,8 @@ public class FisaPacientuluiMapper {
 
         FisaPacientului fisa = new FisaPacientului();
 
-        fisa.setPacient(fisaDto.getPacient());
-        fisa.setMedic(fisaDto.getMedic());
+        /*fisa.setPacient(fisaDto.getPacient());
+        fisa.setMedic(fisaDto.getMedic());*/
 
         fisa.setGreutate(fisaDto.getGreutate());
         fisa.setInaltime(fisaDto.getInaltime());
@@ -45,9 +45,9 @@ public class FisaPacientuluiMapper {
         fisaDto.setRelatieCuPacientul(fisa.getRelatieCuPacientul());
 
         // Legătura cu pacientul (prin ID)
-        if (fisa.getPacient() != null) {
+        /*if (fisa.getPacient() != null) {
             fisaDto.setPacient(fisa.getPacient());
-        }
+        }*/
 
         return fisaDto;
     }

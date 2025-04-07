@@ -57,7 +57,6 @@ public class PacientService {
                 orElseThrow(EntityNotFoundException::new);
     }
 
-
     public void deletePacient(Long pacientId) {
         pacientRepository.deleteById(pacientId);
     }

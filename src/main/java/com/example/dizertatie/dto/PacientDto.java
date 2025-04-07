@@ -16,7 +16,7 @@ public class PacientDto {
     private String cnp;
     private String adresa;
     private Boolean asigurare;
-    private Medic medic;
-    private FisaPacientului fisaPacientului;
+    private Long  medicId;
+    //private FisaPacientului fisaPacientului;
 
 }

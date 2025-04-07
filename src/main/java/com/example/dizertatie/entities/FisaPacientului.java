@@ -24,7 +24,6 @@ public class FisaPacientului {
     @JoinColumn(name = "medic_id")
     private Medic medic;
 
-
     // Date medicale din document (secțiunea I)
     private Double greutate; // în kg
     private Double inaltime; // în cm

@@ -1,5 +1,6 @@
 package com.example.dizertatie.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -37,18 +38,19 @@ public class Medic {
     @Column(name = "COD_PARAFA")
     private Integer codParafa;
 
+    @JsonBackReference
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY,
             orphanRemoval = true,
             mappedBy = "medic")
     private List<Pacient> listaPacienti = new ArrayList<>();
 
-    @JsonManagedReference
+    /*@JsonManagedReference
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY,
             orphanRemoval = true,
             mappedBy = "medic")
-    private Set<FisaPacientului> listaFisaPacienti = new HashSet<>();
+    private Set<FisaPacientului> listaFisaPacienti = new HashSet<>();*/
 
 
     public void addPacient(Pacient pacient) {
@@ -56,10 +58,10 @@ public class Medic {
         pacient.setMedic(this);
     }
 
-    public void addFisa(FisaPacientului fisaPacientului) {
+    /*public void addFisa(FisaPacientului fisaPacientului) {
         listaFisaPacienti.add(fisaPacientului);
         fisaPacientului.setMedic(this);
-    }
+    }*/
 
 
 

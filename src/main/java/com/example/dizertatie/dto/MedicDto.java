@@ -2,6 +2,9 @@ package com.example.dizertatie.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class MedicDto {
 
@@ -11,4 +14,5 @@ public class MedicDto {
     private String specializare;
     private String telefon;
     private Integer codParafa;
+    private List<PacientDto> listaPacienti = new ArrayList<>();
 }

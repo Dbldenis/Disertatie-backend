@@ -23,7 +23,7 @@ public class FisaPacientuluiService {
     @Autowired
     private FisaPacientuluiRepository fisaPacientuluiRepository;
 
-    public FisaPacientului creeazaFisa(FisaPacientului fisaPacientului, @PathVariable Long pacientId, @PathVariable Long medicId) {
+    public FisaPacientului creeazaFisa(FisaPacientului fisaPacientului,  Long pacientId, Long medicId) {
 
         Pacient pacient = pacientRepository.findById(pacientId)
                 .orElseThrow(EntityNotFoundException::new);
@@ -37,7 +37,8 @@ public class FisaPacientuluiService {
         pacient.setFisaPacientului(fisaCreata); // bidirectional
 
         fisaCreata.setMedic(medic);
-        medic.addFisa(fisaCreata); // bidirectional
+        //medic.getListaFisaPacienti().add(fisaCreata);
+        //medic.addFisa(fisaCreata); // bidirectional
 
         fisaCreata.setGreutate(fisaPacientului.getGreutate());
         fisaCreata.setInaltime(fisaPacientului.getInaltime());
