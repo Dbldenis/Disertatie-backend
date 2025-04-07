@@ -76,10 +76,15 @@ public class FisaPacientuluiService {
 
     public FisaPacientului getFisa(Long fisaId) {
 
-        FisaPacientului fisaDupaId = fisaPacientuluiRepository.findById(fisaId)
+        return fisaPacientuluiRepository.findById(fisaId)
                 .orElseThrow(EntityNotFoundException::new);
+    }
 
-        return fisaDupaId;
+    public void stergeFisaDupaId(Long fisaId) {
+        if (!fisaPacientuluiRepository.existsById(fisaId)) {
+            throw new RuntimeException("Fisa pacientului inexistenta");
+        }
+        fisaPacientuluiRepository.deleteById(fisaId);
     }
 
 }

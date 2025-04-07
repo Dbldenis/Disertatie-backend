@@ -90,6 +90,17 @@ public class PacientController {
         return ResponseEntity.ok(fisaPacientuluiDto);
     }
 
+    @DeleteMapping("/delete/fisa/{fisaId}")
+    public ResponseEntity<?> stergeFisaPacientului(@PathVariable Long fisaId) {
+
+        fisaPacientuluiService.stergeFisaDupaId(fisaId);
+
+        return ResponseEntity.ok().body(
+                Map.of("mesaj", "Fisa pacientului a fost ștearsă cu succes")
+        );
+
+    }
+
     //TEST
     @PostMapping(value = "/test", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> test(@RequestBody Map<String, Object> payload) {
