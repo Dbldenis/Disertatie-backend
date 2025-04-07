@@ -1,5 +1,6 @@
 package com.example.dizertatie.service;
 
+import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Medic;
 import com.example.dizertatie.entities.Pacient;
@@ -23,7 +24,7 @@ public class FisaPacientuluiService {
     @Autowired
     private FisaPacientuluiRepository fisaPacientuluiRepository;
 
-    public FisaPacientului creeazaFisa(FisaPacientului fisaPacientului,  Long pacientId, Long medicId) {
+    public FisaPacientului creeazaFisa(FisaPacientului fisaPacientului, Long pacientId, Long medicId) {
 
         Pacient pacient = pacientRepository.findById(pacientId)
                 .orElseThrow(EntityNotFoundException::new);
@@ -52,7 +53,7 @@ public class FisaPacientuluiService {
         return fisaPacientuluiRepository.save(fisaCreata);
     }
 
-    public FisaPacientului updateFisa( FisaPacientului fisaPacientului, @PathVariable Long fisaId) {
+    public FisaPacientului updateFisa(FisaPacientului fisaPacientului, @PathVariable Long fisaId) {
 
         FisaPacientului existingFisa = fisaPacientuluiRepository.findById(fisaId)
                 .orElseThrow(EntityNotFoundException::new);
@@ -71,6 +72,14 @@ public class FisaPacientuluiService {
         //FisaPacientului updatedFisa = fisaRepository.save(existingFisa);
 
         return fisaPacientuluiRepository.save(existingFisa);
+    }
+
+    public FisaPacientului getFisa(Long fisaId) {
+
+        FisaPacientului fisaDupaId = fisaPacientuluiRepository.findById(fisaId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        return fisaDupaId;
     }
 
 }

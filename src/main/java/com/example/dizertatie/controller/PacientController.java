@@ -44,7 +44,7 @@ public class PacientController {
     @PostMapping("/add/{medicId}")
     public ResponseEntity<?> addPacientToMedic(@RequestBody PacientDto pacientDto, @PathVariable Long medicId) {
         Pacient pacientCreate = PacientMapper.pacient2Entity(pacientDto);
-        Pacient pacientCreated = pacientService.pacientToCreate(pacientCreate,medicId);
+        Pacient pacientCreated = pacientService.pacientToCreate(pacientCreate, medicId);
 
         PacientDto pacientDto1 = PacientMapper.pacient2Dto(pacientCreated);
 
@@ -53,7 +53,7 @@ public class PacientController {
 
     //add programare
     @PostMapping("/add/programare/{pacientId}/{medicId}")
-    public ResponseEntity<ProgramareDto> creazaProgramare(@RequestBody ProgramareDto programareDto, @PathVariable Long pacientId, @PathVariable Long medicId ) {
+    public ResponseEntity<ProgramareDto> creazaProgramare(@RequestBody ProgramareDto programareDto, @PathVariable Long pacientId, @PathVariable Long medicId) {
         Programare programareNoua = ProgramareMapper.programare2Entity(programareDto);
         Programare programare = programareService.creazaProgramare(programareNoua, pacientId, medicId);
         ProgramareDto programareDto1 = ProgramareMapper.exemplarToDTO(programare);
@@ -63,9 +63,9 @@ public class PacientController {
 
     //add fisa pacientului
     @PostMapping(value = "/add/fisa/{pacientId}/{medicId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FisaPacientuluiDto> adaugaFisaPacientului(@RequestBody FisaPacientuluiDto fisaPacientuluiDto,@PathVariable Long pacientId, @PathVariable Long medicId) {
+    public ResponseEntity<FisaPacientuluiDto> adaugaFisaPacientului(@RequestBody FisaPacientuluiDto fisaPacientuluiDto, @PathVariable Long pacientId, @PathVariable Long medicId) {
         FisaPacientului fisa = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
-        FisaPacientului fisaCreata = fisaPacientuluiService.creeazaFisa(fisa,pacientId,medicId);
+        FisaPacientului fisaCreata = fisaPacientuluiService.creeazaFisa(fisa, pacientId, medicId);
         FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaCreata);
 
         return ResponseEntity.ok(fisaPacientuluiDto1);
@@ -75,9 +75,19 @@ public class PacientController {
     @PutMapping(value = "/edit/fisa/{fisaId}", consumes = MediaType.APPLICATION_JSON_VALUE) // pentru Json
     public ResponseEntity<FisaPacientuluiDto> updateFisa(@PathVariable Long fisaId, @RequestBody FisaPacientuluiDto fisaPacientuluiDto) {
         FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
-        FisaPacientului fisaCreata = fisaPacientuluiService.updateFisa(fisaPacientului,fisaId);
+        FisaPacientului fisaCreata = fisaPacientuluiService.updateFisa(fisaPacientului, fisaId);
         FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaCreata);
         return ResponseEntity.ok(fisaPacientuluiDto1);
+    }
+
+    //get fisa pacientului
+    @GetMapping("/get/fisa/{fisaId}")
+    public ResponseEntity<FisaPacientuluiDto> getFisa(@PathVariable Long fisaId) {
+
+        FisaPacientului fisaPacientuluiGasita = fisaPacientuluiService.getFisa(fisaId);
+        FisaPacientuluiDto fisaPacientuluiDto = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaPacientuluiGasita);
+
+        return ResponseEntity.ok(fisaPacientuluiDto);
     }
 
     //TEST
@@ -102,7 +112,7 @@ public class PacientController {
     public ResponseEntity<?> editPacient(@RequestBody PacientDto pacientDto, @PathVariable Long pacientId) {
 
         Pacient pacientToUpdate = PacientMapper.pacient2Entity(pacientDto);
-        Pacient pacientUpdated = pacientService.pacientUpdate(pacientToUpdate,pacientId);
+        Pacient pacientUpdated = pacientService.pacientUpdate(pacientToUpdate, pacientId);
         PacientDto pacientDto1 = PacientMapper.pacient2Dto(pacientUpdated);
 
         return ResponseEntity.ok(pacientDto1);
