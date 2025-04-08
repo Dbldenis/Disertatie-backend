@@ -79,7 +79,7 @@ public class MedicService {
 
         // Asociază consultația cu fișa pacientului (dacă este necesar)
         FisaPacientului fisa = pacient.getFisaPacientului();
-        if(fisa != null) {
+        if (fisa != null) {
             fisa.getListaConsultati().add(consultatie); // Dacă relația este implementată
         }
 
@@ -108,8 +108,12 @@ public class MedicService {
                 .orElseThrow(() -> new RuntimeException("Consultația cu id " + consultatieId + " nu a fost găsită."));
     }
 
+    public void deleteConsultatie(Long consultatieId) {
 
-    public void deleteAllPacienti () {
+        consultatiRepository.deleteById(consultatieId);
+    }
+
+    public void deleteAllPacienti() {
         medicRepository.deleteAll();
     }
 

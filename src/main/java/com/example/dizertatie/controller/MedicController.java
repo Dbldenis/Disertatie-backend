@@ -42,7 +42,7 @@ public class MedicController {
     @PostMapping("{medicId}/creare/consultatie/pacient/{pacientId}")
     public ResponseEntity<ConsultatieDto> createConsultatie(@RequestBody ConsultatieDto consultatieDto, @PathVariable Long medicId, @PathVariable Long pacientId) {
 
-        Consultatie consultatie = medicService.createConsultatie(consultatieDto,  pacientId);
+        Consultatie consultatie = medicService.createConsultatie(consultatieDto, pacientId);
         ConsultatieDto consultatieDto1 = ConsultatiMapper.consultatie2Dto(consultatie);
 
         return ResponseEntity.ok(consultatieDto1);
@@ -51,7 +51,7 @@ public class MedicController {
     @PostMapping("/addFisa/{pacientId}/{medicId}")
     public ResponseEntity<?> addFisaToPacient(@RequestBody FisaPacientuluiDto fisaPacientuluiDto, @PathVariable Long pacientId, @PathVariable Long medicId) {
         FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
-        FisaPacientului fisaPacientului1Created = medicService.FisaToCreate(fisaPacientului,pacientId, medicId);
+        FisaPacientului fisaPacientului1Created = medicService.FisaToCreate(fisaPacientului, pacientId, medicId);
         FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaPacientului1Created);
 
         return ResponseEntity.ok(fisaPacientuluiDto);
@@ -72,6 +72,13 @@ public class MedicController {
 
         Consultatie consultatie = medicService.getConsultatieById(consultatieId);
         return ResponseEntity.ok(consultatie);
+    }
+
+    // sterg consultatie dupa id
+    @DeleteMapping("/delete/consultatie/{consultatieId}")
+    public ResponseEntity<?> deleteConsultatie(@PathVariable Long consultatieId) {
+        medicService.deleteConsultatie(consultatieId);
+        return ResponseEntity.ok("Consultația a fost ștearsă cu succes.");
     }
 
     //sterg pacient dupa id
