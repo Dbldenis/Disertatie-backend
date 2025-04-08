@@ -3,12 +3,15 @@ package com.example.dizertatie.controller;
 import com.example.dizertatie.dto.ConsultatieDto;
 import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.MedicDto;
+import com.example.dizertatie.dto.PacientDto;
 import com.example.dizertatie.entities.Consultatie;
 import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Medic;
+import com.example.dizertatie.entities.Pacient;
 import com.example.dizertatie.mapper.ConsultatiMapper;
 import com.example.dizertatie.mapper.FisaPacientuluiMapper;
 import com.example.dizertatie.mapper.MedicMapper;
+import com.example.dizertatie.mapper.PacientMapper;
 import com.example.dizertatie.service.MedicService;
 import com.example.dizertatie.service.PacientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +55,23 @@ public class MedicController {
         FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaPacientului1Created);
 
         return ResponseEntity.ok(fisaPacientuluiDto);
+    }
+
+    @PutMapping("/edit/consultatie/{consultatieId}")
+    public ResponseEntity<?> editConsultatie(@RequestBody ConsultatieDto consultatieDto, @PathVariable Long consultatieId) {
+
+        Consultatie consultatie2Update = ConsultatiMapper.consultati2Entity(consultatieDto);
+        Consultatie consultatieUpdated = medicService.consultatieUpdate(consultatieDto, consultatieId);
+        ConsultatieDto consultatieReturn = ConsultatiMapper.consultatie2Dto(consultatieUpdated);
+
+        return ResponseEntity.ok(consultatieReturn);
+    }
+
+    @GetMapping("/get/consultatie/{consultatieId}")
+    public ResponseEntity<?> getConsultatie(@PathVariable Long consultatieId) {
+
+        Consultatie consultatie = medicService.getConsultatieById(consultatieId);
+        return ResponseEntity.ok(consultatie);
     }
 
     //sterg pacient dupa id

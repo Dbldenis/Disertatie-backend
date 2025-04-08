@@ -88,6 +88,26 @@ public class MedicService {
         return consultatie;
     }
 
+    public Consultatie consultatieUpdate(ConsultatieDto consultatieToUpdate, Long consultatieId) {
+
+        Consultatie existing = consultatiRepository.findById(consultatieId)
+                .orElseThrow(() -> new RuntimeException("Consultația cu id-ul " + consultatieId + " nu a fost găsită."));
+
+        // Actualizează câmpurile permise (de exemplu: data, simptome, tratament, diagnostic, observatii)
+        existing.setDataConsultatiei(consultatieToUpdate.getDataConsultatiei());
+        existing.setSimptome(consultatieToUpdate.getSimptome());
+        existing.setTratament(consultatieToUpdate.getTratament());
+        existing.setDiagnostic(consultatieToUpdate.getDiagnostic());
+        existing.setObservati(consultatieToUpdate.getObservati());
+
+        return consultatiRepository.save(existing);
+    }
+
+    public Consultatie getConsultatieById(Long consultatieId) {
+        return consultatiRepository.findById(consultatieId)
+                .orElseThrow(() -> new RuntimeException("Consultația cu id " + consultatieId + " nu a fost găsită."));
+    }
+
 
     public void deleteAllPacienti () {
         medicRepository.deleteAll();
