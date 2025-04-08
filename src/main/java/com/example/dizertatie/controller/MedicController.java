@@ -3,15 +3,12 @@ package com.example.dizertatie.controller;
 import com.example.dizertatie.dto.ConsultatieDto;
 import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.MedicDto;
-import com.example.dizertatie.dto.PacientDto;
 import com.example.dizertatie.entities.Consultatie;
 import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Medic;
-import com.example.dizertatie.entities.Pacient;
 import com.example.dizertatie.mapper.ConsultatiMapper;
 import com.example.dizertatie.mapper.FisaPacientuluiMapper;
 import com.example.dizertatie.mapper.MedicMapper;
-import com.example.dizertatie.mapper.PacientMapper;
 import com.example.dizertatie.service.MedicService;
 import com.example.dizertatie.service.PacientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,9 +85,17 @@ public class MedicController {
         return ResponseEntity.noContent().build();
     }
 
+    //sterg toate consultatile
+    @DeleteMapping("/delete/all/consultati")
+    public ResponseEntity<?> deleteAllConsultati() {
+        medicService.deleteAllConsultati();
+
+        return ResponseEntity.ok("Toate Consultațiile au fost șterse cu succes.");
+    }
+
     //sterg toti pacienti
-    @DeleteMapping("/delete/all")
-    public ResponseEntity<?> deleteAll() {
+    @DeleteMapping("/delete/all/pacienti")
+    public ResponseEntity<?> deleteAllPacienti() {
         medicService.deleteAllPacienti();
 
         return ResponseEntity.ok().build();

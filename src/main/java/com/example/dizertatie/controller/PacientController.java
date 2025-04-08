@@ -158,14 +158,6 @@ public class PacientController {
         return ResponseEntity.ok(raspuns);
     }
 
-    // delete all pacienti
-    @DeleteMapping("/delete/all")
-    public ResponseEntity<?> deleteAll() {
-        pacientService.deleteALL();
-
-        return ResponseEntity.ok().build();
-    }
-
     //sterge programarea
     @DeleteMapping("/delete/programare/{programareId}")
     public ResponseEntity<?> stergeProgramare(@PathVariable Long programareId) {

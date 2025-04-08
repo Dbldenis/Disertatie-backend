@@ -109,13 +109,17 @@ public class MedicService {
     }
 
     public void deleteConsultatie(Long consultatieId) {
-
         consultatiRepository.deleteById(consultatieId);
     }
 
+    public void deleteAllConsultati() {
+        consultatiRepository.deleteAll();
+    }
     public void deleteAllPacienti() {
         medicRepository.deleteAll();
     }
+
+
 
 
 }
