@@ -37,7 +37,7 @@ public class FisaPacientuluiService {
         fisaCreata.setPacient(pacient);
         pacient.setFisaPacientului(fisaCreata); // bidirectional
 
-        fisaCreata.setMedic(medic);
+        //fisaCreata.setMedic(medic);
         //medic.getListaFisaPacienti().add(fisaCreata);
         //medic.addFisa(fisaCreata); // bidirectional
 

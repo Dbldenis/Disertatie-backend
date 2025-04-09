@@ -1,5 +1,6 @@
 package com.example.dizertatie.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +40,7 @@ public class Pacient {
 
     @ManyToOne()
     @JoinColumn(name = "medic_id")
+    @JsonBackReference
     private Medic medic;
 
     @OneToOne(mappedBy = "pacient", cascade = CascadeType.ALL)

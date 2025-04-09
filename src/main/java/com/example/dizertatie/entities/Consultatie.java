@@ -1,5 +1,6 @@
 package com.example.dizertatie.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class Consultatie {
 
     @ManyToOne()
     @JoinColumn(name = "fisa_id")
+    @JsonBackReference
     private FisaPacientului fisaPacientului;
 
 }

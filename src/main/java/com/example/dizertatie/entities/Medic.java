@@ -38,7 +38,7 @@ public class Medic {
     @Column(name = "COD_PARAFA")
     private Integer codParafa;
 
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY,
             orphanRemoval = true,

@@ -8,6 +8,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class PacientService {
 
@@ -16,6 +18,26 @@ public class PacientService {
 
     @Autowired
     private MedicRepository medicRepository;
+
+    /*public Pacient verify(String email, String verificationCode) {
+
+        Pacient pacient = pacientRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user.getVerificationCodeExpiration() == null || LocalDateTime.now().isAfter(user.getVerificationCodeExpiration())) {
+            throw new RuntimeException("Verification code has expired.");
+        }
+
+        if (!user.getVerificationCode().equals(verificationCode)) {
+            throw new RuntimeException("Invalid verification code.");
+        }
+
+        user.setVerifiedAccount(true);
+        user.setVerificationCode(null);
+        user.setVerificationCodeExpiration(null);
+
+        return userRepository.save(user);
+    }*/
 
     public Pacient pacientToCreate(Pacient pacientToCreate, Long medicId) {
 
@@ -49,6 +71,8 @@ public class PacientService {
         return pacientRepository.save(dbPacient);
 
     }
+
+
 
     //GET Pacient by Id
     public Pacient getPacientData(Long pacientId) {

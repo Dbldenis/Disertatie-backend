@@ -17,7 +17,6 @@ public class ClinicaMapper {
         clinicaCreata.setId(clinicaDto.getId());
         clinicaCreata.setNume(clinicaDto.getNume());
         clinicaCreata.setAdresa(clinicaDto.getAdresa());
-        clinicaCreata.setListaMedici(clinicaDto.getListaMedici());
 
         return clinicaCreata;
 
@@ -34,7 +33,6 @@ public class ClinicaMapper {
         clinicaDto.setId(clinica.getId());
         clinicaDto.setNume(clinicaDto.getNume());
         clinicaDto.setAdresa(clinica.getAdresa());
-        clinicaDto.setListaMedici(clinica.getListaMedici());
 
         return clinicaDto;
 

@@ -14,5 +14,5 @@ public class MedicDto {
     private String specializare;
     private String telefon;
     private Integer codParafa;
-    private List<PacientDto> listaPacienti = new ArrayList<>();
+    //private List<PacientDto> listaPacienti = new ArrayList<>();
 }

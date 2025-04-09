@@ -58,10 +58,10 @@ public class MedicService {
         fisaPacientuluiToCreate.setPacient(pacientCreated);
 
 
-        Medic medic = medicRepository.findById(medicId).
+        /*Medic medic = medicRepository.findById(medicId).
                 orElseThrow(EntityNotFoundException::new);
 
-        fisaPacientuluiToCreate.setMedic(medic);
+        fisaPacientuluiToCreate.setMedic(medic);*/
 
 
         return fisaPacientuluiRepository.save(fisaPacientuluiToCreate);
@@ -79,9 +79,11 @@ public class MedicService {
 
         // Asociază consultația cu fișa pacientului (dacă este necesar)
         FisaPacientului fisa = pacient.getFisaPacientului();
-        if (fisa != null) {
-            fisa.getListaConsultati().add(consultatie); // Dacă relația este implementată
-        }
+
+        fisa.getListaConsultati().add(consultatie); // Dacă relația este implementată
+
+
+        pacientRepository.save(pacient);
 
         consultatiRepository.save(consultatie);
 

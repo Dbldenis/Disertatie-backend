@@ -1,5 +1,6 @@
 package com.example.dizertatie.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,20 +21,20 @@ public class FisaPacientului {
     @JoinColumn(name = "pacient_id", referencedColumnName = "id")
     private Pacient pacient;
 
-    @JsonManagedReference
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "medic_id")
-    private Medic medic;
+    @JsonBackReference
+    private Medic medic;*/
 
     // Date medicale din document (secțiunea I)
-    private Double greutate; // în kg
-    private Double inaltime; // în cm
+    private Double greutate;
+    private Double inaltime;
 
     // Istoric medical (secțiunea II din document)
-    private String alergii; // ex: "penicilină, nuci"
-    private String reactiiAdverse; // descriere reacții raportate
-    private String medicamenteSuspecte; // denumiri medicamente
-    private String evolutieReactie; // ex: "Recuperat cu sechele"
+    private String alergii;
+    private String reactiiAdverse;
+    private String medicamenteSuspecte;
+    private String evolutieReactie;
 
     // Medicamente concomitente (secțiunea III.3)
     /*@ElementCollection
@@ -42,10 +43,11 @@ public class FisaPacientului {
 
     // Detalii raportor (secțiunea IV)
     private String numeRaportor;
-    private String relatieCuPacientul; // ex: "Îngrijitor"
+    private String relatieCuPacientul;
 
     // Relație cu Consultații (o fișă poate avea mai multe consultații)
     @OneToMany(mappedBy = "fisaPacientului", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Consultatie> listaConsultati;
 
 }

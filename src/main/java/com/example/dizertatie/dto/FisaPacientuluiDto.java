@@ -29,6 +29,6 @@ public class FisaPacientuluiDto {
     private String evolutieReactie;
     private String numeRaportor;
     private String relatieCuPacientul;
-    private List<ConsultatieDto> listaConsultati;
+    //private List<ConsultatieDto> listaConsultati;
     //@NotNull(message = "ID-ul pacientului este obligatoriu")
 }

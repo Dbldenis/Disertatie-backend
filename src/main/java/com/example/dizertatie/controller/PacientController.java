@@ -40,6 +40,14 @@ public class PacientController {
     @Autowired
     private FisaPacientuluiService fisaPacientuluiService;
 
+
+    //REGISTER
+    /*@PostMapping("/verify")
+    public ResponseEntity<?> verifyAccount(@RequestParam String email, @RequestParam String code) {
+        pacientService.verify(email, code);
+        return ResponseEntity.noContent().build();
+    }*/
+
     // add pacient
     @PostMapping("/add/{medicId}")
     public ResponseEntity<?> addPacientToMedic(@RequestBody PacientDto pacientDto, @PathVariable Long medicId) {
