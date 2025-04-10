@@ -4,6 +4,8 @@ import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Medic;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class PacientDto {
 
@@ -14,6 +16,8 @@ public class PacientDto {
     private String email;
     private String parola;
     private Boolean isVerified;
+    private LocalDateTime verificationCodeGenerationTime;
+    private LocalDateTime codVerificareGenerareTimp;
     private String telefon;
     private String cnp;
     private String adresa;

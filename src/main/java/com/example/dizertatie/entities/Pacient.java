@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity(name = "Pacient")
@@ -29,8 +31,14 @@ public class Pacient {
     @Column(name = "PASSWORD")
     private String parola;
 
-    @Column(name = "VERIFIED")
-    private boolean isVerified = false;
+    @Column(name = "VERIFICAT")
+    private boolean esteVerificat = false;
+
+    @Column(name = "COD_VERIFICARE_GENERARE_TIMP")
+    private LocalDateTime codVerificareGenerareTimp;
+
+    @Column(name = "COD_VERIFICARE")
+    private String codVerificare;
 
     @Column(name = "TELEFON")
     private String telefon;

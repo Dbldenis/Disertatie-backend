@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.InputMismatchException;
+import java.util.Random;
 
 @Service
 public class PacientService {
+
+    private static final Integer MINUTES_AVAILABLE_CODE = 5;
 
     @Autowired
     private PacientRepository pacientRepository;
@@ -25,18 +29,49 @@ public class PacientService {
     private MedicRepository medicRepository;
 
 
-    private String encodePassword(String password) {
-        String encodedPassword = null;
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-            encodedPassword = Base64.getEncoder().encodeToString(hash);
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
+    public Pacient verify(Long pacientId, Pacient updatedPacient) {
+        Pacient pacient = pacientRepository.findById(pacientId)
+                .orElseThrow(() -> new EntityNotFoundException("Pacientul cu ID " + pacientId + " nu a fost gasit"));
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        Duration elapsedTime = Duration.between(pacient.getCodVerificareGenerareTimp(), currentTime);
+
+        if (elapsedTime.toMinutes() > MINUTES_AVAILABLE_CODE) {
+            pacient.setCodVerificare(null);
+            pacientRepository.save(pacient);
+            throw new IllegalStateException("Codul de verificare a expirat. Solicita un nou cod de verificare.");
         }
 
-        return encodedPassword;
+        if (!pacient.getCodVerificare().equals(updatedPacient.getCodVerificare())) {
+            throw new IllegalStateException("Cod invalid.");
+        }
+
+        pacient.setEsteVerificat(true);
+        pacient.setCodVerificare("gata");
+
+        return pacientRepository.save(pacient);
+    }
+
+    public Pacient retrimiteCodVerificare(Long pacientId) {
+
+        Pacient pacient = pacientRepository.findById(pacientId)
+                .orElseThrow(() -> new EntityNotFoundException("Pacientul cu ID " + pacientId + " nu a fost gasit"));
+
+        if (pacient.isEsteVerificat()) {
+            return pacient;
+        }
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        Duration elapsedTime = Duration.between(pacient.getCodVerificareGenerareTimp(), currentTime);
+
+        if (elapsedTime.toMinutes() > MINUTES_AVAILABLE_CODE - 1) {
+            pacient.setCodVerificare(genereazaCodVerificare());
+            pacient.setCodVerificareGenerareTimp(LocalDateTime.now());
+        }
+
+        //emailService.
+
+        return pacientRepository.save(pacient);
     }
 
     public Pacient login(Pacient pacient) {
@@ -44,32 +79,33 @@ public class PacientService {
         Pacient existentPacient = pacientRepository.findByEmail(pacient.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("User with email " + pacient.getEmail() + " not found"));
 
-        String encodedPassword = encodePassword(pacient.getParola());
-        if (!existentPacient.isVerified() || !encodedPassword.equals(existentPacient.getParola())) {
+        String encodedPassword = codificareParola(pacient.getParola());
+        if (!existentPacient.isEsteVerificat() || !encodedPassword.equals(existentPacient.getParola())) {
             throw new InputMismatchException();
         }
         return existentPacient;
     }
 
-    /*public Pacient verify(String email, String verificationCode) {
+    private String genereazaCodVerificare() {
+        Random random = new Random();
+        int codul = 100000 + random.nextInt(900000); // Generate 6-digit code
+        return String.valueOf(codul);
+    }
 
-        Pacient pacient = pacientRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        if (user.getVerificationCodeExpiration() == null || LocalDateTime.now().isAfter(user.getVerificationCodeExpiration())) {
-            throw new RuntimeException("Verification code has expired.");
+    private String codificareParola(String parola) {
+        String criptareParola = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(parola.getBytes(StandardCharsets.UTF_8));
+            criptareParola = Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
 
-        if (!user.getVerificationCode().equals(verificationCode)) {
-            throw new RuntimeException("Invalid verification code.");
-        }
+        return criptareParola;
+    }
 
-        user.setVerifiedAccount(true);
-        user.setVerificationCode(null);
-        user.setVerificationCodeExpiration(null);
-
-        return userRepository.save(user);
-    }*/
 
     public Pacient pacientToCreate(Pacient pacientToCreate, Long medicId) {
 
@@ -94,6 +130,12 @@ public class PacientService {
         dbPacient.setNume(pacientUpdate.getNume());
         dbPacient.setPrenume(pacientUpdate.getPrenume());
         dbPacient.setEmail(pacientUpdate.getEmail());
+
+        dbPacient.setParola(pacientUpdate.getParola());
+        dbPacient.setCodVerificare(pacientUpdate.getCodVerificare());
+        dbPacient.setCodVerificareGenerareTimp(pacientUpdate.getCodVerificareGenerareTimp());
+        dbPacient.setEsteVerificat(pacientUpdate.isEsteVerificat());
+
         dbPacient.setAdresa(pacientUpdate.getAdresa());
         dbPacient.setTelefon(pacientUpdate.getTelefon());
         dbPacient.setCnp(pacientUpdate.getCnp());
@@ -104,15 +146,11 @@ public class PacientService {
 
     }
 
-
-
-    //GET Pacient by Id
     public Pacient getPacientData(Long pacientId) {
 
         return pacientRepository.findById(pacientId).
                 orElseThrow(EntityNotFoundException::new);
     }
-
 
     public void deletePacient(Long pacientId) {
         pacientRepository.deleteById(pacientId);

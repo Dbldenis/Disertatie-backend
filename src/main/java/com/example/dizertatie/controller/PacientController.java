@@ -40,17 +40,28 @@ public class PacientController {
     @Autowired
     private FisaPacientuluiService fisaPacientuluiService;
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody PacientDto pacientDto) {
+        Pacient pacientToLogin = PacientMapper.pacient2Entity(pacientDto);
+        Pacient existentPacient = pacientService.login(pacientToLogin);
 
+        return ResponseEntity.ok(PacientMapper.pacient2Dto(existentPacient));
+    }
 
+    @PutMapping("/{pacientId}")
+    public ResponseEntity<?> verify(@PathVariable Long pacientId, @RequestBody PacientDto pacientDto) {
+        Pacient pacientToUpdate = PacientMapper.pacient2Entity(pacientDto);
+        Pacient updatedPacient = pacientService.verify(pacientId, pacientToUpdate);
 
+        return ResponseEntity.ok(PacientMapper.pacient2Dto(updatedPacient));
+    }
 
+    @PutMapping("/retrimiteCod/{pacientId}")
+    public ResponseEntity<?> retrimitereCodVerificare(@PathVariable Long pacientId) {
+        Pacient pacient = pacientService.retrimiteCodVerificare(pacientId);
 
-    //REGISTER
-    /*@PostMapping("/verify")
-    public ResponseEntity<?> verifyAccount(@RequestParam String email, @RequestParam String code) {
-        pacientService.verify(email, code);
-        return ResponseEntity.noContent().build();
-    }*/
+        return ResponseEntity.ok(PacientMapper.pacient2Dto(pacient));
+    }
 
     // add pacient
     @PostMapping("/add/{medicId}")
@@ -62,18 +73,6 @@ public class PacientController {
 
         return ResponseEntity.ok(pacientDto1);
     }
-
-    //########### # # # # # #
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody PacientDto pacientDto) {
-        Pacient pacientToLogin = PacientMapper.pacient2Entity(pacientDto);
-        Pacient existentPacient = pacientService.login(pacientToLogin);
-        PacientDto pacientDto1 = PacientMapper.pacient2Dto(existentPacient);
-
-        return ResponseEntity.ok(pacientDto1);
-    }
-
-
 
     //add programare
     @PostMapping("/add/programare/{pacientId}/{medicId}")

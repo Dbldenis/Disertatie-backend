@@ -16,7 +16,11 @@ public class PacientMapper {
         pacient.setPrenume(pacientDto.getPrenume());
         pacient.setEmail(pacientDto.getEmail());
         pacient.setParola(pacientDto.getParola());
-        pacient.setVerified(pacientDto.getIsVerified());
+
+        pacient.setEsteVerificat(pacientDto.getIsVerified());
+        pacient.setCodVerificareGenerareTimp(pacientDto.getVerificationCodeGenerationTime());
+
+        pacient.setCodVerificareGenerareTimp(pacientDto.getCodVerificareGenerareTimp());
         pacient.setTelefon(pacientDto.getTelefon());
         pacient.setCnp(pacientDto.getCnp());
         pacient.setAdresa(pacientDto.getAdresa());
@@ -44,7 +48,10 @@ public class PacientMapper {
         pacientDto.setPrenume(pacient.getPrenume());
         pacientDto.setEmail(pacient.getEmail());
         pacientDto.setParola(pacient.getParola());
-        pacientDto.setIsVerified(pacient.isVerified());
+        pacientDto.setIsVerified(pacient.isEsteVerificat());
+        pacientDto.setVerificationCodeGenerationTime(pacient.getCodVerificareGenerareTimp());
+
+        pacientDto.setCodVerificareGenerareTimp(pacient.getCodVerificareGenerareTimp());
         pacientDto.setTelefon(pacient.getTelefon());
         pacientDto.setCnp(pacient.getCnp());
         pacientDto.setAdresa(pacient.getAdresa());
