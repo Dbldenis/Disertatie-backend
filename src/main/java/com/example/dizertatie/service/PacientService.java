@@ -25,9 +25,11 @@ public class PacientService {
     @Autowired
     private PacientRepository pacientRepository;
 
-    @Autowired
-    private MedicRepository medicRepository;
+    /*@Autowired
+    private MedicRepository medicRepository;*/
 
+    @Autowired
+    private EmailService emailService;
 
     public Pacient verify(Long pacientId, Pacient updatedPacient) {
         Pacient pacient = pacientRepository.findById(pacientId)
@@ -69,7 +71,7 @@ public class PacientService {
             pacient.setCodVerificareGenerareTimp(LocalDateTime.now());
         }
 
-        //emailService.
+        emailService.sendVerificationEmail(pacient.getEmail(), pacient.getCodVerificare());
 
         return pacientRepository.save(pacient);
     }
@@ -106,17 +108,18 @@ public class PacientService {
         return criptareParola;
     }
 
-
     public Pacient pacientToCreate(Pacient pacientToCreate, Long medicId) {
 
         if (pacientToCreate.getId() != null) {
             throw new RuntimeException("You cannot provide an ID to a new pacient that you want to create");
         }
 
-        Medic medicCreated = medicRepository.findById(medicId)
+        /*Medic medicCreated = medicRepository.findById(medicId)
                 .orElseThrow(EntityNotFoundException::new);
 
-        medicCreated.addPacient(pacientToCreate);
+        medicCreated.addPacient(pacientToCreate);*/
+
+        pacientToCreate.getMedic().addPacient(pacientToCreate);
 
         return pacientRepository.save(pacientToCreate);
     }
@@ -127,6 +130,7 @@ public class PacientService {
                 .orElseThrow(EntityNotFoundException::new);
 
         // nume, prenume, email, telefon, cnp, adresa, asigurare, medic
+
         dbPacient.setNume(pacientUpdate.getNume());
         dbPacient.setPrenume(pacientUpdate.getPrenume());
         dbPacient.setEmail(pacientUpdate.getEmail());
