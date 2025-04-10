@@ -12,6 +12,8 @@ public class PacientDto {
     private String nume;
     private String prenume;
     private String email;
+    private String parola;
+    private Boolean isVerified;
     private String telefon;
     private String cnp;
     private String adresa;

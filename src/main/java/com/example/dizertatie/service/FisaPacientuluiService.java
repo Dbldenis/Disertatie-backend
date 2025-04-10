@@ -1,6 +1,5 @@
 package com.example.dizertatie.service;
 
-import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Medic;
 import com.example.dizertatie.entities.Pacient;

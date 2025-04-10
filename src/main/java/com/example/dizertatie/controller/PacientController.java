@@ -41,6 +41,10 @@ public class PacientController {
     private FisaPacientuluiService fisaPacientuluiService;
 
 
+
+
+
+
     //REGISTER
     /*@PostMapping("/verify")
     public ResponseEntity<?> verifyAccount(@RequestParam String email, @RequestParam String code) {
@@ -58,6 +62,18 @@ public class PacientController {
 
         return ResponseEntity.ok(pacientDto1);
     }
+
+    //########### # # # # # #
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody PacientDto pacientDto) {
+        Pacient pacientToLogin = PacientMapper.pacient2Entity(pacientDto);
+        Pacient existentPacient = pacientService.login(pacientToLogin);
+        PacientDto pacientDto1 = PacientMapper.pacient2Dto(existentPacient);
+
+        return ResponseEntity.ok(pacientDto1);
+    }
+
+
 
     //add programare
     @PostMapping("/add/programare/{pacientId}/{medicId}")

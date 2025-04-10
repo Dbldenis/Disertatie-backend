@@ -15,6 +15,8 @@ public class PacientMapper {
         pacient.setNume(pacientDto.getNume());
         pacient.setPrenume(pacientDto.getPrenume());
         pacient.setEmail(pacientDto.getEmail());
+        pacient.setParola(pacientDto.getParola());
+        pacient.setVerified(pacientDto.getIsVerified());
         pacient.setTelefon(pacientDto.getTelefon());
         pacient.setCnp(pacientDto.getCnp());
         pacient.setAdresa(pacientDto.getAdresa());
@@ -41,6 +43,8 @@ public class PacientMapper {
         pacientDto.setNume(pacient.getNume());
         pacientDto.setPrenume(pacient.getPrenume());
         pacientDto.setEmail(pacient.getEmail());
+        pacientDto.setParola(pacient.getParola());
+        pacientDto.setIsVerified(pacient.isVerified());
         pacientDto.setTelefon(pacient.getTelefon());
         pacientDto.setCnp(pacient.getCnp());
         pacientDto.setAdresa(pacient.getAdresa());

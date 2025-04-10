@@ -8,7 +8,12 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.Base64;
+import java.util.InputMismatchException;
 
 @Service
 public class PacientService {
@@ -18,6 +23,33 @@ public class PacientService {
 
     @Autowired
     private MedicRepository medicRepository;
+
+
+    private String encodePassword(String password) {
+        String encodedPassword = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            encodedPassword = Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        return encodedPassword;
+    }
+
+    public Pacient login(Pacient pacient) {
+
+        Pacient existentPacient = pacientRepository.findByEmail(pacient.getEmail())
+                .orElseThrow(() -> new EntityNotFoundException("User with email " + pacient.getEmail() + " not found"));
+
+        String encodedPassword = encodePassword(pacient.getParola());
+        if (!existentPacient.isVerified() || !encodedPassword.equals(existentPacient.getParola())) {
+            throw new InputMismatchException();
+        }
+        return existentPacient;
+    }
 
     /*public Pacient verify(String email, String verificationCode) {
 

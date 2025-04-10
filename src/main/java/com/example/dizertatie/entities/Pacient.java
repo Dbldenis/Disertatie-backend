@@ -26,6 +26,12 @@ public class Pacient {
     @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "PASSWORD")
+    private String parola;
+
+    @Column(name = "VERIFIED")
+    private boolean isVerified = false;
+
     @Column(name = "TELEFON")
     private String telefon;
 
