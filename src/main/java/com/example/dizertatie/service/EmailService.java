@@ -11,6 +11,7 @@ import jakarta.mail.internet.MimeMessage;
 @Service
 public class EmailService {
 
+    @Autowired
     private final JavaMailSender mailSender;
 
     public EmailService(JavaMailSender mailSender) {
