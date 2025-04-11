@@ -129,12 +129,6 @@ public class PacientService {
 
         return pacientRepository.save(pacientToCreate);
 
-        /*Medic medicCreated = medicRepository.findById(medicId)
-                .orElseThrow(EntityNotFoundException::new);
-
-        medicCreated.addPacient(pacientToCreate);*/
-
-
     }
 
     public Pacient pacientUpdate(Pacient pacientUpdate, Long pacientId) {
