@@ -1,5 +1,6 @@
 package com.example.dizertatie.controller;
 
+import org.hibernate.validator.internal.engine.groups.ValidationOrder;
 import org.springframework.http.MediaType;
 import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.PacientDto;
@@ -15,6 +16,7 @@ import com.example.dizertatie.service.PacientService;
 import com.example.dizertatie.service.ProgramareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.example.dizertatie.mapper.FisaPacientuluiMapper;
 
@@ -65,13 +67,11 @@ public class PacientController {
 
     // add pacient
     @PostMapping("/add/{medicId}")
-    public ResponseEntity<?> addPacientToMedic(@RequestBody PacientDto pacientDto, @PathVariable Long medicId) {
+    public ResponseEntity<?> addPacientToMedic(@Validated(ValidationOrder.class) @RequestBody PacientDto pacientDto) {
         Pacient pacientCreate = PacientMapper.pacient2Entity(pacientDto);
-        Pacient pacientCreated = pacientService.pacientToCreate(pacientCreate, medicId);
+        Pacient pacientCreated = pacientService.pacientToCreate(pacientCreate);
 
-        PacientDto pacientDto1 = PacientMapper.pacient2Dto(pacientCreated);
-
-        return ResponseEntity.ok(pacientDto1);
+        return ResponseEntity.ok(PacientMapper.pacient2Dto(pacientCreated));
     }
 
     //add programare

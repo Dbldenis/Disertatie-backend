@@ -25,7 +25,7 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setTo(to);
-            helper.setSubject("Verificati contul");
+            helper.setSubject("Verificare cont email");
             helper.setText("<p>Codul tau de verificare este : <strong>" + verificationCode + "</strong></p>", true);
 
             mailSender.send(message);

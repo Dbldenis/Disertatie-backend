@@ -108,20 +108,33 @@ public class PacientService {
         return criptareParola;
     }
 
-    public Pacient pacientToCreate(Pacient pacientToCreate, Long medicId) {
+    public Pacient pacientToCreate(Pacient pacientToCreate) {
 
         if (pacientToCreate.getId() != null) {
             throw new RuntimeException("You cannot provide an ID to a new pacient that you want to create");
         }
+
+        if (pacientToCreate.getCodVerificare() != null) {
+            throw new RuntimeException("You cannot provide a verification code to a user");
+        }
+
+        pacientToCreate.getMedic().addPacient(pacientToCreate);
+
+        pacientToCreate.setParola(codificareParola(pacientToCreate.getParola()));
+        String verificationCode = genereazaCodVerificare();
+        pacientToCreate.setCodVerificare(verificationCode);
+
+        emailService.sendVerificationEmail(pacientToCreate.getEmail(), verificationCode);
+        pacientToCreate.setCodVerificareGenerareTimp(LocalDateTime.now());
+
+        return pacientRepository.save(pacientToCreate);
 
         /*Medic medicCreated = medicRepository.findById(medicId)
                 .orElseThrow(EntityNotFoundException::new);
 
         medicCreated.addPacient(pacientToCreate);*/
 
-        pacientToCreate.getMedic().addPacient(pacientToCreate);
 
-        return pacientRepository.save(pacientToCreate);
     }
 
     public Pacient pacientUpdate(Pacient pacientUpdate, Long pacientId) {

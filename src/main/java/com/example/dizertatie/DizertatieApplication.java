@@ -13,5 +13,4 @@ public class DizertatieApplication {
 			System.out.println(exception);
 		}
 	}
-
 }
