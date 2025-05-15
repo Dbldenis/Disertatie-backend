@@ -15,8 +15,19 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.util.Base64;
+import java.util.InputMismatchException;
+import java.util.Random;
+
 @Service
 public class MedicService {
+
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private MedicRepository medicRepository;
@@ -36,6 +47,62 @@ public class MedicService {
             throw new RuntimeException("You cannot provide an ID to a new user that you want to create");
         }
         return medicRepository.save(medicToCreate);
+    }
+
+
+    public Medic login(Medic medic) {
+
+        Medic existentMedic = medicRepository.findByEmail(medic.getEmail())
+                .orElseThrow(() -> new EntityNotFoundException("Medic with email " + medic.getEmail() + " not found"));
+
+        String encodedPassword = codificareParola(medic.getParola());
+        if (!existentMedic.isEsteVerificat() || !encodedPassword.equals(existentMedic.getParola())) {
+            throw new InputMismatchException();
+        }
+        return existentMedic;
+    }
+
+    private String genereazaCodVerificare() {
+        Random random = new Random();
+        int codul = 100000 + random.nextInt(900000); // Generate 6-digit code
+        return String.valueOf(codul);
+    }
+
+    private String codificareParola(String parola) {
+        String criptareParola = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(parola.getBytes(StandardCharsets.UTF_8));
+            criptareParola = Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        return criptareParola;
+    }
+
+    public Medic CreareMedic(Medic medicToCreate) {
+
+        if (medicToCreate.getId() != null) {
+            throw new RuntimeException("You cannot provide an ID to a new medic that you want to create");
+        }
+
+        if (medicToCreate.getCodVerificare() != null) {
+            throw new RuntimeException("You cannot provide a verification code to a pacient");
+        }
+
+        medicToCreate.getClinica().addMedic(medicToCreate);
+
+        medicToCreate.setParola(codificareParola(medicToCreate.getParola()));
+        String verificationCode = genereazaCodVerificare();
+        medicToCreate.setCodVerificare(verificationCode);
+
+        emailService.sendVerificationEmail(medicToCreate.getEmail(), verificationCode);
+        medicToCreate.setCodVerificareGenerareTimp(LocalDateTime.now());
+
+        return medicRepository.save(medicToCreate);
+
     }
 
     //GET Pacient by Id

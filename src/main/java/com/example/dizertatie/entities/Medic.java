@@ -3,6 +3,8 @@ package com.example.dizertatie.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -41,12 +43,29 @@ public class Medic {
     @Column(name = "PASSWORD")
     private String parola;
 
+    @Column(name = "EMAIL")
+    private String email;
+
+    @Column(name = "VERIFICAT")
+    private boolean esteVerificat = false;
+
+    @Column(name = "COD_VERIFICARE")
+    private String codVerificare;
+
+    @Column(name = "COD_VERIFICARE_GENERARE_TIMP")
+    private LocalDateTime codVerificareGenerareTimp;
+
     @JsonManagedReference
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY,
             orphanRemoval = true,
             mappedBy = "medic")
     private List<Pacient> listaPacienti = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "clinica_id")
+    @JsonBackReference
+    private Clinica clinica;
 
     /*@JsonManagedReference
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},

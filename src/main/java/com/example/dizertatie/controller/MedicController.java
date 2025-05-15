@@ -3,12 +3,15 @@ package com.example.dizertatie.controller;
 import com.example.dizertatie.dto.ConsultatieDto;
 import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.MedicDto;
+import com.example.dizertatie.dto.PacientDto;
 import com.example.dizertatie.entities.Consultatie;
 import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Medic;
+import com.example.dizertatie.entities.Pacient;
 import com.example.dizertatie.mapper.ConsultatiMapper;
 import com.example.dizertatie.mapper.FisaPacientuluiMapper;
 import com.example.dizertatie.mapper.MedicMapper;
+import com.example.dizertatie.mapper.PacientMapper;
 import com.example.dizertatie.service.MedicService;
 import com.example.dizertatie.service.PacientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +34,19 @@ public class MedicController {
 
         System.out.println("===>>> Am primit un medic în controller: " + medicDto.getNume());
 
-        Medic medicToCreate = MedicMapper.medic2Entity(medicDto);
-        Medic medicCreated = medicService.medicToCreate(medicToCreate);
+        Medic medicCreate = MedicMapper.medic2Entity(medicDto);
+        Medic medicCreated = medicService.medicToCreate(medicCreate);
 
-        return ResponseEntity.ok(medicCreated);
+        return ResponseEntity.ok(MedicMapper.medic2Dto(medicCreated));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> medicLogin(@RequestBody MedicDto medicDto) {
+
+        Medic medicToLogin = MedicMapper.medic2Entity(medicDto);
+        Medic existentMedic = medicService.login(medicToLogin);
+
+        return ResponseEntity.ok(MedicMapper.medic2Dto(existentMedic));
     }
 
     // crearea consultatie la pacient

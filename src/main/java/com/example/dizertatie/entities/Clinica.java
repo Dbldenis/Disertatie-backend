@@ -1,6 +1,9 @@
 package com.example.dizertatie.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,9 +25,16 @@ public class Clinica {
     @Column(name = "ADRESA")
     private String adresa;
 
+    @JsonManagedReference
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private List<Medic> listaMedici;
+            orphanRemoval = true,
+            mappedBy = "clinica")
+    private List<Medic> listaMedici = new ArrayList<>();
+
+    public void addMedic (Medic medic) {
+        listaMedici.add(medic);
+        medic.setClinica(this);
+    }
 
 }

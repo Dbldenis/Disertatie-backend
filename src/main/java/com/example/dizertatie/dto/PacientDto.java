@@ -1,7 +1,5 @@
 package com.example.dizertatie.dto;
 
-import com.example.dizertatie.entities.FisaPacientului;
-import com.example.dizertatie.entities.Medic;
 import lombok.Data;
 
 import java.time.LocalDateTime;

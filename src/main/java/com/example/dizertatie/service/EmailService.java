@@ -30,7 +30,7 @@ public class EmailService {
 
             mailSender.send(message);
         } catch (MessagingException e) {
-            throw new RuntimeException("Failed to send email.");
+            throw new RuntimeException("Email-ul nu a putut fi trimis.");
         }
     }
 
