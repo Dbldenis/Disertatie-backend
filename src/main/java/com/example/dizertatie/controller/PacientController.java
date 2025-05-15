@@ -1,6 +1,7 @@
 package com.example.dizertatie.controller;
 
 import org.hibernate.validator.internal.engine.groups.ValidationOrder;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.PacientDto;
@@ -42,36 +43,21 @@ public class PacientController {
     @Autowired
     private FisaPacientuluiService fisaPacientuluiService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody PacientDto pacientDto) {
-        Pacient pacientToLogin = PacientMapper.pacient2Entity(pacientDto);
-        Pacient existentPacient = pacientService.login(pacientToLogin);
-
-        return ResponseEntity.ok(PacientMapper.pacient2Dto(existentPacient));
-    }
-
-    @PutMapping("/{pacientId}")
-    public ResponseEntity<?> verify(@PathVariable Long pacientId, @RequestBody PacientDto pacientDto) {
-        Pacient pacientToUpdate = PacientMapper.pacient2Entity(pacientDto);
-        Pacient updatedPacient = pacientService.verify(pacientId, pacientToUpdate);
-
-        return ResponseEntity.ok(PacientMapper.pacient2Dto(updatedPacient));
-    }
-
-    @PutMapping("/retrimiteCod/{pacientId}")
-    public ResponseEntity<?> retrimitereCodVerificare(@PathVariable Long pacientId) {
-        Pacient pacient = pacientService.retrimiteCodVerificare(pacientId);
-
-        return ResponseEntity.ok(PacientMapper.pacient2Dto(pacient));
-    }
-
-    // add pacient
+    // add pacient - WORKS
     @PostMapping("/add/{medicId}")
     public ResponseEntity<?> addPacientToMedic(@Validated(ValidationOrder.class) @RequestBody PacientDto pacientDto) {
         Pacient pacientCreate = PacientMapper.pacient2Entity(pacientDto);
         Pacient pacientCreated = pacientService.pacientToCreate(pacientCreate);
 
         return ResponseEntity.ok(PacientMapper.pacient2Dto(pacientCreated));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody PacientDto pacientDto) {
+        Pacient pacientToLogin = PacientMapper.pacient2Entity(pacientDto);
+        Pacient existentPacient = pacientService.login(pacientToLogin);
+
+        return ResponseEntity.ok(PacientMapper.pacient2Dto(existentPacient));
     }
 
     //add programare
@@ -94,6 +80,24 @@ public class PacientController {
         return ResponseEntity.ok(fisaPacientuluiDto1);
     }
 
+    @PutMapping("/{pacientId}")
+    public ResponseEntity<?> verify(@PathVariable Long pacientId, @RequestBody PacientDto pacientDto) {
+        Pacient pacientToUpdate = PacientMapper.pacient2Entity(pacientDto);
+        Pacient updatedPacient = pacientService.verify(pacientId, pacientToUpdate);
+
+        return ResponseEntity.ok(PacientMapper.pacient2Dto(updatedPacient));
+    }
+
+    // Retrimit codul - WORKS
+    @PutMapping("/retrimiteCod/{pacientId}")
+    public ResponseEntity<?> retrimitereCodVerificare(@PathVariable Long pacientId) {
+        Pacient pacient = pacientService.retrimiteCodVerificare(pacientId);
+
+        return ResponseEntity.ok(PacientMapper.pacient2Dto(pacient));
+    }
+
+
+
     //edit fisa pacientului
     @PutMapping(value = "/edit/fisa/{fisaId}", consumes = MediaType.APPLICATION_JSON_VALUE) // pentru Json
     public ResponseEntity<FisaPacientuluiDto> updateFisa(@PathVariable Long fisaId, @RequestBody FisaPacientuluiDto fisaPacientuluiDto) {
@@ -101,6 +105,27 @@ public class PacientController {
         FisaPacientului fisaCreata = fisaPacientuluiService.updateFisa(fisaPacientului, fisaId);
         FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaCreata);
         return ResponseEntity.ok(fisaPacientuluiDto1);
+    }
+
+    //edit programre
+    @PutMapping("/edit/programare/{programareId}")
+    public ResponseEntity<ProgramareDto> editeazaProgramare(@PathVariable Long programareId, @RequestBody ProgramareDto dto) {
+
+        Programare programareActualizata = programareService.editeazaProgramare(programareId, dto);
+        ProgramareDto raspuns = ProgramareMapper.exemplarToDTO(programareActualizata);
+
+        return ResponseEntity.ok(raspuns);
+    }
+
+    // edit pacient
+    @PutMapping("/edit/{pacientId}")
+    public ResponseEntity<?> editPacient(@RequestBody PacientDto pacientDto, @PathVariable Long pacientId) {
+
+        Pacient pacientToUpdate = PacientMapper.pacient2Entity(pacientDto);
+        Pacient pacientUpdated = pacientService.pacientUpdate(pacientToUpdate, pacientId);
+        PacientDto pacientDto1 = PacientMapper.pacient2Dto(pacientUpdated);
+
+        return ResponseEntity.ok(pacientDto1);
     }
 
     //get fisa pacientului
@@ -138,27 +163,6 @@ public class PacientController {
     @PostMapping(value = "/test", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> test(@RequestBody Map<String, Object> payload) {
         return ResponseEntity.ok("OK");
-    }
-
-    //edit programre
-    @PutMapping("/edit/programare/{programareId}")
-    public ResponseEntity<ProgramareDto> editeazaProgramare(@PathVariable Long programareId, @RequestBody ProgramareDto dto) {
-
-        Programare programareActualizata = programareService.editeazaProgramare(programareId, dto);
-        ProgramareDto raspuns = ProgramareMapper.exemplarToDTO(programareActualizata);
-
-        return ResponseEntity.ok(raspuns);
-    }
-
-    // edit pacient
-    @PutMapping("/edit/{pacientId}")
-    public ResponseEntity<?> editPacient(@RequestBody PacientDto pacientDto, @PathVariable Long pacientId) {
-
-        Pacient pacientToUpdate = PacientMapper.pacient2Entity(pacientDto);
-        Pacient pacientUpdated = pacientService.pacientUpdate(pacientToUpdate, pacientId);
-        PacientDto pacientDto1 = PacientMapper.pacient2Dto(pacientUpdated);
-
-        return ResponseEntity.ok(pacientDto1);
     }
 
     //get programare

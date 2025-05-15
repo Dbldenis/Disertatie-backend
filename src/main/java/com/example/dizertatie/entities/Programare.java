@@ -19,9 +19,9 @@ public class Programare {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
+    /*@Enumerated(EnumType.STRING)
     @Column(name = "TIP_CONSULTATIE")
-    private TipConsultatie tipConsutlatie;
+    private TipConsultatie tipConsutlatie;*/
 
     @Column(name = "DATA")
     private LocalDate data;

@@ -29,6 +29,8 @@ public class MedicController {
     @PostMapping("/add")
     public ResponseEntity<?> createMedic(@RequestBody MedicDto medicDto) {
 
+        System.out.println("===>>> Am primit un medic în controller: " + medicDto.getNume());
+
         Medic medicToCreate = MedicMapper.medic2Entity(medicDto);
         Medic medicCreated = medicService.medicToCreate(medicToCreate);
 

@@ -11,7 +11,7 @@ public class ProgramareMapper {
 
         Programare programare = new Programare();
 
-        programare.setTipConsutlatie(programareDto.getTipConsultatie());
+        //programare.setTipConsutlatie(programareDto.getTipConsultatie());
         programare.setData(programareDto.getData());
         programare.setOra(programareDto.getOra());
 
@@ -28,7 +28,7 @@ public class ProgramareMapper {
         ProgramareDto programareDto = new ProgramareDto();
 
         programareDto.setId(programare.getId());
-        programareDto.setTipConsultatie(programare.getTipConsutlatie());
+        //programareDto.setTipConsultatie(programare.getTipConsutlatie());
         programareDto.setData(programare.getData());
         programareDto.setOra(programare.getOra());
 

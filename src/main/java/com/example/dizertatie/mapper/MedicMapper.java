@@ -16,6 +16,7 @@ public class MedicMapper {
         medicCreat.setSpecializare(medicDto.getSpecializare());
         medicCreat.setTelefon(medicDto.getTelefon());
         medicCreat.setCodParafa(medicDto.getCodParafa());
+        medicCreat.setParola(medicDto.getParola());
         //medicCreat.setListaPacienti(medicDto.getListaPacienti(medicDto.getListaPacienti());
 
 
@@ -37,6 +38,7 @@ public class MedicMapper {
         medicReturnat.setSpecializare(medic.getSpecializare());
         medicReturnat.setTelefon(medic.getTelefon());
         medicReturnat.setCodParafa(medic.getCodParafa());
+        medicReturnat.setParola(medic.getParola());
         //medicReturnat.getListaPacienti(medic.getListaPacienti());
         //medicReturnat.getConsultati(medic.getConsultati());
 

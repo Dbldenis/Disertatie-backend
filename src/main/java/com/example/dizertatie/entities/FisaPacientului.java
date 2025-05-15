@@ -1,6 +1,5 @@
 package com.example.dizertatie.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,11 +19,6 @@ public class FisaPacientului {
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "pacient_id", referencedColumnName = "id")
     private Pacient pacient;
-
-    /*@ManyToOne
-    @JoinColumn(name = "medic_id")
-    @JsonBackReference
-    private Medic medic;*/
 
     // Date medicale din document (secțiunea I)
     private Double greutate;

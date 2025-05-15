@@ -38,6 +38,9 @@ public class Medic {
     @Column(name = "COD_PARAFA")
     private Integer codParafa;
 
+    @Column(name = "PASSWORD")
+    private String parola;
+
     @JsonManagedReference
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY,

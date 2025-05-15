@@ -50,7 +50,7 @@ public class ProgramareService {
         programareCreata.setMedic(medic);
         programareCreata.setData(programare.getData());
         programareCreata.setOra(programare.getOra());
-        programareCreata.setTipConsutlatie(programare.getTipConsutlatie());
+        //programareCreata.setTipConsutlatie(programare.getTipConsutlatie());
 
         System.out.println("Programare ce va fi salvată: " + programareCreata);
 
@@ -78,7 +78,7 @@ public class ProgramareService {
         // actualizăm doar câmpurile permise
         programare.setData(dto.getData());
         programare.setOra(dto.getOra());
-        programare.setTipConsutlatie(dto.getTipConsultatie());
+        //programare.setTipConsutlatie(dto.getTipConsultatie());
 
         return programareRepository.save(programare);
     }
