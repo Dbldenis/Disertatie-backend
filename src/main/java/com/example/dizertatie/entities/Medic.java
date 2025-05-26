@@ -19,7 +19,6 @@ import lombok.Setter;
 @Table(name = "MEDIC", schema = "public")
 public class Medic {
 
-    // nume, prenume, specializare, telefon, cod parafa
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)

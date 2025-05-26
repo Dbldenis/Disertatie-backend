@@ -19,6 +19,7 @@ public class MedicMapper {
         medicCreat.setParola(medicDto.getParola());
 
         medicCreat.setEmail(medicDto.getEmail());
+        medicCreat.setEsteVerificat(medicDto.getIsVerified() != null ? medicDto.getIsVerified() : false); // modificat
         medicCreat.setEsteVerificat(medicDto.getIsVerified());
         medicCreat.setCodVerificare(medicDto.getCodVerificare());
         medicCreat.setCodVerificareGenerareTimp(medicDto.getCodVerificareGenerareTimp());

@@ -82,7 +82,7 @@ public class MedicService {
         return criptareParola;
     }
 
-    public Medic CreareMedic(Medic medicToCreate) {
+    public Medic CreareMedicSiEmail(Medic medicToCreate) {
 
         if (medicToCreate.getId() != null) {
             throw new RuntimeException("You cannot provide an ID to a new medic that you want to create");

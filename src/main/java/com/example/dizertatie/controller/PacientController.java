@@ -196,4 +196,6 @@ public class PacientController {
 
     }
 
+    // Implementeaza optiunea de a sterge toate programarile
+
 }

@@ -28,6 +28,7 @@ public class MedicController {
     @Autowired
     private PacientService pacientService;
 
+
     //add medic
     @PostMapping("/add")
     public ResponseEntity<?> createMedic(@RequestBody MedicDto medicDto) {
