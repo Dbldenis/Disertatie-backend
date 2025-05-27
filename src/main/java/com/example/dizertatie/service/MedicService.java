@@ -50,6 +50,8 @@ public class MedicService {
     }
 
 
+
+
     public Medic login(Medic medic) {
 
         Medic existentMedic = medicRepository.findByEmail(medic.getEmail())
@@ -61,6 +63,15 @@ public class MedicService {
         }
         return existentMedic;
     }
+
+    public Medic loginCuEmail(Medic medic) {
+
+        return medicRepository.findByEmail(medic.getEmail())
+                .orElseThrow(() -> new EntityNotFoundException("Medic with email " + medic.getEmail() + " not found"));
+    }
+
+
+
 
     private String genereazaCodVerificare() {
         Random random = new Random();

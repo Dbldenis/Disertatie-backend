@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/medic")
 public class MedicController {
@@ -41,6 +43,7 @@ public class MedicController {
         return ResponseEntity.ok(MedicMapper.medic2Dto(medicCreated));
     }
 
+    //Login cu email si parola
     @PostMapping("/login")
     public ResponseEntity<?> medicLogin(@RequestBody MedicDto medicDto) {
 
@@ -49,6 +52,17 @@ public class MedicController {
 
         return ResponseEntity.ok(MedicMapper.medic2Dto(existentMedic));
     }
+
+    //Login doar cu email
+    @PostMapping("/email/login")
+    public ResponseEntity<?> medicLoginEmail(@RequestBody MedicDto medicDto) {
+
+        Medic medicLogin = MedicMapper.medic2Entity(medicDto);
+        Medic emailMedicGasit = medicService.loginCuEmail(medicLogin);
+
+        return ResponseEntity.ok(MedicMapper.medic2Dto(emailMedicGasit));
+    }
+
 
     // crearea consultatie la pacient
     @PostMapping("{medicId}/creare/consultatie/pacient/{pacientId}")

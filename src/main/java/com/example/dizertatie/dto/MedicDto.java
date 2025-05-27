@@ -15,6 +15,7 @@ public class MedicDto {
     private Integer codParafa;
     private String parola;
     private String email;
+
     private Boolean isVerified = false;
     private String codVerificare;
     private LocalDateTime codVerificareGenerareTimp;
