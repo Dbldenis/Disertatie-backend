@@ -45,6 +45,9 @@ public class Medic {
     @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "ANI_EXPERIENTA")
+    private Integer aniExperienta;
+
     @Column(name = "VERIFICAT")
     private boolean esteVerificat = false;
 

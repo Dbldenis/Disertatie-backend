@@ -17,6 +17,7 @@ public class MedicMapper {
         medicCreat.setTelefon(medicDto.getTelefon());
         medicCreat.setCodParafa(medicDto.getCodParafa());
         medicCreat.setParola(medicDto.getParola());
+        medicCreat.setAniExperienta(medicDto.getAniExperienta());
 
         medicCreat.setEmail(medicDto.getEmail());
         medicCreat.setEsteVerificat(medicDto.getIsVerified() != null ? medicDto.getIsVerified() : false); // modificat
@@ -46,6 +47,7 @@ public class MedicMapper {
         medicReturnat.setTelefon(medic.getTelefon());
         medicReturnat.setCodParafa(medic.getCodParafa());
         medicReturnat.setParola(medic.getParola());
+        medicReturnat.setAniExperienta(medic.getAniExperienta());
 
         medicReturnat.setEmail(medic.getEmail());
         medicReturnat.setEsteVerificat(medic.isEsteVerificat());
