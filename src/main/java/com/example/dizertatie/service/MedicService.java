@@ -56,6 +56,20 @@ public class MedicService {
                 .orElseThrow(() -> new EntityNotFoundException("Medic with email " + medic.getEmail() + " not found"));
     }
 
+    public Medic saveMedic(Medic medic) {
+        // Aici poți face și validări suplimentare, ex: lungime parolă, format email, etc.
+
+
+        medic.setParola(medic.getParola());
+        medic.setEsteVerificat(false); // sau true, dacă e deja verificat cu OTP
+        return medicRepository.save(medic);
+    }
+
+    public boolean existsByEmailOrCodParafa(String email, Integer codParafa) {
+        return medicRepository.existsByEmail(email) || medicRepository.existsByCodParafa(codParafa);
+    }
+
+
     /*public Medic login(Medic medic) {
 
         Medic existentMedic = medicRepository.findByEmail(medic.getEmail())
@@ -138,7 +152,8 @@ public class MedicService {
 
         medicToCreate.getClinica().addMedic(medicToCreate);
 
-        medicToCreate.setParola(codificareParola(medicToCreate.getParola()));
+        // aici era apelata criptarea parolei
+        medicToCreate.setParola(medicToCreate.getParola());
         String verificationCode = genereazaCodVerificare();
         medicToCreate.setCodVerificare(verificationCode);
 
@@ -192,7 +207,6 @@ public class MedicService {
         FisaPacientului fisa = pacient.getFisaPacientului();
 
         fisa.getListaConsultati().add(consultatie); // Dacă relația este implementată
-
 
         pacientRepository.save(pacient);
 

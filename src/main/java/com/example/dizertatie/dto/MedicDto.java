@@ -1,5 +1,6 @@
 package com.example.dizertatie.dto;
 
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,8 +13,10 @@ public class MedicDto {
     private String nume;
     private String prenume;
     private String specializare;
+    @Size(max = 10, message = "Telefonul nu poate avea mai mult de 10 cifre")
     private String telefon;
     private Integer codParafa;
+    @Size(max = 15, message = "Parola nu poate avea mai mult de 15 caractere")
     private String parola;
     private String email;
     private Integer aniExperienta;

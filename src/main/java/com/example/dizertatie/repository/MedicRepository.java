@@ -10,4 +10,8 @@ public interface MedicRepository extends JpaRepository<Medic, Long>  {
 
     Optional<Medic> findByEmail(String email);
 
+    boolean existsByEmail(String email);
+    boolean existsByCodParafa(Integer codParafa);
+
+
 }

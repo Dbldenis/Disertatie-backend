@@ -15,6 +15,7 @@ import com.example.dizertatie.mapper.PacientMapper;
 import com.example.dizertatie.service.MedicService;
 import com.example.dizertatie.service.PacientService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,15 +36,30 @@ public class MedicController {
 
     //add medic
     @PostMapping("/add")
-    public ResponseEntity<?> createMedic(@RequestBody MedicDto medicDto) {
+    public ResponseEntity<?> createMedic(@Valid @RequestBody MedicDto medicDto) {
 
-        System.out.println("===>>> Am primit un medic în controller: " + medicDto.getNume());
+        System.out.println("===>>> Am primit un medic in controller: " + medicDto.getNume());
+        try {
+            // Verifici dacă există deja un medic cu același email sau codParafa
+            if (medicService.existsByEmailOrCodParafa(medicDto.getEmail(), medicDto.getCodParafa())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Există deja un medic cu acest email sau cod parafă!");
+            }
+            Medic medic = MedicMapper.medic2Entity(medicDto);
+            Medic medicSalvat = medicService.saveMedic(medic);
+            return ResponseEntity.ok(MedicMapper.medic2Dto(medicSalvat));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Eroare la înregistrarea medicului!");
+        }
+    }
+
+    /*
 
         Medic medicCreate = MedicMapper.medic2Entity(medicDto);
         Medic medicCreated = medicService.medicToCreate(medicCreate);
 
-        return ResponseEntity.ok(MedicMapper.medic2Dto(medicCreated));
-    }
+        return ResponseEntity.ok(MedicMapper.medic2Dto(medicCreated));*/
+
+
 
     //Login cu email si parola
     /*@PostMapping("/login")
