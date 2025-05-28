@@ -14,7 +14,9 @@ import com.example.dizertatie.mapper.MedicMapper;
 import com.example.dizertatie.mapper.PacientMapper;
 import com.example.dizertatie.service.MedicService;
 import com.example.dizertatie.service.PacientService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,23 +46,52 @@ public class MedicController {
     }
 
     //Login cu email si parola
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public ResponseEntity<?> medicLogin(@RequestBody MedicDto medicDto) {
 
         Medic medicToLogin = MedicMapper.medic2Entity(medicDto);
         Medic existentMedic = medicService.login(medicToLogin);
 
         return ResponseEntity.ok(MedicMapper.medic2Dto(existentMedic));
+    }*/
+
+    // Trimite codul de verificare pe email
+    @PostMapping("/email/send-code")
+    public ResponseEntity<?> trimiteCodPeEmail(@RequestBody MedicDto medicDto) {
+        try {
+            medicService.genereazaSiTrimiteCodVerificare(medicDto.getEmail());
+            return ResponseEntity.ok("Codul a fost trimis pe email!");
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nu există niciun medic cu acest email!");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Eroare la trimiterea codului!");
+        }
+    }
+
+
+    // Verifică codul OTP primit de medic
+    @PostMapping("/email/verify-code")
+    public ResponseEntity<?> verificaCodOTP(@RequestBody Map<String, String> payload) {
+        String email = payload.get("email");
+        String cod = payload.get("cod");
+        boolean valid = medicService.verificaCodVerificare(email, cod);
+        if (valid) {
+            return ResponseEntity.ok("Cont verificat și autentificat!");
+        } else {
+            return ResponseEntity.status(400).body("Cod invalid sau expirat!");
+        }
     }
 
     //Login doar cu email
     @PostMapping("/email/login")
     public ResponseEntity<?> medicLoginEmail(@RequestBody MedicDto medicDto) {
-
-        Medic medicLogin = MedicMapper.medic2Entity(medicDto);
-        Medic emailMedicGasit = medicService.loginCuEmail(medicLogin);
-
-        return ResponseEntity.ok(MedicMapper.medic2Dto(emailMedicGasit));
+        try {
+            Medic medicLogin = MedicMapper.medic2Entity(medicDto);
+            Medic emailMedicGasit = medicService.loginCuEmail(medicLogin);
+            return ResponseEntity.ok(MedicMapper.medic2Dto(emailMedicGasit));
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email inexistent!");
+        }
     }
 
 
@@ -129,5 +160,15 @@ public class MedicController {
 
         return ResponseEntity.ok().build();
     }
+
+
+    // GPT
+
+
+
+
+
+
+
 
 }

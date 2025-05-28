@@ -13,6 +13,7 @@ import com.example.dizertatie.repository.PacientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -49,10 +50,13 @@ public class MedicService {
         return medicRepository.save(medicToCreate);
     }
 
+    public Medic loginCuEmail(Medic medic) {
 
+        return medicRepository.findByEmail(medic.getEmail())
+                .orElseThrow(() -> new EntityNotFoundException("Medic with email " + medic.getEmail() + " not found"));
+    }
 
-
-    public Medic login(Medic medic) {
+    /*public Medic login(Medic medic) {
 
         Medic existentMedic = medicRepository.findByEmail(medic.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("Medic with email " + medic.getEmail() + " not found"));
@@ -62,21 +66,50 @@ public class MedicService {
             throw new InputMismatchException();
         }
         return existentMedic;
-    }
-
-    public Medic loginCuEmail(Medic medic) {
-
-        return medicRepository.findByEmail(medic.getEmail())
-                .orElseThrow(() -> new EntityNotFoundException("Medic with email " + medic.getEmail() + " not found"));
-    }
-
-
-
+    }*/
 
     private String genereazaCodVerificare() {
         Random random = new Random();
         int codul = 100000 + random.nextInt(900000); // Generate 6-digit code
         return String.valueOf(codul);
+    }
+
+    // Generează și trimite codul pe email
+    public void genereazaSiTrimiteCodVerificare(String email) {
+        Medic medic = medicRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Medic cu emailul " + email + " nu există!"));
+
+        System.out.println("Trimit cod către: " + email);
+        String codVerificare = genereazaCodVerificare();
+        medic.setCodVerificare(codVerificare);
+        medic.setCodVerificareGenerareTimp(LocalDateTime.now());
+        medicRepository.save(medic);
+
+        // Folosește serviciul tău existent
+        emailService.sendVerificationEmail(medic.getEmail(), codVerificare);
+
+        medicRepository.save(medic);
+
+    }
+
+    // Verifică codul OTP
+    public boolean verificaCodVerificare(String email, String cod) {
+        Medic medic = medicRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Medic cu emailul " + email + " nu există!"));
+
+        // Verifică codul și dacă nu a expirat (ex: valabil 10 min)
+        if (medic.getCodVerificare() != null &&
+                medic.getCodVerificare().equals(cod) &&
+                medic.getCodVerificareGenerareTimp() != null &&
+                medic.getCodVerificareGenerareTimp().isAfter(LocalDateTime.now().minusMinutes(10))) {
+
+            medic.setEsteVerificat(true);
+            medic.setCodVerificare(null);
+            medic.setCodVerificareGenerareTimp(null);
+            medicRepository.save(medic);
+            return true;
+        }
+        return false;
     }
 
     private String codificareParola(String parola) {
@@ -195,6 +228,7 @@ public class MedicService {
     public void deleteAllConsultati() {
         consultatiRepository.deleteAll();
     }
+
     public void deleteAllPacienti() {
         medicRepository.deleteAll();
     }
