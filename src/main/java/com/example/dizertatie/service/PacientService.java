@@ -118,9 +118,9 @@ public class PacientService {
             throw new RuntimeException("You cannot provide a verification code to a user");
         }
 
-        pacientToCreate.getMedic().addPacient(pacientToCreate);
+        //pacientToCreate.getMedic().addPacient(pacientToCreate);
 
-        pacientToCreate.setParola(codificareParola(pacientToCreate.getParola()));
+        pacientToCreate.setParola(pacientToCreate.getParola()); // am eliminat codificare parola
         String verificationCode = genereazaCodVerificare();
         pacientToCreate.setCodVerificare(verificationCode);
 

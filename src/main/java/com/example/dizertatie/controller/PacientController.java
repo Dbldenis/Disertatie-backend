@@ -44,13 +44,27 @@ public class PacientController {
     private FisaPacientuluiService fisaPacientuluiService;
 
     // add pacient - WORKS
-    @PostMapping("/add/{medicId}")
+    /*@PostMapping("/add/{medicId}")
     public ResponseEntity<?> addPacientToMedic(@Validated(ValidationOrder.class) @RequestBody PacientDto pacientDto) {
         Pacient pacientCreate = PacientMapper.pacient2Entity(pacientDto);
         Pacient pacientCreated = pacientService.pacientToCreate(pacientCreate);
 
         return ResponseEntity.ok(PacientMapper.pacient2Dto(pacientCreated));
+    }*/
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addPacient(@RequestBody PacientDto pacientDto) {
+
+        Pacient pacientCreate = PacientMapper.pacient2Entity(pacientDto);
+        Pacient pacientCreated = pacientService.pacientToCreate(pacientCreate);
+
+        return ResponseEntity.ok(PacientMapper.pacient2Dto(pacientCreated));
     }
+
+
+    // -----------------------------------
+
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody PacientDto pacientDto) {
