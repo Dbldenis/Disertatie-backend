@@ -124,12 +124,21 @@ public class PacientService {
         String verificationCode = genereazaCodVerificare();
         pacientToCreate.setCodVerificare(verificationCode);
 
-        emailService.sendVerificationEmail(pacientToCreate.getEmail(), verificationCode);
+        //emailService.sendVerificationEmail(pacientToCreate.getEmail(), verificationCode);
+
         pacientToCreate.setCodVerificareGenerareTimp(LocalDateTime.now());
 
         return pacientRepository.save(pacientToCreate);
 
     }
+
+    /*public Pacient pacientToCreate(Pacient pacientToCreate) {
+
+        if (pacientToCreate.getId() != null) {
+            throw new RuntimeException("You cannot provide an ID to a new user that you want to create");
+        }
+        return pacientRepository.save(pacientToCreate);
+    }*/
 
     public Pacient pacientUpdate(Pacient pacientUpdate, Long pacientId) {
 

@@ -61,7 +61,6 @@ public class PacientController {
         return ResponseEntity.ok(PacientMapper.pacient2Dto(pacientCreated));
     }
 
-
     // -----------------------------------
 
 

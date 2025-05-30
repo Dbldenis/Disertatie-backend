@@ -17,7 +17,10 @@ public class PacientMapper {
         pacient.setEmail(pacientDto.getEmail());
         pacient.setParola(pacientDto.getParola());
 
-        pacient.setEsteVerificat(pacientDto.getIsVerified());
+        pacient.setEsteVerificat(
+                pacientDto.getIsVerified() != null ? pacientDto.getIsVerified() : false
+        );
+
         pacient.setCodVerificareGenerareTimp(pacientDto.getVerificationCodeGenerationTime());
 
         pacient.setCodVerificareGenerareTimp(pacientDto.getCodVerificareGenerareTimp());
@@ -26,9 +29,9 @@ public class PacientMapper {
         pacient.setAdresa(pacientDto.getAdresa());
         pacient.setAsigurare(pacientDto.getAsigurare());
 
-        Medic medic = new Medic();
+        /*Medic medic = new Medic();
         medic.setId(pacientDto.getMedicId());
-        pacient.setMedic(medic);
+        pacient.setMedic(medic);*/
 
         return pacient;
 
@@ -56,7 +59,12 @@ public class PacientMapper {
         pacientDto.setCnp(pacient.getCnp());
         pacientDto.setAdresa(pacient.getAdresa());
         pacientDto.setAsigurare(pacient.getAsigurare());
-        pacientDto.setMedicId(pacient.getMedic().getId());
+        //pacientDto.setMedicId(pacient.getMedic().getId());
+
+        if (pacient.getMedic() != null) {
+            pacientDto.setMedicId(pacient.getMedic().getId());
+        }
+
 
         return pacientDto;
 

@@ -52,9 +52,8 @@ public class Pacient {
     @Column(name="ASIGURARE")
     private Boolean asigurare;
 
-    @ManyToOne()
-    @JoinColumn(name = "medic_id")
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medic_id", nullable = true)
     private Medic medic;
 
     @OneToOne(mappedBy = "pacient", cascade = CascadeType.ALL)
