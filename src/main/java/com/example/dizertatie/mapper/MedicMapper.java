@@ -19,6 +19,7 @@ public class MedicMapper {
         medicCreat.setParola(medicDto.getParola());
         medicCreat.setAniExperienta(medicDto.getAniExperienta());
 
+
         medicCreat.setEmail(medicDto.getEmail());
         medicCreat.setEsteVerificat(medicDto.getIsVerified() != null ? medicDto.getIsVerified() : false); // modificat
         medicCreat.setEsteVerificat(medicDto.getIsVerified());
@@ -31,7 +32,7 @@ public class MedicMapper {
         return medicCreat;
     }
 
-    public static Medic medic2Dto(Medic medic) {
+    public static MedicDto medic2Dto(Medic medic) {
 
         if (medic.getId() == null) {
             return null;
@@ -39,7 +40,7 @@ public class MedicMapper {
 
         // nume, prem, specializare, telefon, codparaf, listapacienti, consultati,
 
-        Medic medicReturnat = new Medic();
+        MedicDto medicReturnat = new MedicDto(); // AM MODIFICAT IN DTO
 
         medicReturnat.setNume(medic.getNume());
         medicReturnat.setPrenume(medic.getPrenume());
@@ -48,6 +49,7 @@ public class MedicMapper {
         medicReturnat.setCodParafa(medic.getCodParafa());
         medicReturnat.setParola(medic.getParola());
         medicReturnat.setAniExperienta(medic.getAniExperienta());
+
 
         medicReturnat.setEmail(medic.getEmail());
         medicReturnat.setEsteVerificat(medic.isEsteVerificat());

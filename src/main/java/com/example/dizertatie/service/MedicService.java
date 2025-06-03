@@ -1,5 +1,6 @@
 package com.example.dizertatie.service;
 
+import com.example.dizertatie.dto.MedicDto;
 import com.example.dizertatie.mapper.ConsultatiMapper;
 import com.example.dizertatie.dto.ConsultatieDto;
 import com.example.dizertatie.entities.Consultatie;
@@ -22,6 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -65,7 +67,7 @@ public class MedicService {
         return medicRepository.save(medic);
     }
 
-    public boolean existsByEmailOrCodParafa(String email, Integer codParafa) {
+    public boolean existsByEmailOrCodParafa(String email, Long codParafa) {
         return medicRepository.existsByEmail(email) || medicRepository.existsByCodParafa(codParafa);
     }
 
@@ -235,6 +237,10 @@ public class MedicService {
                 .orElseThrow(() -> new RuntimeException("Consultația cu id " + consultatieId + " nu a fost găsită."));
     }
 
+    public List<Medic> getMediciBySpecialitate(String specialitate) {
+        return medicRepository.findBySpecializareIgnoreCase(specialitate);
+    }
+
     public void deleteConsultatie(Long consultatieId) {
         consultatiRepository.deleteById(consultatieId);
     }
@@ -246,7 +252,6 @@ public class MedicService {
     public void deleteAllPacienti() {
         medicRepository.deleteAll();
     }
-
 
 
 

@@ -15,6 +15,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -25,11 +26,13 @@ public class PacientService {
     @Autowired
     private PacientRepository pacientRepository;
 
-    /*@Autowired
-    private MedicRepository medicRepository;*/
+    @Autowired
+    private MedicRepository medicRepository;
 
     @Autowired
     private EmailService emailService;
+
+
 
     public Pacient verify(Long pacientId, Pacient updatedPacient) {
         Pacient pacient = pacientRepository.findById(pacientId)
@@ -165,6 +168,11 @@ public class PacientService {
         return pacientRepository.save(dbPacient);
 
     }
+
+    public List<Medic> getMediciBySpecialitate(String specialitate) {
+        return medicRepository.findBySpecializareIgnoreCase(specialitate);
+    }
+
 
     public Pacient getPacientData(Long pacientId) {
 

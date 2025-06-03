@@ -4,6 +4,7 @@ import com.example.dizertatie.entities.Medic;
 import com.example.dizertatie.entities.Pacient;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MedicRepository extends JpaRepository<Medic, Long>  {
@@ -11,7 +12,9 @@ public interface MedicRepository extends JpaRepository<Medic, Long>  {
     Optional<Medic> findByEmail(String email);
 
     boolean existsByEmail(String email);
-    boolean existsByCodParafa(Integer codParafa);
+    boolean existsByCodParafa(Long codParafa);
+
+    List<Medic> findBySpecializareIgnoreCase(String specializare);
 
 
 }

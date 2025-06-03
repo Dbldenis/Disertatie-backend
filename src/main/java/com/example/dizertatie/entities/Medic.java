@@ -37,7 +37,7 @@ public class Medic {
     private String telefon;
 
     @Column(name = "COD_PARAFA")
-    private Integer codParafa;
+    private Long codParafa;
 
     @Column(name = "PASSWORD")
     private String parola;

@@ -65,7 +65,6 @@ public class PacientMapper {
             pacientDto.setMedicId(pacient.getMedic().getId());
         }
 
-
         return pacientDto;
 
     }

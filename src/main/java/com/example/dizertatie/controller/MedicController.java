@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -48,6 +49,7 @@ public class MedicController {
             Medic medicSalvat = medicService.saveMedic(medic);
             return ResponseEntity.ok(MedicMapper.medic2Dto(medicSalvat));
         } catch (Exception e) {
+            //System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Eroare la înregistrarea medicului!");
         }
     }
@@ -145,6 +147,18 @@ public class MedicController {
 
         Consultatie consultatie = medicService.getConsultatieById(consultatieId);
         return ResponseEntity.ok(consultatie);
+    }
+
+    // Get la medici
+    @GetMapping("/get/medici")
+    public ResponseEntity<List<MedicDto>> getMediciBySpecialitate(@RequestParam String specialitate) {
+        List<Medic> mediciFiltrati = medicService.getMediciBySpecialitate(specialitate);
+
+        List<MedicDto> rezultat = mediciFiltrati.stream()
+                .map(MedicMapper::medic2Dto )
+                .toList();
+
+        return ResponseEntity.ok(rezultat);
     }
 
     // sterg consultatie dupa id

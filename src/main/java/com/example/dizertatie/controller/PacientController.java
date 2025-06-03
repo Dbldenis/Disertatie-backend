@@ -1,5 +1,8 @@
 package com.example.dizertatie.controller;
 
+import com.example.dizertatie.dto.MedicDto;
+import com.example.dizertatie.entities.Medic;
+import com.example.dizertatie.mapper.MedicMapper;
 import org.hibernate.validator.internal.engine.groups.ValidationOrder;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
