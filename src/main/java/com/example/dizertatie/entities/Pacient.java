@@ -32,7 +32,7 @@ public class Pacient {
     private String parola;
 
     @Column(name = "VERIFICAT")
-    private boolean esteVerificat = false;
+    private Boolean esteVerificat = false;
 
     @Column(name = "COD_VERIFICARE_GENERARE_TIMP")
     private LocalDateTime codVerificareGenerareTimp;

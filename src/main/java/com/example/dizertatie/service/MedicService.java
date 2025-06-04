@@ -253,6 +253,7 @@ public class MedicService {
         medicRepository.deleteAll();
     }
 
-
-
+    public List<Medic> findAll() {
+        return medicRepository.findAll();
+    }
 }

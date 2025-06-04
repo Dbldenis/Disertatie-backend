@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -49,7 +47,7 @@ public class Medic {
     private Integer aniExperienta;
 
     @Column(name = "VERIFICAT")
-    private boolean esteVerificat = false;
+    private Boolean esteVerificat = false;
 
     @Column(name = "COD_VERIFICARE")
     private String codVerificare;

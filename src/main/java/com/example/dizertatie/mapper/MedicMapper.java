@@ -52,7 +52,10 @@ public class MedicMapper {
 
 
         medicReturnat.setEmail(medic.getEmail());
-        medicReturnat.setEsteVerificat(medic.isEsteVerificat());
+        medicReturnat.setEsteVerificat(
+                medic.getEsteVerificat() != null ? medic.getEsteVerificat() : false
+        );
+
         medicReturnat.setCodVerificareGenerareTimp(medic.getCodVerificareGenerareTimp());
 
 

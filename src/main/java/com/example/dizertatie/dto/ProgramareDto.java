@@ -6,7 +6,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import lombok.Data;
+import lombok.ToString;
 
+@ToString
 @Data
 public class ProgramareDto {
 
@@ -21,3 +23,5 @@ public class ProgramareDto {
     private Long medicId;*/
 
 }
+
+

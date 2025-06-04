@@ -51,7 +51,7 @@ public class PacientMapper {
         pacientDto.setPrenume(pacient.getPrenume());
         pacientDto.setEmail(pacient.getEmail());
         pacientDto.setParola(pacient.getParola());
-        pacientDto.setIsVerified(pacient.isEsteVerificat());
+        pacientDto.setIsVerified(pacient.getEsteVerificat());
         pacientDto.setVerificationCodeGenerationTime(pacient.getCodVerificareGenerareTimp());
 
         pacientDto.setCodVerificareGenerareTimp(pacient.getCodVerificareGenerareTimp());

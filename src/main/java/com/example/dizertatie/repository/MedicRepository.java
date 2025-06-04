@@ -16,5 +16,4 @@ public interface MedicRepository extends JpaRepository<Medic, Long>  {
 
     List<Medic> findBySpecializareIgnoreCase(String specializare);
 
-
 }

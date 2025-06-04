@@ -62,7 +62,7 @@ public class PacientService {
         Pacient pacient = pacientRepository.findById(pacientId)
                 .orElseThrow(() -> new EntityNotFoundException("Pacientul cu ID " + pacientId + " nu a fost gasit"));
 
-        if (pacient.isEsteVerificat()) {
+        if (pacient.getEsteVerificat()) {
             return pacient;
         }
 
@@ -85,7 +85,7 @@ public class PacientService {
                 .orElseThrow(() -> new EntityNotFoundException("User with email " + pacient.getEmail() + " not found"));
 
         String encodedPassword = codificareParola(pacient.getParola());
-        if (!existentPacient.isEsteVerificat() || !encodedPassword.equals(existentPacient.getParola())) {
+        if (!existentPacient.getEsteVerificat() || !encodedPassword.equals(existentPacient.getParola())) {
             throw new InputMismatchException();
         }
         return existentPacient;
@@ -157,7 +157,8 @@ public class PacientService {
         dbPacient.setParola(pacientUpdate.getParola());
         dbPacient.setCodVerificare(pacientUpdate.getCodVerificare());
         dbPacient.setCodVerificareGenerareTimp(pacientUpdate.getCodVerificareGenerareTimp());
-        dbPacient.setEsteVerificat(pacientUpdate.isEsteVerificat());
+        dbPacient.setEsteVerificat(pacientUpdate.getEsteVerificat());
+
 
         dbPacient.setAdresa(pacientUpdate.getAdresa());
         dbPacient.setTelefon(pacientUpdate.getTelefon());

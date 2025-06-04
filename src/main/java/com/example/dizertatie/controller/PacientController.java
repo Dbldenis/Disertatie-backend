@@ -79,6 +79,8 @@ public class PacientController {
     //add programare
     @PostMapping("/add/programare/{pacientId}/{medicId}")
     public ResponseEntity<ProgramareDto> creazaProgramare(@RequestBody ProgramareDto programareDto, @PathVariable Long pacientId, @PathVariable Long medicId) {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(programareDto.toString());
         Programare programareNoua = ProgramareMapper.programare2Entity(programareDto);
         Programare programare = programareService.creazaProgramare(programareNoua, pacientId, medicId);
         ProgramareDto programareDto1 = ProgramareMapper.exemplarToDTO(programare);

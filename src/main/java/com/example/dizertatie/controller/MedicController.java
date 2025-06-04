@@ -158,6 +158,19 @@ public class MedicController {
                 .map(MedicMapper::medic2Dto )
                 .toList();
 
+        System.out.println("Rezultat" + rezultat);
+        return ResponseEntity.ok(rezultat);
+    }
+
+    @GetMapping("/get/test")
+    public ResponseEntity<List<MedicDto>> getMediciBySpecialitate() {
+        List<Medic> mediciFiltrati = medicService.findAll();
+
+        List<MedicDto> rezultat = mediciFiltrati.stream()
+                .map(MedicMapper::medic2Dto )
+                .toList();
+
+        System.out.println("Rezultat" + rezultat);
         return ResponseEntity.ok(rezultat);
     }
 
