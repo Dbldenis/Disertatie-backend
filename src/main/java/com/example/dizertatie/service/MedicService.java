@@ -92,17 +92,25 @@ public class MedicService {
 
     // Generează și trimite codul pe email
     public void genereazaSiTrimiteCodVerificare(String email) {
+
+        System.out.println("Trimit cod către: " + email);
+
+        String emailH = "denisdbl331@gmail.com";
         Medic medic = medicRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Medic cu emailul " + email + " nu există!"));
 
+
+        //email = "denisdbl331@gmail.com";
         System.out.println("Trimit cod către: " + email);
         String codVerificare = genereazaCodVerificare();
+
+        System.out.println(codVerificare);
         medic.setCodVerificare(codVerificare);
         medic.setCodVerificareGenerareTimp(LocalDateTime.now());
         medicRepository.save(medic);
 
         // Folosește serviciul tău existent
-        emailService.sendVerificationEmail(medic.getEmail(), codVerificare);
+        emailService.sendVerificationEmail(emailH, codVerificare);
 
         medicRepository.save(medic);
 

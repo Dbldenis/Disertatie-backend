@@ -103,6 +103,7 @@ public class MedicController {
     //Login doar cu email
     @PostMapping("/email/login")
     public ResponseEntity<?> medicLoginEmail(@RequestBody MedicDto medicDto) {
+        System.out.println("Medic Dto :" + medicDto.getEmail());
         try {
             Medic medicLogin = MedicMapper.medic2Entity(medicDto);
             Medic emailMedicGasit = medicService.loginCuEmail(medicLogin);

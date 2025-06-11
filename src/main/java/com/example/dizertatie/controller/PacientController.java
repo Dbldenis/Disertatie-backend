@@ -1,10 +1,8 @@
 package com.example.dizertatie.controller;
 
-import com.example.dizertatie.dto.MedicDto;
-import com.example.dizertatie.entities.Medic;
-import com.example.dizertatie.mapper.MedicMapper;
-import org.hibernate.validator.internal.engine.groups.ValidationOrder;
-import org.springframework.context.annotation.Configuration;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import com.example.dizertatie.dto.FisaPacientuluiDto;
 import com.example.dizertatie.dto.PacientDto;
@@ -20,7 +18,6 @@ import com.example.dizertatie.service.PacientService;
 import com.example.dizertatie.service.ProgramareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.example.dizertatie.mapper.FisaPacientuluiMapper;
 
@@ -55,26 +52,83 @@ public class PacientController {
         return ResponseEntity.ok(PacientMapper.pacient2Dto(pacientCreated));
     }*/
 
-    @PostMapping("/add")
+    /*@PostMapping("/add")
     public ResponseEntity<?> addPacient(@RequestBody PacientDto pacientDto) {
 
         Pacient pacientCreate = PacientMapper.pacient2Entity(pacientDto);
         Pacient pacientCreated = pacientService.pacientToCreate(pacientCreate);
 
         return ResponseEntity.ok(PacientMapper.pacient2Dto(pacientCreated));
+    }*/
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createPacient(@Valid @RequestBody PacientDto pacientDto) {
+        System.out.println("Am ajuns in create");
+        try {
+            if (pacientService.existsByCnpOrTelefonOrEmail(pacientDto.getCnp(), pacientDto.getTelefon(), pacientDto.getEmail())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Există deja un pacient cu acest CNP, număr de telefon sau email!");
+            }
+            Pacient pacient = PacientMapper.pacient2Entity(pacientDto);
+            Pacient pacientSalvat = pacientService.savePacient(pacient);
+            return ResponseEntity.ok(PacientMapper.pacient2Dto(pacientSalvat));
+        } catch (Exception e) {
+            System.out.println("Sunt in catch");
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Eroare la înregistrarea pacientului!");
+        }
     }
 
     // -----------------------------------
 
+    // Trimite codul de verificare pe email
+    @PostMapping("/email/send-code")
+    public ResponseEntity<?> trimiteCodPeEmail(@RequestBody PacientDto pacientDto) {
+        try {
+            pacientService.genereazaSiTrimiteCodVerificare(pacientDto.getEmail());
+            return ResponseEntity.ok("Codul a fost trimis pe email!");
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nu exista niciun pacient cu acest email!");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Eroare la trimiterea codului!");
+        }
+    }
+
+    // Verifica codul OTP primit de pacient
+    @PostMapping("/email/verify-code")
+    public ResponseEntity<?> verificaCodOTP(@RequestBody Map<String, String> payload) {
+        String email = payload.get("email");
+        String cod = payload.get("cod");
+        boolean valid = pacientService.verificaCodVerificare(email, cod);
+        if (valid) {
+            return ResponseEntity.ok("Cont verificat si autentificat!");
+        } else {
+            return ResponseEntity.status(400).body("Cod invalid sau expirat!");
+        }
+    }
 
 
-    @PostMapping("/login")
+
+    // Login doar cu email
+    @PostMapping("/email/login")
+    public ResponseEntity<?> pacientLoginEmail(@RequestBody PacientDto pacientDto) {
+        try {
+            Pacient pacientLogin = PacientMapper.pacient2Entity(pacientDto);
+            Pacient pacientGasit = pacientService.loginCuEmail(pacientLogin);
+            return ResponseEntity.ok(PacientMapper.pacient2Dto(pacientGasit));
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email inexistent!");
+        }
+    }
+
+
+    //------------------------------------
+    /*@PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody PacientDto pacientDto) {
         Pacient pacientToLogin = PacientMapper.pacient2Entity(pacientDto);
         Pacient existentPacient = pacientService.login(pacientToLogin);
 
         return ResponseEntity.ok(PacientMapper.pacient2Dto(existentPacient));
-    }
+    }*/
 
     //add programare
     @PostMapping("/add/programare/{pacientId}/{medicId}")
@@ -98,7 +152,7 @@ public class PacientController {
         return ResponseEntity.ok(fisaPacientuluiDto1);
     }
 
-    @PutMapping("/{pacientId}")
+    /*@PutMapping("/{pacientId}")
     public ResponseEntity<?> verify(@PathVariable Long pacientId, @RequestBody PacientDto pacientDto) {
         Pacient pacientToUpdate = PacientMapper.pacient2Entity(pacientDto);
         Pacient updatedPacient = pacientService.verify(pacientId, pacientToUpdate);
@@ -112,7 +166,7 @@ public class PacientController {
         Pacient pacient = pacientService.retrimiteCodVerificare(pacientId);
 
         return ResponseEntity.ok(PacientMapper.pacient2Dto(pacient));
-    }
+    }*/
 
 
 
@@ -125,7 +179,7 @@ public class PacientController {
         return ResponseEntity.ok(fisaPacientuluiDto1);
     }
 
-    //edit programre
+    // edit programare
     @PutMapping("/edit/programare/{programareId}")
     public ResponseEntity<ProgramareDto> editeazaProgramare(@PathVariable Long programareId, @RequestBody ProgramareDto dto) {
 

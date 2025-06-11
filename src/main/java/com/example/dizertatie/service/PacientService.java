@@ -33,8 +33,64 @@ public class PacientService {
     private EmailService emailService;
 
 
+    public Pacient savePacient(Pacient pacient) {
+        pacient.setParola(pacient.getParola());
+        pacient.setEsteVerificat(false);
+        return pacientRepository.save(pacient);
+    }
 
-    public Pacient verify(Long pacientId, Pacient updatedPacient) {
+    public boolean existsByCnpOrTelefonOrEmail(String cnp, String telefon, String email) {
+        System.out.println(pacientRepository.existsByCnp(cnp));
+        System.out.println(pacientRepository.existsByTelefon(telefon));
+        System.out.println(pacientRepository.existsByEmail(email));
+
+
+        return pacientRepository.existsByCnp(cnp) ||
+                pacientRepository.existsByTelefon(telefon) ||
+                pacientRepository.existsByEmail(email);
+    }
+
+    //------------------------------------------------------------
+
+    public Pacient loginCuEmail(Pacient pacient) {
+
+        return pacientRepository.findByEmail(pacient.getEmail())
+                .orElseThrow(() -> new EntityNotFoundException("Pacient with email " + pacient.getEmail() + " not found"));
+    }
+
+    public void genereazaSiTrimiteCodVerificare(String email) {
+        Pacient pacient = pacientRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Pacient cu emailul " + email + " nu exista!"));
+
+        String codVerificare = genereazaCodVerificare();
+        pacient.setCodVerificare(codVerificare);
+        pacient.setCodVerificareGenerareTimp(LocalDateTime.now());
+        pacientRepository.save(pacient);
+
+        emailService.sendVerificationEmail("denisdbl331@gmail.com", codVerificare);
+
+        pacientRepository.save(pacient);
+    }
+
+    public boolean verificaCodVerificare(String email, String cod) {
+        Pacient pacient = pacientRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Pacient cu emailul " + email + " nu exista!"));
+
+        if (pacient.getCodVerificare() != null &&
+                pacient.getCodVerificare().equals(cod) &&
+                pacient.getCodVerificareGenerareTimp() != null &&
+                pacient.getCodVerificareGenerareTimp().isAfter(LocalDateTime.now().minusMinutes(10))) {
+
+            pacient.setEsteVerificat(true);
+            pacient.setCodVerificare(null);
+            pacient.setCodVerificareGenerareTimp(null);
+            pacientRepository.save(pacient);
+            return true;
+        }
+        return false;
+    }
+    //------------------------------------------------------------
+    /*public Pacient verify(Long pacientId, Pacient updatedPacient) {
         Pacient pacient = pacientRepository.findById(pacientId)
                 .orElseThrow(() -> new EntityNotFoundException("Pacientul cu ID " + pacientId + " nu a fost gasit"));
 
@@ -89,7 +145,7 @@ public class PacientService {
             throw new InputMismatchException();
         }
         return existentPacient;
-    }
+    }*/
 
     private String genereazaCodVerificare() {
         Random random = new Random();
@@ -111,7 +167,7 @@ public class PacientService {
         return criptareParola;
     }
 
-    public Pacient pacientToCreate(Pacient pacientToCreate) {
+    /*public Pacient pacientToCreate(Pacient pacientToCreate) {
 
         if (pacientToCreate.getId() != null) {
             throw new RuntimeException("You cannot provide an ID to a new pacient that you want to create");
@@ -133,7 +189,7 @@ public class PacientService {
 
         return pacientRepository.save(pacientToCreate);
 
-    }
+    }*/
 
     /*public Pacient pacientToCreate(Pacient pacientToCreate) {
 
