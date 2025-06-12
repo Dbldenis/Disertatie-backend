@@ -10,6 +10,7 @@ public class MedicDto {
 
     // nume, prenume, specializare, telefon, codparafa, parola, email
     // este verificat, cod verificare, cod verificare generare timp
+    private Long id;
     private String nume;
     private String prenume;
     private String specializare;

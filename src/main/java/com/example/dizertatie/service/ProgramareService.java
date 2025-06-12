@@ -4,6 +4,8 @@ import com.example.dizertatie.dto.ProgramareDto;
 import com.example.dizertatie.entities.Medic;
 import com.example.dizertatie.entities.Pacient;
 import com.example.dizertatie.entities.Programare;
+import com.example.dizertatie.mapper.MedicMapper;
+import com.example.dizertatie.mapper.PacientMapper;
 import com.example.dizertatie.repository.MedicRepository;
 import com.example.dizertatie.repository.PacientRepository;
 import com.example.dizertatie.repository.ProgramareRepository;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProgramareService {
@@ -97,5 +100,29 @@ public class ProgramareService {
             throw new RuntimeException("Programare inexistenta");
         }
         programareRepository.deleteById(id);
+    }
+
+    public List<ProgramareDto> getProgramariInfoPentruPacient(Long pacientId) {
+        return programareRepository.findAllByPacientId(pacientId)
+                .stream()
+                .map(this::mapProgramareToInfo)
+                .collect(Collectors.toList());
+    }
+
+    private ProgramareDto mapProgramareToInfo(Programare programare) {
+        ProgramareDto dto = new ProgramareDto();
+        dto.setId(programare.getId());
+        dto.setData(programare.getData());
+        dto.setOra(programare.getOra());
+
+        if (programare.getPacient() != null) {
+            dto.setPacientDto(PacientMapper.pacient2Dto(programare.getPacient()));
+        }
+
+        if (programare.getMedic() != null) {
+            dto.setMedicDto(MedicMapper.medic2Dto(programare.getMedic()));
+        }
+
+        return dto;
     }
 }

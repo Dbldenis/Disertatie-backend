@@ -47,6 +47,7 @@ public class PacientMapper {
 
         // nume, prenume, email, telefon, cnp, adresa, asigurare, medic
 
+        pacientDto.setId(pacient.getId());
         pacientDto.setNume(pacient.getNume());
         pacientDto.setPrenume(pacient.getPrenume());
         pacientDto.setEmail(pacient.getEmail());

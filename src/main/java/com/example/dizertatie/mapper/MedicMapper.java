@@ -42,6 +42,7 @@ public class MedicMapper {
 
         MedicDto medicReturnat = new MedicDto(); // AM MODIFICAT IN DTO
 
+        medicReturnat.setId(medic.getId());
         medicReturnat.setNume(medic.getNume());
         medicReturnat.setPrenume(medic.getPrenume());
         medicReturnat.setSpecializare(medic.getSpecializare());

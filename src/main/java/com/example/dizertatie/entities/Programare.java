@@ -29,13 +29,22 @@ public class Programare {
     @Column(name = "ORA")
     private LocalTime ora;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+    /*@OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             orphanRemoval = true)
     private Pacient pacient;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             orphanRemoval = true)
+    private Medic medic;*/
+
+    @ManyToOne
+    @JoinColumn(name = "PACIENT_ID")
+    private Pacient pacient;
+
+    @ManyToOne
+    @JoinColumn(name = "MEDIC_ID")
     private Medic medic;
+
 
     // tip consultatie, data ora
 

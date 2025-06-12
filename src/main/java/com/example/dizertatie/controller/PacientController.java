@@ -106,8 +106,6 @@ public class PacientController {
         }
     }
 
-
-
     // Login doar cu email
     @PostMapping("/email/login")
     public ResponseEntity<?> pacientLoginEmail(@RequestBody PacientDto pacientDto) {
