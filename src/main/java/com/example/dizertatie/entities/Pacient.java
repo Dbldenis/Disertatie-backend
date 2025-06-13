@@ -59,7 +59,10 @@ public class Pacient {
     @OneToOne(mappedBy = "pacient", cascade = CascadeType.ALL)
     private FisaPacientului fisaPacientului;
 
-    @OneToOne(mappedBy = "pacient", cascade = CascadeType.ALL)
-    private Programare programare;
+    /*@OneToOne(mappedBy = "pacient", cascade = CascadeType.ALL)
+    private Programare programare;*/
+
+    @OneToMany(mappedBy = "pacient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<Programare> listaProgramari = new java.util.ArrayList<>();
 
 }

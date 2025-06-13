@@ -268,4 +268,15 @@ public class PacientController {
 
     // Implementeaza optiunea de a sterge toate programarile
 
+    @DeleteMapping("/delete/toate-programarile")
+    public ResponseEntity<?> stergeToateProgramarile() {
+        programareService.stergeToateProgramarile();
+
+        return ResponseEntity.ok().body(
+                Map.of("mesaj", "Toate programările au fost șterse cu succes")
+        );
+    }
+
+
+
 }

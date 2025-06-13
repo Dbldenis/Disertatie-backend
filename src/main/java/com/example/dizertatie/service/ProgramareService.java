@@ -125,4 +125,8 @@ public class ProgramareService {
 
         return dto;
     }
+
+    public void stergeToateProgramarile() {
+        programareRepository.deleteAll();
+    }
 }

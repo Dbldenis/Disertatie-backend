@@ -37,13 +37,22 @@ public class Programare {
             orphanRemoval = true)
     private Medic medic;*/
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "PACIENT_ID")
     private Pacient pacient;
 
     @ManyToOne
     @JoinColumn(name = "MEDIC_ID")
+    private Medic medic;*/
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PACIENT_ID")
+    private Pacient pacient;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEDIC_ID")
     private Medic medic;
+
 
 
     // tip consultatie, data ora

@@ -16,7 +16,6 @@ public class ProgramareDto {
     private TipConsultatie tipConsultatie;
     private LocalDate data;
     private LocalTime ora;
-
     private PacientDto pacientDto;
     private MedicDto medicDto;
     /*private Long pacientId;
