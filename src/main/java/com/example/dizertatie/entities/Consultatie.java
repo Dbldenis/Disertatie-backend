@@ -16,6 +16,20 @@ public class Consultatie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // !!!!!!!!!!!!!!
+
+    // SA PUI ID PACIENT
+    // SA PUI ID MEDIC
+
+    /*@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long pacientId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long medicId;*/
+
+
     @Column(name = "DATA")
     private LocalDateTime dataConsultatiei;
 

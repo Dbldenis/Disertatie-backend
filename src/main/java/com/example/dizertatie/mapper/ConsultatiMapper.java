@@ -7,7 +7,6 @@ public class ConsultatiMapper {
 
     public static Consultatie consultati2Entity(ConsultatieDto consultatiDto) {
 
-
         Consultatie consultati = new Consultatie();
 
         //// id, data, observati, simptome, tratament, diagnostic, fisa pacientului
@@ -18,6 +17,7 @@ public class ConsultatiMapper {
         consultati.setTratament(consultatiDto.getTratament());
         consultati.setDiagnostic(consultatiDto.getDiagnostic());
 
+        consultati.setFisaPacientului(consultati.getFisaPacientului());
 
         return consultati;
     }
@@ -38,6 +38,8 @@ public class ConsultatiMapper {
         consultatiDto.setSimptome(consultatie.getSimptome());
         consultatiDto.setTratament(consultatie.getTratament());
         consultatiDto.setDiagnostic(consultatie.getDiagnostic());
+
+        //consultatiDto.setFisaPacientuluiDto(consultatie.getFisaPacientului());
         //consultatiDto.setPacient(consultatie.getPacient());
 
         return consultatiDto;

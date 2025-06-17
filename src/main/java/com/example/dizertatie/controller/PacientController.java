@@ -167,12 +167,11 @@ public class PacientController {
     }*/
 
 
-
     //edit fisa pacientului
     @PutMapping(value = "/edit/fisa/{fisaId}", consumes = MediaType.APPLICATION_JSON_VALUE) // pentru Json
     public ResponseEntity<FisaPacientuluiDto> updateFisa(@PathVariable Long fisaId, @RequestBody FisaPacientuluiDto fisaPacientuluiDto) {
         FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
-        FisaPacientului fisaCreata = fisaPacientuluiService.updateFisa(fisaPacientului, fisaId);
+        FisaPacientului fisaCreata = fisaPacientuluiService.updateFisa(fisaPacientuluiDto, fisaId);
         FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaCreata);
         return ResponseEntity.ok(fisaPacientuluiDto1);
     }
@@ -218,7 +217,7 @@ public class PacientController {
     }
 
 
-    @DeleteMapping("/delete/fisa/{fisaId}")
+    /*@DeleteMapping("/delete/fisa/{fisaId}")
     public ResponseEntity<?> stergeFisaPacientului(@PathVariable Long fisaId) {
 
         fisaPacientuluiService.stergeFisaDupaId(fisaId);
@@ -227,13 +226,13 @@ public class PacientController {
                 Map.of("mesaj", "Fisa pacientului a fost ștearsă cu succes")
         );
 
-    }
+    }*/
 
     //TEST
-    @PostMapping(value = "/test", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /*@PostMapping(value = "/test", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> test(@RequestBody Map<String, Object> payload) {
         return ResponseEntity.ok("OK");
-    }
+    }*/
 
     //get programare
     @GetMapping("/get/programare/{programareId}")
@@ -255,6 +254,9 @@ public class PacientController {
         return ResponseEntity.ok(raspuns);
     }
 
+    // Trebuie get programari in loc de pacient id trebuie un medic id --- asta pentru programarile unui medic
+    // La fel ca sus
+
     //sterge programarea
     @DeleteMapping("/delete/programare/{programareId}")
     public ResponseEntity<?> stergeProgramare(@PathVariable Long programareId) {
@@ -263,7 +265,6 @@ public class PacientController {
         return ResponseEntity.ok().body(
                 Map.of("mesaj", "Programarea a fost ștearsă cu succes")
         );
-
     }
 
     // Implementeaza optiunea de a sterge toate programarile

@@ -1,17 +1,8 @@
 package com.example.dizertatie.controller;
 
-import com.example.dizertatie.dto.ConsultatieDto;
-import com.example.dizertatie.dto.FisaPacientuluiDto;
-import com.example.dizertatie.dto.MedicDto;
-import com.example.dizertatie.dto.PacientDto;
-import com.example.dizertatie.entities.Consultatie;
-import com.example.dizertatie.entities.FisaPacientului;
-import com.example.dizertatie.entities.Medic;
-import com.example.dizertatie.entities.Pacient;
-import com.example.dizertatie.mapper.ConsultatiMapper;
-import com.example.dizertatie.mapper.FisaPacientuluiMapper;
-import com.example.dizertatie.mapper.MedicMapper;
-import com.example.dizertatie.mapper.PacientMapper;
+import com.example.dizertatie.dto.*;
+import com.example.dizertatie.entities.*;
+import com.example.dizertatie.mapper.*;
 import com.example.dizertatie.service.MedicService;
 import com.example.dizertatie.service.PacientService;
 import jakarta.persistence.EntityNotFoundException;
@@ -63,7 +54,7 @@ public class MedicController {
 
 
 
-    //Login cu email si parola
+    //Login cu username si parola
     /*@PostMapping("/login")
     public ResponseEntity<?> medicLogin(@RequestBody MedicDto medicDto) {
 
@@ -113,43 +104,6 @@ public class MedicController {
         }
     }
 
-
-    // crearea consultatie la pacient
-    @PostMapping("{medicId}/creare/consultatie/pacient/{pacientId}")
-    public ResponseEntity<ConsultatieDto> createConsultatie(@RequestBody ConsultatieDto consultatieDto, @PathVariable Long medicId, @PathVariable Long pacientId) {
-
-        Consultatie consultatie = medicService.createConsultatie(consultatieDto, pacientId);
-        ConsultatieDto consultatieDto1 = ConsultatiMapper.consultatie2Dto(consultatie);
-
-        return ResponseEntity.ok(consultatieDto1);
-    }
-
-    @PostMapping("/addFisa/{pacientId}/{medicId}")
-    public ResponseEntity<?> addFisaToPacient(@RequestBody FisaPacientuluiDto fisaPacientuluiDto, @PathVariable Long pacientId, @PathVariable Long medicId) {
-        FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
-        FisaPacientului fisaPacientului1Created = medicService.FisaToCreate(fisaPacientului, pacientId, medicId);
-        FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaPacientului1Created);
-
-        return ResponseEntity.ok(fisaPacientuluiDto);
-    }
-
-    @PutMapping("/edit/consultatie/{consultatieId}")
-    public ResponseEntity<?> editConsultatie(@RequestBody ConsultatieDto consultatieDto, @PathVariable Long consultatieId) {
-
-        Consultatie consultatie2Update = ConsultatiMapper.consultati2Entity(consultatieDto);
-        Consultatie consultatieUpdated = medicService.consultatieUpdate(consultatieDto, consultatieId);
-        ConsultatieDto consultatieReturn = ConsultatiMapper.consultatie2Dto(consultatieUpdated);
-
-        return ResponseEntity.ok(consultatieReturn);
-    }
-
-    @GetMapping("/get/consultatie/{consultatieId}")
-    public ResponseEntity<?> getConsultatie(@PathVariable Long consultatieId) {
-
-        Consultatie consultatie = medicService.getConsultatieById(consultatieId);
-        return ResponseEntity.ok(consultatie);
-    }
-
     // Get la medici
     @GetMapping("/get/medici")
     public ResponseEntity<List<MedicDto>> getMediciBySpecialitate(@RequestParam String specialitate) {
@@ -163,6 +117,15 @@ public class MedicController {
         return ResponseEntity.ok(rezultat);
     }
 
+    // Get un singur medic
+    @GetMapping("/get/medic/{medicId}")
+    public ResponseEntity<MedicDto> getMedic(@PathVariable Long medicId) {
+        Medic medic = medicService.gasesteMedicDupaId(medicId); // găsește medicul sau aruncă excepție
+        MedicDto dto = MedicMapper.medic2Dto(medic); // mapare entitate -> dto (scrii sau folosești MapStruct)
+        return ResponseEntity.ok(dto);
+    }
+
+
     @GetMapping("/get/test")
     public ResponseEntity<List<MedicDto>> getMediciBySpecialitate() {
         List<Medic> mediciFiltrati = medicService.findAll();
@@ -175,26 +138,11 @@ public class MedicController {
         return ResponseEntity.ok(rezultat);
     }
 
-    // sterg consultatie dupa id
-    @DeleteMapping("/delete/consultatie/{consultatieId}")
-    public ResponseEntity<?> deleteConsultatie(@PathVariable Long consultatieId) {
-        medicService.deleteConsultatie(consultatieId);
-        return ResponseEntity.ok("Consultația a fost ștearsă cu succes.");
-    }
-
     //sterg pacient dupa id
     @DeleteMapping("/delete/{pacientId}")
     public ResponseEntity<?> deletePacientByIdFromMedic(@PathVariable Long pacientId) {
         pacientService.deletePacient(pacientId);
         return ResponseEntity.noContent().build();
-    }
-
-    //sterg toate consultatile
-    @DeleteMapping("/delete/all/consultati")
-    public ResponseEntity<?> deleteAllConsultati() {
-        medicService.deleteAllConsultati();
-
-        return ResponseEntity.ok("Toate Consultațiile au fost șterse cu succes.");
     }
 
     //sterg toti pacienti
@@ -204,15 +152,5 @@ public class MedicController {
 
         return ResponseEntity.ok().build();
     }
-
-
-    // GPT
-
-
-
-
-
-
-
 
 }

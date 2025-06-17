@@ -1,10 +1,13 @@
 package com.example.dizertatie.service;
 
+import com.example.dizertatie.entities.FisaPacientului;
 import com.example.dizertatie.entities.Medic;
 import com.example.dizertatie.entities.Pacient;
+import com.example.dizertatie.repository.FisaPacientuluiRepository;
 import com.example.dizertatie.repository.MedicRepository;
 import com.example.dizertatie.repository.PacientRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +16,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class PacientService {
@@ -32,9 +32,12 @@ public class PacientService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private FisaPacientuluiRepository fisaPacientuluiRepository;
+
 
     public Pacient savePacient(Pacient pacient) {
-        pacient.setParola(pacient.getParola());
+        pacient.setParola(codificareParola(pacient.getParola())); // cu codificare
         pacient.setEsteVerificat(false);
         return pacientRepository.save(pacient);
     }
@@ -238,11 +241,38 @@ public class PacientService {
     }
 
     public void deletePacient(Long pacientId) {
-        pacientRepository.deleteById(pacientId);
+        Pacient pacient = pacientRepository.findById(pacientId)
+                .orElseThrow(() -> new EntityNotFoundException("Pacientul cu ID " + pacientId + " nu a fost gasit"));
+        pacientRepository.delete(pacient);
     }
 
     public void deleteALL() {
         pacientRepository.deleteAll();
     }
+
+    @Transactional
+    public void deleteFisaForPacient(Long pacientId) {
+        // Find the Pacient by ID
+        Optional<Pacient> optionalPacient = pacientRepository.findById(pacientId);
+        if (optionalPacient.isEmpty()) {
+            throw new EntityNotFoundException("Pacient with ID " + pacientId + " not found.");
+        }
+
+        Pacient pacient = optionalPacient.get();
+
+        // Find and remove the reference to FisaPacientului
+        FisaPacientului fisaPacientului = pacient.getFisaPacientului();
+        if (fisaPacientului != null) {
+            pacient.setFisaPacientului(null);
+            pacientRepository.save(pacient);
+
+            // Delete the associated FisaPacientului
+            fisaPacientuluiRepository.delete(fisaPacientului);
+        }
+    }
+
+
+
+
 
 }

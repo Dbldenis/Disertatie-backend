@@ -203,59 +203,11 @@ public class MedicService {
         return fisaPacientuluiRepository.save(fisaPacientuluiToCreate);
     }
 
-    @Transactional
-    public Consultatie createConsultatie(ConsultatieDto consultatieDto, Long pacientId) {
-
-        // Verifică existența pacientului
-        Pacient pacient = pacientRepository.findById(pacientId)
-                .orElseThrow(() -> new EntityNotFoundException("Pacient not found"));
-
-        Consultatie consultatie = ConsultatiMapper.consultati2Entity(consultatieDto);
-        consultatie.setFisaPacientului(pacient.getFisaPacientului());
-
-        // Asociază consultația cu fișa pacientului (dacă este necesar)
-        FisaPacientului fisa = pacient.getFisaPacientului();
-
-        fisa.getListaConsultati().add(consultatie); // Dacă relația este implementată
-
-        pacientRepository.save(pacient);
-
-        consultatiRepository.save(consultatie);
-
-        return consultatie;
-    }
-
-    public Consultatie consultatieUpdate(ConsultatieDto consultatieToUpdate, Long consultatieId) {
-
-        Consultatie existing = consultatiRepository.findById(consultatieId)
-                .orElseThrow(() -> new RuntimeException("Consultația cu id-ul " + consultatieId + " nu a fost găsită."));
-
-        // Actualizează câmpurile permise (de exemplu: data, simptome, tratament, diagnostic, observatii)
-        existing.setDataConsultatiei(consultatieToUpdate.getDataConsultatiei());
-        existing.setSimptome(consultatieToUpdate.getSimptome());
-        existing.setTratament(consultatieToUpdate.getTratament());
-        existing.setDiagnostic(consultatieToUpdate.getDiagnostic());
-        existing.setObservati(consultatieToUpdate.getObservati());
-
-        return consultatiRepository.save(existing);
-    }
-
-    public Consultatie getConsultatieById(Long consultatieId) {
-        return consultatiRepository.findById(consultatieId)
-                .orElseThrow(() -> new RuntimeException("Consultația cu id " + consultatieId + " nu a fost găsită."));
-    }
 
     public List<Medic> getMediciBySpecialitate(String specialitate) {
         return medicRepository.findBySpecializareIgnoreCase(specialitate);
     }
 
-    public void deleteConsultatie(Long consultatieId) {
-        consultatiRepository.deleteById(consultatieId);
-    }
-
-    public void deleteAllConsultati() {
-        consultatiRepository.deleteAll();
-    }
 
     public void deleteAllPacienti() {
         medicRepository.deleteAll();
@@ -263,5 +215,11 @@ public class MedicService {
 
     public List<Medic> findAll() {
         return medicRepository.findAll();
+    }
+
+    public Medic gasesteMedicDupaId(Long medicId) {
+
+        return medicRepository.findById(medicId)
+                .orElseThrow(() -> new EntityNotFoundException("Medicul cu ID " + medicId + " nu a fost gasit"));
     }
 }

@@ -18,6 +18,8 @@ public class ConsultatieDto {
     private FisaPacientuluiDto fisaPacientuluiDto;
     //private PacientDto pacientDto;
     //private TipConsultatie tipConsultatie;
+    private Long pacientId;
+    private Long medicId;
 
 }
 

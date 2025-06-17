@@ -18,6 +18,7 @@ public class ProgramareDto {
     private LocalTime ora;
     private PacientDto pacientDto;
     private MedicDto medicDto;
+
     /*private Long pacientId;
     private Long medicId;*/
 

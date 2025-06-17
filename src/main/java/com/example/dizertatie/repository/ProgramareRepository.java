@@ -14,5 +14,11 @@ public interface ProgramareRepository extends JpaRepository<Programare, Long> {
     @Query("SELECT DISTINCT p FROM Programare p WHERE p.pacient.id = :pacientId")
     List<Programare> findAllByPacientId(@Param("pacientId") Long pacientId);
 
+    //@Query("SELECT DISTINCT p FROM Programare p WHERE p.medic.id = :medicId")
+    @Query("SELECT p FROM Programare p " +
+            "JOIN FETCH p.pacient " +
+            "JOIN FETCH p.medic " +
+            "WHERE p.medic.id = :medicId")
+    List<Programare> findAllByMedicId(@Param("medicId") Long medicId);
 
 }

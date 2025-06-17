@@ -91,8 +91,14 @@ public class ProgramareService {
                 .orElseThrow(() -> new RuntimeException("Programarea nu a fost găsită"));
     }
 
+    // Programarile pentru pacient
     public List<Programare> getProgramariPentruPacient(Long pacientId) {
         return programareRepository.findAllByPacientId(pacientId);
+    }
+
+    // Programarile pentru medic
+    public List<Programare> getProgramariPentruMedic(Long medicId) {
+        return programareRepository.findAllByMedicId(medicId);
     }
 
     public void stergeProgramare(Long id) {

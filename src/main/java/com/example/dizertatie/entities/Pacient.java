@@ -1,6 +1,7 @@
 package com.example.dizertatie.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,7 +57,8 @@ public class Pacient {
     @JoinColumn(name = "medic_id", nullable = true)
     private Medic medic;
 
-    @OneToOne(mappedBy = "pacient", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "pacient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private FisaPacientului fisaPacientului;
 
     /*@OneToOne(mappedBy = "pacient", cascade = CascadeType.ALL)
