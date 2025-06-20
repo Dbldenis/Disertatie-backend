@@ -281,10 +281,6 @@ public class PacientController {
         return ResponseEntity.ok(raspuns);
     }
 
-
-
-
-
     // Trebuie get programari in loc de pacient id trebuie un medic id --- asta pentru programarile unui medic
     // La fel ca sus
 

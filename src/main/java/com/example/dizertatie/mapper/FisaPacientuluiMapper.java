@@ -13,6 +13,7 @@ public class FisaPacientuluiMapper {
         /*fisa.setPacient(fisaDto.getPacient());
         fisa.setMedic(fisaDto.getMedic());*/
 
+        fisa.setId(fisaDto.getId());
         fisa.setGreutate(fisaDto.getGreutate());
         fisa.setInaltime(fisaDto.getInaltime());
         fisa.setAlergii(fisaDto.getAlergii());
@@ -35,6 +36,7 @@ public class FisaPacientuluiMapper {
 
         FisaPacientuluiDto fisaDto = new FisaPacientuluiDto();
 
+        fisaDto.setId(fisa.getId());
         fisaDto.setGreutate(fisa.getGreutate());
         fisaDto.setInaltime(fisa.getInaltime());
         fisaDto.setAlergii(fisa.getAlergii());

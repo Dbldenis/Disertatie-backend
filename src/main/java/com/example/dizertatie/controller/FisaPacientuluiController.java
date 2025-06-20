@@ -32,6 +32,7 @@ public class FisaPacientuluiController {
     // Actualizează o fișă de pacient
     @PutMapping("/update/{fisaId}")
     public ResponseEntity<FisaPacientului> updateFisa(@RequestBody FisaPacientuluiDto fisaPacientuluiDto, @PathVariable Long fisaId) {
+        System.out.println("Am ajuns in update fisa pacientului: " + fisaPacientuluiDto.toString() + " !!!!!!!!!!!!!!!!");
         FisaPacientului fisaActualizata = fisaPacientuluiService.updateFisa(fisaPacientuluiDto, fisaId);
         return ResponseEntity.ok(fisaActualizata);
     }
