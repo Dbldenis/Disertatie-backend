@@ -29,18 +29,14 @@ public class MedicController {
     //add medic
     @PostMapping("/add")
     public ResponseEntity<?> createMedic(@Valid @RequestBody MedicDto medicDto) {
-
-        System.out.println("===>>> Am primit un medic in controller: " + medicDto.getNume());
         try {
-            // Verifici dacă există deja un medic cu același email sau codParafa
-            if (medicService.existsByEmailOrCodParafa(medicDto.getEmail(), medicDto.getCodParafa())) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Există deja un medic cu acest email sau cod parafă!");
+            if (medicService.existaMedicCuUtilizatorSiParola(medicDto.getUtilizator(), medicDto.getParola())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Există deja un medic cu acest nume de utilizator!");
             }
             Medic medic = MedicMapper.medic2Entity(medicDto);
             Medic medicSalvat = medicService.saveMedic(medic);
             return ResponseEntity.ok(MedicMapper.medic2Dto(medicSalvat));
         } catch (Exception e) {
-            //System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Eroare la înregistrarea medicului!");
         }
     }
@@ -52,17 +48,15 @@ public class MedicController {
 
         return ResponseEntity.ok(MedicMapper.medic2Dto(medicCreated));*/
 
-
-
     //Login cu username si parola
-    /*@PostMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> medicLogin(@RequestBody MedicDto medicDto) {
 
         Medic medicToLogin = MedicMapper.medic2Entity(medicDto);
         Medic existentMedic = medicService.login(medicToLogin);
 
         return ResponseEntity.ok(MedicMapper.medic2Dto(existentMedic));
-    }*/
+    }
 
     // Trimite codul de verificare pe email
     @PostMapping("/email/send-code")
@@ -124,6 +118,23 @@ public class MedicController {
         MedicDto dto = MedicMapper.medic2Dto(medic); // mapare entitate -> dto (scrii sau folosești MapStruct)
         return ResponseEntity.ok(dto);
     }
+
+    @GetMapping("get/pacienti-medic/{medicId}")
+    public ResponseEntity<List<PacientDto>> getPacientiMedic(@PathVariable Long medicId) {
+        List<PacientDto> raspuns = pacientService.getPacientiCuFisaPentruMedic(medicId);
+        return ResponseEntity.ok(raspuns);
+    }
+
+    /*@GetMapping("/get/pacienti/{medicId}")
+    public ResponseEntity<List<PacientDto>> getiPacienti(@PathVariable Long medicId) {
+        List<Programare> programari = programareService.getProgramariPentruPacient(medicId);
+
+        List<ProgramareDto> raspuns = programari.stream()
+                .map(ProgramareMapper::exemplarToDTO)
+                .toList();
+
+        return ResponseEntity.ok(raspuns);
+    }*/
 
 
     @GetMapping("/get/test")

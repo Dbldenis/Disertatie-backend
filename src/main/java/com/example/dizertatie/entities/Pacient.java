@@ -26,6 +26,9 @@ public class Pacient {
     @Column(name = "PRENUME_NUME")
     private String prenume;
 
+    @Column(name = "UTILIZATOR")
+    private String utilizator;
+
     @Column(name = "EMAIL")
     private String email;
 

@@ -26,6 +26,7 @@ public class FisaPacientului {
     @JoinColumn(name = "medic_id")
     private Medic medic;
 
+    // greutate, inaltime, alergii, reacti adverse, medicamente suspecte, evolutie reactie
 
     // Date medicale din document (secțiunea I)
     private Double greutate;

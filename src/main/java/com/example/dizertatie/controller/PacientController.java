@@ -1,5 +1,8 @@
 package com.example.dizertatie.controller;
 
+import com.example.dizertatie.dto.MedicDto;
+import com.example.dizertatie.entities.Medic;
+import com.example.dizertatie.mapper.MedicMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,6 +27,7 @@ import com.example.dizertatie.mapper.FisaPacientuluiMapper;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/pacient")
 public class PacientController {
@@ -63,16 +67,15 @@ public class PacientController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createPacient(@Valid @RequestBody PacientDto pacientDto) {
-        System.out.println("Am ajuns in create");
+        System.out.println("Am ajuns in create pacient" + pacientDto.toString());
         try {
-            if (pacientService.existsByCnpOrTelefonOrEmail(pacientDto.getCnp(), pacientDto.getTelefon(), pacientDto.getEmail())) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Există deja un pacient cu acest CNP, număr de telefon sau email!");
+            if (pacientService.existsByUtilizator(pacientDto.getUtilizator())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Există deja un pacient cu acest nume de utilizator!");
             }
             Pacient pacient = PacientMapper.pacient2Entity(pacientDto);
             Pacient pacientSalvat = pacientService.savePacient(pacient);
             return ResponseEntity.ok(PacientMapper.pacient2Dto(pacientSalvat));
         } catch (Exception e) {
-            System.out.println("Sunt in catch");
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Eroare la înregistrarea pacientului!");
         }
@@ -118,6 +121,14 @@ public class PacientController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> pacientLogin(@RequestBody PacientDto pacientDto) {
+
+        Pacient pacientToLogin = PacientMapper.pacient2Entity(pacientDto);
+        Pacient existentPacient = pacientService.login(pacientToLogin);
+
+        return ResponseEntity.ok(PacientMapper.pacient2Dto(existentPacient));
+    }
 
     //------------------------------------
     /*@PostMapping("/login")
@@ -131,7 +142,7 @@ public class PacientController {
     //add programare
     @PostMapping("/add/programare/{pacientId}/{medicId}")
     public ResponseEntity<ProgramareDto> creazaProgramare(@RequestBody ProgramareDto programareDto, @PathVariable Long pacientId, @PathVariable Long medicId) {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println(programareDto.toString());
         Programare programareNoua = ProgramareMapper.programare2Entity(programareDto);
         Programare programare = programareService.creazaProgramare(programareNoua, pacientId, medicId);
@@ -141,14 +152,16 @@ public class PacientController {
     }
 
     //add fisa pacientului
-    @PostMapping(value = "/add/fisa/{pacientId}/{medicId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/add/fisa/{pacientId}/{medicId}")
     public ResponseEntity<FisaPacientuluiDto> adaugaFisaPacientului(@RequestBody FisaPacientuluiDto fisaPacientuluiDto, @PathVariable Long pacientId, @PathVariable Long medicId) {
+        System.out.println("Creez fisa !?!!!!!!!!!!!!!!1");
         FisaPacientului fisa = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
         FisaPacientului fisaCreata = fisaPacientuluiService.creeazaFisa(fisa, pacientId, medicId);
         FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaCreata);
 
         return ResponseEntity.ok(fisaPacientuluiDto1);
     }
+
 
     /*@PutMapping("/{pacientId}")
     public ResponseEntity<?> verify(@PathVariable Long pacientId, @RequestBody PacientDto pacientDto) {
@@ -169,7 +182,16 @@ public class PacientController {
 
     //edit fisa pacientului
     @PutMapping(value = "/edit/fisa/{fisaId}", consumes = MediaType.APPLICATION_JSON_VALUE) // pentru Json
-    public ResponseEntity<FisaPacientuluiDto> updateFisa(@PathVariable Long fisaId, @RequestBody FisaPacientuluiDto fisaPacientuluiDto) {
+    public ResponseEntity<FisaPacientuluiDto> updateFisaInit(@PathVariable Long fisaId, @RequestBody FisaPacientuluiDto fisaPacientuluiDto) {
+        FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
+        FisaPacientului fisaCreata = fisaPacientuluiService.updateFisa(fisaPacientuluiDto, fisaId);
+        FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaCreata);
+        return ResponseEntity.ok(fisaPacientuluiDto1);
+    }
+
+    @PutMapping(value = "/edit/fisa", consumes = MediaType.APPLICATION_JSON_VALUE) // pentru Json
+    public ResponseEntity<FisaPacientuluiDto> updateFisa( @RequestBody FisaPacientuluiDto fisaPacientuluiDto) {
+        Long fisaId = fisaPacientuluiDto.getId();
         FisaPacientului fisaPacientului = FisaPacientuluiMapper.fisaPacientuluiDto2Entity(fisaPacientuluiDto);
         FisaPacientului fisaCreata = fisaPacientuluiService.updateFisa(fisaPacientuluiDto, fisaId);
         FisaPacientuluiDto fisaPacientuluiDto1 = FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisaCreata);
@@ -217,6 +239,10 @@ public class PacientController {
     }
 
 
+
+
+
+
     /*@DeleteMapping("/delete/fisa/{fisaId}")
     public ResponseEntity<?> stergeFisaPacientului(@PathVariable Long fisaId) {
 
@@ -242,6 +268,7 @@ public class PacientController {
         return ResponseEntity.ok(dto);
     }
 
+
     // Filtrare dupa pacient Id
     @GetMapping("/get/programari/{pacientId}")
     public ResponseEntity<List<ProgramareDto>> getProgramariPacient(@PathVariable Long pacientId) {
@@ -253,6 +280,10 @@ public class PacientController {
 
         return ResponseEntity.ok(raspuns);
     }
+
+
+
+
 
     // Trebuie get programari in loc de pacient id trebuie un medic id --- asta pentru programarile unui medic
     // La fel ca sus

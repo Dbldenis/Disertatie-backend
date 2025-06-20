@@ -26,11 +26,16 @@ public class ProgramareController {
     // Filtrare dupa medic id
     @GetMapping("/get/programari/{medicId}")
     public ResponseEntity<List<ProgramareDto>> getProgramariMedic(@PathVariable Long medicId) {
+
+        System.out.println("Am ajuns in get Programari Medic: " + medicId + " !!!!!!!!!!!!!!!!");
         List<Programare> programari = programareService.getProgramariPentruMedic(medicId);
 
         List<ProgramareDto> raspuns = programari.stream()
                 .map(ProgramareMapper::exemplarToDTO)
                 .toList();
+
+        System.out.println("!!!!!!" + raspuns.toString());
+        System.out.println("!!!!!!" + raspuns.size());
 
         return ResponseEntity.ok(raspuns);
     }
@@ -38,6 +43,13 @@ public class ProgramareController {
     // Trebuie get programari in loc de pacient id trebuie un medic id --- asta pentru programarile unui medic
     // La fel ca sus
 
+
+    @Override
+    public String toString() {
+        return "ProgramareController{" +
+                "programareService=" + programareService +
+                '}';
+    }
 }
 
 

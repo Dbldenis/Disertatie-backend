@@ -28,6 +28,9 @@ public class Medic {
     @Column(name = "PRENUME_NUME")
     private String prenume;
 
+    @Column(name = "UTILIZATOR")
+    private String utilizator;
+
     @Column(name = "SPECIALIZARE")
     private String specializare;
 

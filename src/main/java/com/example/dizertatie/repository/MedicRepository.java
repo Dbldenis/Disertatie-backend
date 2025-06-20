@@ -11,9 +11,10 @@ public interface MedicRepository extends JpaRepository<Medic, Long>  {
 
     Optional<Medic> findByEmail(String email);
 
-    boolean existsByEmail(String email);
-    boolean existsByCodParafa(Long codParafa);
+    boolean existsByUtilizatorAndParola(String utilizator, String parola);
 
     List<Medic> findBySpecializareIgnoreCase(String specializare);
+
+    Optional<Medic> findByUtilizator(String utilizator);
 
 }

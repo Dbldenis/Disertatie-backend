@@ -21,10 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class MedicService {
@@ -61,15 +58,17 @@ public class MedicService {
     public Medic saveMedic(Medic medic) {
         // Aici poți face și validări suplimentare, ex: lungime parolă, format email, etc.
 
-
-        medic.setParola(medic.getParola());
+        medic.setParola(codificareParola(medic.getParola()));
         medic.setEsteVerificat(false); // sau true, dacă e deja verificat cu OTP
         return medicRepository.save(medic);
     }
 
-    public boolean existsByEmailOrCodParafa(String email, Long codParafa) {
-        return medicRepository.existsByEmail(email) || medicRepository.existsByCodParafa(codParafa);
+
+    public boolean existaMedicCuUtilizatorSiParola(String utilizator, String parola) {
+        String parolaCriptata = codificareParola(parola);
+        return medicRepository.existsByUtilizatorAndParola(utilizator, parolaCriptata);
     }
+
 
 
     /*public Medic login(Medic medic) {
@@ -83,6 +82,30 @@ public class MedicService {
         }
         return existentMedic;
     }*/
+
+    public Medic login(Medic medicDeAutentificat) {
+        Optional<Medic> medicGasitOpt = medicRepository.findByUtilizator(medicDeAutentificat.getUtilizator());
+
+        if (medicGasitOpt.isEmpty()) {
+            throw new RuntimeException("Utilizator sau parolă incorectă");
+        }
+
+        Medic medicGasit = medicGasitOpt.get();
+
+        // criptează parola primită la login
+        String parolaCriptata = codificareParola(medicDeAutentificat.getParola());
+
+        // compară cu parola din BD
+        if (!medicGasit.getParola().equals(parolaCriptata)) {
+            throw new RuntimeException("Utilizator sau parolă incorectă");
+        }
+
+        /*if (Boolean.FALSE.equals(medicGasit.getEsteVerificat())) {
+            throw new RuntimeException("Contul nu este verificat");
+        }*/
+
+        return medicGasit;
+    }
 
     private String genereazaCodVerificare() {
         Random random = new Random();

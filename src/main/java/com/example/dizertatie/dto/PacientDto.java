@@ -11,6 +11,7 @@ public class PacientDto {
     private Long id;
     private String nume;
     private String prenume;
+    private String utilizator;
     private String email;
     private String parola;
     private Boolean isVerified;

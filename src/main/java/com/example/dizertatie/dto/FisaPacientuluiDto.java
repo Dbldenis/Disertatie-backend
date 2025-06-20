@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 public class FisaPacientuluiDto {
 
+    private Long id;
     private Double greutate;
     private Double inaltime;
     private String alergii;

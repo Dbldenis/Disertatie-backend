@@ -43,6 +43,9 @@ public class FisaPacientuluiService {
         //medic.getListaFisaPacienti().add(fisaCreata);
         //medic.addFisa(fisaCreata); // bidirectional
 
+        // greutate, inaltime, nume raportor, relatie cu pacientul
+        // alergii, reacti adverse, medicamente suspecte, evolutie reactie
+
         fisaCreata.setGreutate(fisaPacientului.getGreutate());
         fisaCreata.setInaltime(fisaPacientului.getInaltime());
         fisaCreata.setAlergii(fisaPacientului.getAlergii());
@@ -51,6 +54,7 @@ public class FisaPacientuluiService {
         fisaCreata.setNumeRaportor(fisaPacientului.getNumeRaportor());
         fisaCreata.setMedicamenteSuspecte(fisaPacientului.getMedicamenteSuspecte());
         fisaCreata.setRelatieCuPacientul(fisaPacientului.getRelatieCuPacientul());
+
 
         return fisaPacientuluiRepository.save(fisaCreata);
     }

@@ -21,4 +21,5 @@ public interface ProgramareRepository extends JpaRepository<Programare, Long> {
             "WHERE p.medic.id = :medicId")
     List<Programare> findAllByMedicId(@Param("medicId") Long medicId);
 
+    List<Programare> findByMedicId(Long medicId);
 }

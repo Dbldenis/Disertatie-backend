@@ -13,6 +13,7 @@ public class MedicDto {
     private Long id;
     private String nume;
     private String prenume;
+    private String utilizator;
     private String specializare;
     @Size(max = 10, message = "Telefonul nu poate avea mai mult de 10 cifre")
     private String telefon;

@@ -13,6 +13,7 @@ public class MedicMapper {
 
         medicCreat.setNume(medicDto.getNume());
         medicCreat.setPrenume(medicDto.getPrenume());
+        medicCreat.setUtilizator(medicDto.getUtilizator());
         medicCreat.setSpecializare(medicDto.getSpecializare());
         medicCreat.setTelefon(medicDto.getTelefon());
         medicCreat.setCodParafa(medicDto.getCodParafa());
@@ -44,6 +45,7 @@ public class MedicMapper {
 
         medicReturnat.setId(medic.getId());
         medicReturnat.setNume(medic.getNume());
+        medicReturnat.setUtilizator(medic.getUtilizator());
         medicReturnat.setPrenume(medic.getPrenume());
         medicReturnat.setSpecializare(medic.getSpecializare());
         medicReturnat.setTelefon(medic.getTelefon());
