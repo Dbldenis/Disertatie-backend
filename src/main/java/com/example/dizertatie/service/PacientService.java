@@ -62,7 +62,7 @@ public class PacientService {
             PacientDto dto = PacientMapper.pacient2Dto(pacient);
 
             fisaPacientuluiRepository
-                    .findByPacientIdAndMedicId(pacient.getId(), medicId)
+                    .findByPacientId(pacient.getId())
                     .ifPresent(fisa -> dto.setFisaPacientuluiDto(FisaPacientuluiMapper.fisaPacientuluiEntity2Dto(fisa)));
 
             return dto;

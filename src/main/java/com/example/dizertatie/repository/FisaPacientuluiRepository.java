@@ -17,4 +17,6 @@ public interface FisaPacientuluiRepository extends JpaRepository<FisaPacientului
     void deleteByPacientId(@Param("pacientId") Long pacientId);
 
     Optional<FisaPacientului> findByPacientIdAndMedicId(Long id, Long medicId);
+
+    Optional<FisaPacientului> findByPacientId(Long id);
 }
