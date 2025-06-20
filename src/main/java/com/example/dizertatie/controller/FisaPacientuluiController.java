@@ -45,11 +45,17 @@ public class FisaPacientuluiController {
     }
 
     // Șterge o fșiă după id -- Nu trebuie sa pot sterge fisa pacientului !
-    @DeleteMapping("/sterge/{fisaId}")
+   /* @DeleteMapping("/sterge/{fisaId}")
     public ResponseEntity<?> stergeFisa(@PathVariable Long fisaId) {
         fisaPacientuluiService.deletePacientById(fisaId);
         return ResponseEntity.ok().body(
                 Map.of("mesaj", "Fișa pacientului a fost ștearsă cu succes")
         );
+    }*/
+
+    @DeleteMapping("/sterge/{fisaId}")
+    public ResponseEntity<?> stergeFisa(@PathVariable Long fisaId) {
+        fisaPacientuluiService.deleteFisaById(fisaId);
+        return ResponseEntity.ok().body(Map.of("mesaj", "Fișa pacientului a fost ștearsă cu succes"));
     }
 }

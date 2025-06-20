@@ -118,6 +118,10 @@ public class FisaPacientuluiService {
 
     }
 
+    public void deleteFisaById(Long fisaId) {
+        fisaPacientuluiRepository.deleteById(fisaId);
+    }
+
 
 
 }

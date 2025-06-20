@@ -12,8 +12,8 @@ import java.util.Optional;
 @Repository
 public interface FisaPacientuluiRepository extends JpaRepository<FisaPacientului, Long> {
 
-    @Modifying
-    @Query("DELETE FROM FisaPacientului f WHERE f.pacient.id = :pacientId")
+    /*@Modifying
+    @Query("DELETE FROM FisaPacientului f WHERE f.pacient.id = :pacientId")*/
     void deleteByPacientId(@Param("pacientId") Long pacientId);
 
     Optional<FisaPacientului> findByPacientIdAndMedicId(Long id, Long medicId);
