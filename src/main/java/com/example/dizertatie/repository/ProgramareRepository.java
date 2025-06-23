@@ -1,7 +1,9 @@
 package com.example.dizertatie.repository;
 
 import com.example.dizertatie.entities.Programare;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -22,4 +24,9 @@ public interface ProgramareRepository extends JpaRepository<Programare, Long> {
     List<Programare> findAllByMedicId(@Param("medicId") Long medicId);
 
     List<Programare> findByMedicId(Long medicId);
+
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Programare p WHERE p.medic.id = :medicId")
+    void deleteByMedicId(@Param("medicId") Long medicId);
 }

@@ -132,7 +132,8 @@ public class ProgramareService {
         return dto;
     }
 
-    public void stergeToateProgramarile() {
-        programareRepository.deleteAll();
+    public void stergeProgramariDupaMedicId(Long medicId) {
+        programareRepository.deleteByMedicId(medicId);
     }
+
 }
