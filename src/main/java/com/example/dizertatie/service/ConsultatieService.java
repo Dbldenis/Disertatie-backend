@@ -12,6 +12,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ConsultatieService {
 
@@ -38,7 +40,7 @@ public class ConsultatieService {
 
         fisa.getListaConsultati().add(consultatie); // Dacă relația este implementată
 
-        pacientRepository.save(pacient);
+        //pacientRepository.save(pacient);
 
         consultatiRepository.save(consultatie);
 
@@ -64,6 +66,11 @@ public class ConsultatieService {
         return consultatiRepository.findById(consultatieId)
                 .orElseThrow(() -> new RuntimeException("Consultația cu id " + consultatieId + " nu a fost găsită."));
     }
+
+    public List<Consultatie> getConsultatiiByMedicIdAndPacientId(Long medicId, Long pacientId) {
+        return consultatiRepository.findByMedicIdAndPacientId(medicId, pacientId);
+    }
+
 
     public void deleteConsultatie(Long consultatieId) {
         consultatiRepository.deleteById(consultatieId);

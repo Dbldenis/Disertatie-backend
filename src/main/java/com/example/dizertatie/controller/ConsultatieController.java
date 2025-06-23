@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/consultatie")
 public class ConsultatieController {
@@ -24,6 +26,11 @@ public class ConsultatieController {
     @PostMapping("{medicId}/creare/consultatie/pacient/{pacientId}")
     public ResponseEntity<ConsultatieDto> createConsultatie(@RequestBody ConsultatieDto consultatieDto, @PathVariable Long medicId, @PathVariable Long pacientId) {
 
+        System.out.println("Am ajuns in create consultatie: " + consultatieDto.toString() + " !!!!!!!!!!!!!!!!");
+        System.out.println("Am ajuns in create consultatie medicId: " + medicId + " !!!!!!!!!!!!!!!!");
+        System.out.println("Am ajuns in create consultatie pacientId: " + pacientId + " !!!!!!!!!!!!!!!!");
+        consultatieDto.setMedicId(medicId);
+        consultatieDto.setPacientId(pacientId);
         Consultatie consultatie = consultatieService.createConsultatie(consultatieDto, pacientId);
         ConsultatieDto consultatieDto1 = ConsultatiMapper.consultatie2Dto(consultatie);
 
@@ -48,6 +55,18 @@ public class ConsultatieController {
         Consultatie consultatie = consultatieService.getConsultatieById(consultatieId);
         return ResponseEntity.ok(consultatie);
     }
+
+    @GetMapping("/get/consultatii/{medicId}/{pacientId}")
+    public ResponseEntity<?> getConsultatiiByMedicAndPacient(
+            @PathVariable Long medicId,
+            @PathVariable Long pacientId) {
+
+        List<Consultatie> consultatii = consultatieService
+                .getConsultatiiByMedicIdAndPacientId(medicId, pacientId);
+
+        return ResponseEntity.ok(consultatii);
+    }
+
 
     // sterg consultatie dupa id
     @DeleteMapping("/delete/consultatie/{consultatieId}")
