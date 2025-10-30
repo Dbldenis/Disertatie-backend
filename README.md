@@ -21,5 +21,6 @@ Scopul principal este gestionarea informațiilor medicale ale pacienților, prog
 - **Spring Boot**
 - **Spring Data JPA / Hibernate**
 - **PostgreSQL**
+- **pgAdmin**
 - **Gradle**
 - **Postman**
