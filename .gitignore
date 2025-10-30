@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Application Configuration ###
+# Ignore local application properties with sensitive data
+application-local.properties
+.env
